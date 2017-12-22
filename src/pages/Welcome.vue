@@ -1,33 +1,4 @@
 <template lang="pug">
-  q-layout(ref="layout" view="lHh Lpr fff" :left-class="{'bg-grey-2': true}")
-    q-toolbar.glossy(slot="header")
-
-      q-btn(flat @click="$refs.layout.toggleLeft()")
-        q-icon(name="menu")
-      
-      q-toolbar-title TravelChain
-        div(slot="subtitle") Beta 0.1
-  
-  
-    div(slot="left")
-      q-list(no-border link inset-delimiter)
-        q-list-header Essential Links
-        q-item(@click="$router.push('/data')")
-          q-item-side(icon="assessment")
-          q-item-main(label="Data" sublabel="Your data")
-        </q-item>
-        q-item(@click="$router.push('/news')")
-          q-item-side(icon="library_books")
-          q-item-main(label="News" sublabel="Some news")
-        </q-item>
-        q-item(@click="$router.push('analyse')")
-          q-item-side(icon="remove_red_eye")
-          q-item-main(label="Analyse" sublabel="Analyse your personality")
-        </q-item>
-      </q-list>
-    </div>
-  
-    div.layout-padding.row.justify-center.items-center.non-selectable.no-pointer-events.window-height
       div.logo(:style="position")
         img(src="~assets/logo.svg" width="200")
 </template>
