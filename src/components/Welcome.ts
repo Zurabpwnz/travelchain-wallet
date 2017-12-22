@@ -36,7 +36,7 @@ function getRotationFromAccel(accelX, accelY, accelZ) {
 }
 
 @Component({
-    name: 'hello',
+    name: 'welcome',
     components: {
         QLayout,
         QToolbar,

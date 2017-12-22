@@ -12,15 +12,15 @@
     div(slot="left")
       q-list(no-border link inset-delimiter)
         q-list-header Essential Links
-        q-item(@click="launch('http://quasar-framework.org')")
+        q-item(@click="$router.push('/data')")
           q-item-side(icon="assessment")
           q-item-main(label="Data" sublabel="Your data")
         </q-item>
-        q-item(@click="launch('http://quasar-framework.org')")
+        q-item(@click="$router.push('/news')")
           q-item-side(icon="library_books")
-          q-item-main(label="News" sublabel="Travelai")
+          q-item-main(label="News" sublabel="Some news")
         </q-item>
-        q-item(@click="launch('http://quasar-framework.org')")
+        q-item(@click="$router.push('analyse')")
           q-item-side(icon="remove_red_eye")
           q-item-main(label="Analyse" sublabel="Analyse your personality")
         </q-item>
@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts">
-    import Hello from './Hello'
-    export default Hello
+    import Welcome from '../components/Welcome.ts'
+    export default Welcome
 </script>
 
 <style lang="stylus">
