@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/TheDeveloperTom/.nvm/versions/node/v6.10.0/bin/node /usr/local/bin/yarn add vue@2.5.11 vue-router@3.0.1 vue-property-decorator@6.0.0 vue-loader@13.6.0 vue-class-component@6.1.2
+  /Users/TheDeveloperTom/.nvm/versions/node/v6.10.0/bin/node /usr/local/bin/yarn add ejs@2.5.5
 
 PATH: 
-  /opt/local/bin:/usr/local/opt/gdal2/bin:/Users/TheDeveloperTom/.nvm/versions/node/v6.10.0/bin:/usr/local/opt/gettext/bin:/usr/local/bin:/Users/TheDeveloperTom/bin:/usr/local/bin:/Users/TheDeveloperTom/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+  /opt/local/bin:/usr/local/opt/gdal2/bin:/Users/TheDeveloperTom/.nvm/versions/node/v6.10.0/bin:/usr/local/opt/gettext/bin:/usr/local/bin:/Users/TheDeveloperTom/bin:/usr/local/bin:/Users/TheDeveloperTom/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/opt/local/bin:/usr/local/opt/gdal2/bin:/usr/local/opt/gettext/bin:/Users/TheDeveloperTom/bin:/Users/TheDeveloperTom/.composer/vendor/bin
 
 Yarn version: 
   0.19.1
@@ -30,8 +30,9 @@ npm manifest:
       "babel-runtime": "^6.0.0",
       "quasar-extras": "0.0.7",
       "quasar-framework": "git+https://git@github.com/quasarframework/quasar-edge.git",
-      "vue": "^2.3.0",
-      "vue-router": "^2.7.0"
+      "vue": "2.5.11",
+      "vue-property-decorator": "6.0.0",
+      "vue-router": "3.0.1"
     },
     "devDependencies": {
       "@types/chai": "^3.4.35",
@@ -87,10 +88,10 @@ npm manifest:
       "tslint-loader": "^3.4.3",
       "typescript": "^2.2.1",
       "url-loader": "^0.5.7",
-      "vue-class-component": "^5.0.0",
-      "vue-loader": "11.1.4",
+      "vue-class-component": "6.1.2",
+      "vue-loader": "13.6.0",
       "vue-style-loader": "^2.0.0",
-      "vue-template-compiler": "^2.2.2",
+      "vue-template-compiler": "2.5.11",
       "webpack": "^2.2.1",
       "webpack-dev-middleware": "^1.8.4",
       "webpack-hot-middleware": "^2.18.1",
@@ -463,7 +464,7 @@ Lockfile:
     dependencies:
       inherits "~2.0.0"
   
-  bluebird@^3.0.5, bluebird@^3.1.1, bluebird@^3.3.0, bluebird@^3.4.7:
+  bluebird@^3.1.1, bluebird@^3.3.0, bluebird@^3.4.7:
     version "3.5.1"
     resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
   
@@ -889,7 +890,7 @@ Lockfile:
     dependencies:
       delayed-stream "~1.0.0"
   
-  commander@2.12.x, commander@^2.9.0, commander@~2.12.1:
+  commander@2.12.x, commander@~2.12.1:
     version "2.12.2"
     resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
   
@@ -930,13 +931,6 @@ Lockfile:
       inherits "^2.0.3"
       readable-stream "^2.2.2"
       typedarray "^0.0.6"
-  
-  config-chain@~1.1.5:
-    version "1.1.11"
-    resolved "https://registry.yarnpkg.com/config-chain/-/config-chain-1.1.11.tgz#aba09747dfbe4c3e70e766a6e41586e1859fc6f2"
-    dependencies:
-      ini "^1.3.4"
-      proto-list "~1.2.1"
   
   configstore@^3.0.0:
     version "3.1.1"
@@ -1352,13 +1346,9 @@ Lockfile:
     version "1.4.0"
     resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
   
-  diff@3.2.0:
+  diff@3.2.0, diff@^3.0.1:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/diff/-/diff-3.2.0.tgz#c9ce393a4b7cbd0b058a725c93df299027868ff9"
-  
-  diff@^3.0.1:
-    version "3.4.0"
-    resolved "https://registry.yarnpkg.com/diff/-/diff-3.4.0.tgz#b1d85507daf3964828de54b37d0d73ba67dda56c"
   
   diffie-hellman@^5.0.0:
     version "5.0.2"
@@ -1455,16 +1445,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
     dependencies:
       jsbn "~0.1.0"
-  
-  editorconfig@^0.13.2:
-    version "0.13.3"
-    resolved "https://registry.yarnpkg.com/editorconfig/-/editorconfig-0.13.3.tgz#e5219e587951d60958fd94ea9a9a008cdeff1b34"
-    dependencies:
-      bluebird "^3.0.5"
-      commander "^2.9.0"
-      lru-cache "^3.2.0"
-      semver "^5.1.0"
-      sigmund "^1.0.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -2912,15 +2892,6 @@ Lockfile:
     version "2.4.0"
     resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.0.tgz#9e566fee624751a1d720c966cd6226d29d4025aa"
   
-  js-beautify@^1.6.3:
-    version "1.7.5"
-    resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.7.5.tgz#69d9651ef60dbb649f65527b53674950138a7919"
-    dependencies:
-      config-chain "~1.1.5"
-      editorconfig "^0.13.2"
-      mkdirp "~0.5.0"
-      nopt "~3.0.1"
-  
   js-tokens@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -3171,7 +3142,7 @@ Lockfile:
       json5 "^0.5.0"
       object-assign "^4.0.1"
   
-  loader-utils@^1.0.2:
+  loader-utils@^1.0.2, loader-utils@^1.1.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
     dependencies:
@@ -3358,13 +3329,7 @@ Lockfile:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.2.4.tgz#6c658619becf14031d0d0b594b16042ce4dc063d"
   
-  lru-cache@^3.2.0:
-    version "3.2.0"
-    resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-3.2.0.tgz#71789b3b7f5399bec8565dda38aa30d2a097efee"
-    dependencies:
-      pseudomap "^1.0.1"
-  
-  lru-cache@^4.0.1:
+  lru-cache@^4.0.1, lru-cache@^4.1.1:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
     dependencies:
@@ -3661,7 +3626,7 @@ Lockfile:
       tar "^2.2.1"
       tar-pack "^3.4.0"
   
-  nopt@3.x, nopt@~3.0.1:
+  nopt@3.x:
     version "3.0.6"
     resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
     dependencies:
@@ -4315,7 +4280,7 @@ Lockfile:
       source-map "^0.5.6"
       supports-color "^3.2.3"
   
-  postcss@^6.0.1:
+  postcss@^6.0.1, postcss@^6.0.8:
     version "6.0.14"
     resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.14.tgz#5534c72114739e75d0afcf017db853099f562885"
     dependencies:
@@ -4334,6 +4299,10 @@ Lockfile:
   preserve@^0.2.0:
     version "0.2.0"
     resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
+  
+  prettier@^1.7.0:
+    version "1.9.2"
+    resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
   
   pretty-error@^2.0.2:
     version "2.1.1"
@@ -4362,10 +4331,6 @@ Lockfile:
     version "1.1.8"
     resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
   
-  proto-list@~1.2.1:
-    version "1.2.4"
-    resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
-  
   proxy-addr@~2.0.2:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.2.tgz#6571504f47bb988ec8180253f85dd7e14952bdec"
@@ -4390,7 +4355,7 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   
-  pseudomap@^1.0.1, pseudomap@^1.0.2:
+  pseudomap@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
   
@@ -4582,6 +4547,10 @@ Lockfile:
     dependencies:
       balanced-match "^0.4.2"
   
+  reflect-metadata@^0.1.10:
+    version "0.1.10"
+    resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
+  
   regenerate@^1.2.1:
     version "1.3.3"
     resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.3.3.tgz#0c336d3980553d755c39b586ae3b20aa49c82b7f"
@@ -4754,7 +4723,7 @@ Lockfile:
     version "1.1.7"
     resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
   
-  resolve@^1.1.6, resolve@^1.1.7:
+  resolve@^1.1.6, resolve@^1.1.7, resolve@^1.4.0:
     version "1.5.0"
     resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
     dependencies:
@@ -4907,10 +4876,6 @@ Lockfile:
       glob "^7.0.0"
       interpret "^1.0.0"
       rechoir "^0.6.2"
-  
-  sigmund@^1.0.1:
-    version "1.0.1"
-    resolved "https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
   
   signal-exit@^3.0.0, signal-exit@^3.0.2:
     version "3.0.2"
@@ -5585,34 +5550,42 @@ Lockfile:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   
-  vue-class-component@^5.0.0:
-    version "5.0.2"
-    resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-5.0.2.tgz#3dcdc005c58c4e88d8ec2d46e01c74f4d90135c8"
+  vue-class-component@6.1.2, vue-class-component@^6.0.0:
+    version "6.1.2"
+    resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.1.2.tgz#87ac0265b0db71a3f49f10d90e4f69f9be9c2fbd"
   
-  vue-hot-reload-api@^2.0.11:
+  vue-hot-reload-api@^2.2.0:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.4.tgz#683bd1d026c0d3b3c937d5875679e9a87ec6cd8f"
   
-  vue-loader@11.1.4:
-    version "11.1.4"
-    resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-11.1.4.tgz#d399b0ee10b34f2e41183b1e52255c4ab9f1f845"
+  vue-loader@13.6.0:
+    version "13.6.0"
+    resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.6.0.tgz#c1c9570e1e57475f8acb02cda35551b812f88086"
     dependencies:
       consolidate "^0.14.0"
       hash-sum "^1.0.2"
-      js-beautify "^1.6.3"
-      loader-utils "^1.0.2"
-      lru-cache "^4.0.1"
-      postcss "^5.0.10"
+      loader-utils "^1.1.0"
+      lru-cache "^4.1.1"
+      postcss "^6.0.8"
       postcss-load-config "^1.1.0"
       postcss-selector-parser "^2.0.0"
-      source-map "^0.5.6"
-      vue-hot-reload-api "^2.0.11"
-      vue-style-loader "^2.0.0"
-      vue-template-es2015-compiler "^1.2.2"
+      prettier "^1.7.0"
+      resolve "^1.4.0"
+      source-map "^0.6.1"
+      vue-hot-reload-api "^2.2.0"
+      vue-style-loader "^3.0.0"
+      vue-template-es2015-compiler "^1.6.0"
   
-  vue-router@^2.7.0:
-    version "2.8.1"
-    resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.8.1.tgz#9833c9ee57ac83beb0269056fefee71713f20695"
+  vue-property-decorator@6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-6.0.0.tgz#bb651b293542e31db0d24f36f4b0250ef08d8515"
+    dependencies:
+      reflect-metadata "^0.1.10"
+      vue-class-component "^6.0.0"
+  
+  vue-router@3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
   
   vue-style-loader@^2.0.0:
     version "2.0.5"
@@ -5621,20 +5594,27 @@ Lockfile:
       hash-sum "^1.0.2"
       loader-utils "^1.0.2"
   
-  vue-template-compiler@^2.2.2:
-    version "2.5.13"
-    resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.13.tgz#12a2aa0ecd6158ac5e5f14d294b0993f399c3d38"
+  vue-style-loader@^3.0.0:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-3.0.3.tgz#623658f81506aef9d121cdc113a4f5c9cac32df7"
+    dependencies:
+      hash-sum "^1.0.2"
+      loader-utils "^1.0.2"
+  
+  vue-template-compiler@2.5.11:
+    version "2.5.11"
+    resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.11.tgz#7dda6905e464ff173c8e70e1dfd1769a7888b7e8"
     dependencies:
       de-indent "^1.0.2"
       he "^1.1.0"
   
-  vue-template-es2015-compiler@^1.2.2:
+  vue-template-es2015-compiler@^1.6.0:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   
-  vue@^2.3.0:
-    version "2.5.13"
-    resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.13.tgz#95bd31e20efcf7a7f39239c9aa6787ce8cf578e1"
+  vue@2.5.11:
+    version "2.5.11"
+    resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.11.tgz#80ca2657aa81f03545cd8dd5a2f55454641e6405"
   
   watchpack@^1.3.1:
     version "1.4.0"
