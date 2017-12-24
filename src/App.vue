@@ -25,7 +25,7 @@
             q-item-side(icon="remove_red_eye")
             q-item-main(label="Analyse" sublabel="Analyse your personality")
     
-      div.layout-padding.row.justify-center.items-center.non-selectable.no-pointer-events.window-height
+      div.layout-padding.row.justify-center.items-center.non-selectable.window-height
         router-view
 </template>
 
