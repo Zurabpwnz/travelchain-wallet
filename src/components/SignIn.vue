@@ -10,9 +10,9 @@
                 )
                     q-input(
                         float-label="Username"
+                        @input="updateUsername"
                         v-model="username"
                     )
-
 
                 q-field(
                     icon="fa-key"
@@ -26,52 +26,62 @@
                         v-model="password"
                     )
             q-card-actions(align="center")
-                q-btn(big color="secondary").full-width
+                q-btn.full-width(:disable="isSubbmitAllowed" big color="secondary")
                     | Sign In
 
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Component, Model, Prop, Emit } from 'vue-property-decorator'
 import { 
-    QField, 
-    QInput, 
-    QCard, 
-    QCardTitle, 
-    QCardMain, 
-    QCardActions,
-    QBtn
-    } from 'quasar'
+  QField, 
+  QInput, 
+  QCard, 
+  QCardTitle, 
+  QCardMain, 
+  QCardActions,
+  QBtn
+  } from 'quasar'
 
 @Component({
-    components: { 
-        QField, 
-        QInput, 
-        QCard,
-        QCardActions,
-        QCardMain,
-        QBtn
-    }
+  components: { 
+    QField, 
+    QInput, 
+    QCard,
+    QCardActions,
+    QCardMain,
+    QBtn
+  }
 })
 export default class SignIn extends Vue {
-    username: String = ''
-    password: String = ''
+  @Prop(Boolean)
+  isDisabled: boolean
 
-    mounted (): void {    
-    }
+  @Prop(Boolean)
+  isUsernameValid: boolean
 
-    get isUsernameValid (): boolean {
-        return true
-    }
+  @Prop(Boolean)
+  isPasswordValid: boolean
 
-    get isPasswordValid (): boolean {
-        return true
-    }
+  @Emit('usernameChanged')
+  updateUsername (username) {}
+
+  @Emit('passwordChanged')
+  updatePassword (password) {}
+
+  username: String = ''
+  password: String = ''
+
+  get isSubbmitAllowed (): boolean {
+    return this.isDisabled && !this.username && !this.password
+  }
 }
 </script>
 
 <style lang="stylus">
+.max-available-height
+  min-height: calc(100vh - 50px);
 </style>
 
 

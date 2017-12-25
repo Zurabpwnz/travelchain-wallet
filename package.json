@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "@types/lodash.debounce": "^4.0.3",
     "babel-runtime": "^6.0.0",
+    "debounce-decorator": "^1.0.6",
     "ejs": "2.5.5",
     "pug": "^2.0.0-rc.4",
+    "lodash": "^4.17.4",
     "quasar-extras": "0.0.7",
     "quasar-framework": "git+https://git@github.com/quasarframework/quasar-edge.git",
     "store": "^2.0.12",
