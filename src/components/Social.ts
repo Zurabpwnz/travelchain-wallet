@@ -2,9 +2,9 @@ import axios from 'axios';
 import AuthData from '../AuthData';
 
 export class SocialData {
-    public name:string;
-    public avatar:string;
-    private self:Social;
+    public name: string;
+    public avatar: string;
+    private self: Social;
 
     constructor(obj) { this.self = obj; }
 
@@ -129,7 +129,7 @@ export class Facebook extends Social {
             return axios.get('https://graph.facebook.com/'+ userinfo.data.id +'/picture?access_token='+ data.access_token)
         })
         .then((avatar) => {
-            this.sd.setAvatar( avatar.request.responseURL );
+            this.sd.setAvatar( avatar );
         });
     }
 }

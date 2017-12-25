@@ -5,3 +5,9 @@ declare module '*.vue' {
 
 declare module 'quasar';
 declare const __THEME;
+
+
+declare module '*' {
+    var _a: any;
+    export = _a;
+}

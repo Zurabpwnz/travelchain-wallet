@@ -1,14 +1,15 @@
-<template>
-    <div id="social-logger">
-        <p class="social-line" v-for="social in socials">
-            <span :class="socialClass(social)" @click="connectSocial(social)"></span>
-            <template v-if="social.info.name">
-                <span class="img"> <img :src="social.info.avatar"> </span>
-                <span class="name">{{ social.info.name }}</span>
-            </template>
-            <span v-else>Не привязан</span>
-        </p>
-    </div>
+<template lang="pug">
+    #social-logger
+        p.social-line(v-for="social in socials")
+            span(:class="'fa fa-' + social.name" @click="connectSocial(social)")
+            template(v-if="social.info.name")
+                span.img
+                    img(:src="social.info.avatar")
+                span.name
+                    | {{ social.info.name }}
+            
+            span(v-else)
+                | Не привязан
 </template>
 
 <script lang="ts">
@@ -27,14 +28,10 @@ export default class Data extends Vue {
 
     mounted()
     {
-        for( let social of this.socials )
-            if( social.store && store.get(social.store) && store.get(social.store).hasOwnProperty("access_token") )
+        for(let social of this.socials)
+            if(social.store && store.get(social.store) 
+               && store.get(social.store).hasOwnProperty("access_token"))
                 social.process( store.get(social.store) )
-    }
-
-    socialClass(social)
-    {
-        return "fa fa-"+ social.name
     }
 
     connectSocial(social)

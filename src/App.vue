@@ -3,7 +3,7 @@
   div#q-app 
     //-Don't drop "q-app" class
     q-layout(ref="layout" view="lHh Lpr fff" :left-class="{'bg-grey-2': true}")
-      q-toolbar.glossy(slot="header")
+      q-toolbar(slot="header" color="#2c3d75")
 
         q-btn(flat @click="$refs.layout.toggleLeft()")
           q-icon(name="menu")
@@ -25,7 +25,7 @@
             q-item-side(icon="remove_red_eye")
             q-item-main(label="Analyse" sublabel="Analyse your personality")
     
-      div.layout-padding.row.justify-center.items-center.non-selectable.window-height
+      div
         router-view
 </template>
 

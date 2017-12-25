@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-    import Welcome from '../components/Welcome.ts'
+    import Welcome from '../components/Welcome'
     export default Welcome
 </script>
 
