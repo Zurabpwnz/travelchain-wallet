@@ -1,6 +1,45 @@
-<template lang="pug">
-      div.logo(:style="position")
-        img(src="~assets/logo.svg" width="200")
+<template>
+    <q-layout>
+        <q-card>
+            <q-card-title>Nickname</q-card-title>
+        </q-card>
+
+        <q-card>
+            <q-card-title><q-icon class="head-icon" name="assignment ind" />Data Sources</q-card-title>
+            <q-card-separator />
+            <q-card-main align="center">
+                <p class="big">1/3</p>
+            </q-card-main>
+            <q-card-separator />
+            <q-card-actions align="end">
+                <q-btn flat @click="$router.push('/data')">Go to my data</q-btn>
+            </q-card-actions>
+        </q-card>
+
+        <q-card>
+            <q-card-title><q-icon class="head-icon" name="account balance wallet" />Wallet</q-card-title>
+            <q-card-separator />
+            <q-card-main align="center">
+                <p class="big">10 TT</p>
+            </q-card-main>
+            <q-card-separator />
+            <q-card-actions align="end">
+                <q-btn flat @click="$router.push('/data')">Transfer</q-btn>
+            </q-card-actions>
+        </q-card>
+
+        <q-card>
+            <q-card-title><q-icon class="head-icon" name="linear scale" />Referal link</q-card-title>
+            <q-card-separator />
+            <q-card-main>
+                <p><q-input value="https://data.travelchain.io/?r=me" readonly /></p>
+            </q-card-main>
+            <q-card-separator />
+            <q-card-actions align="end">
+                <q-btn flat @click="$router.push('/data')">How it works</q-btn>
+            </q-card-actions>
+        </q-card>
+    </q-layout>
 </template>
 
 <script lang="ts">
@@ -9,14 +48,12 @@
 </script>
 
 <style lang="stylus">
-.logo-container
-  width 255px
-  height 242px
-  perspective 800px
-  position absolute
-  top 50%
-  left 50%
-  transform translateX(-50%) translateY(-50%)
-.logo
-  transform-style preserve-3d
+.big
+    margin 1rem 0
+    font-size 2em
+
+.head-icon
+    font-size 1.5em
+    margin-top -0.25rem
+    margin-right 0.5rem
 </style>

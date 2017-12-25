@@ -38,6 +38,7 @@ export default class Social {
         this.store = storekey;
         this.url = url;
         this.redirectURL = window.location.origin;
+        // this.redirectURL = "http://data.travelchain.io/";
     }
 
     getGoto() {}

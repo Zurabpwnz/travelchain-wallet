@@ -1,17 +1,17 @@
 
 export default {
     google: {
-        id: "642023532145-38cbputj0ph4efo1l2ukgbl1cus4qscs.apps.googleusercontent.com",
-        secret: "Zd_xoeUv-XK1Hkk8lCLvZdCz"
+        id: "781263892871-nd10n213p9b1o22frmosdr0hpjqh0jn9.apps.googleusercontent.com",
+        secret: "OLV8Cy3se_QM9ruKQSKSJq3g"
     },
 
     vk: {
-        id: "6307118",
-        secret: "sESOuFdluwOmkQzhh0jN"
+        id: "6310728",
+        secret: "V70bSPFOX4GbQD9etRWq"
     },
 
     facebook: {
-        id: "1803429806393869",
-        secret: "3be572b91a70dd9a1ebf8d8b17effd94"
+        id: "382638688814527",
+        secret: "934d7dc76ce1efa8b70629590aa74dcf"
     }
 }
