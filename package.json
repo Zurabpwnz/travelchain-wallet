@@ -11,8 +11,11 @@
     "unit": "cross-env karma start test/unit/karma.conf.js --single-run"
   },
   "dependencies": {
+    "@types/lodash.debounce": "^4.0.3",
     "babel-runtime": "^6.0.0",
+    "debounce-decorator": "^1.0.6",
     "ejs": "2.5.5",
+    "lodash": "^4.17.4",
     "quasar-extras": "0.0.7",
     "quasar-framework": "git+https://git@github.com/quasarframework/quasar-edge.git",
     "vue": "^2.5.11",

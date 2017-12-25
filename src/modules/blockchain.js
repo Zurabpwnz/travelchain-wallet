@@ -96,6 +96,13 @@ export default {
     })
   },
 
+  doesUserExist (accountName) {
+      return FetchChain('getAccount', [accountName]).then(
+        () => true,
+        () => false
+      )
+  },
+
   login(accountName, password) {
     if (!accountName || !password) { return Promise.reject('Empty creditials') }
 
