@@ -1,20 +1,21 @@
 <template lang="pug">
-  sign-in-container
+  sign-in
 </template>
 
 <script lang="ts">
 import Vue from "vue"
 import Component from "vue-class-component"
-import SignInContainer from "../components/containers/SignIn.vue"
+import SignIn from "../SignIn.vue"
 
 @Component({
-  components: { SignInContainer }
+  components: { SignIn }
 })
-export default class SignInPage extends Vue {
+export default class SignInContainer extends Vue {
 
   mounted() { }
 }
 </script>
 
 <style lang="stylus">
+
 </style>

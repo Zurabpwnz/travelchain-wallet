@@ -26,11 +26,11 @@ export class SocialData {
 }
 
 export default class Social {
-    public url:string;
-    public name:string;
-    public store:string;
-    public redirectURL:string;
-    public info:object = {};
+    public url: string;
+    public name: string;
+    public store: string;
+    public redirectURL: string;
+    public info: object = {};
     protected sd = new SocialData(this);
 
     constructor(name, storekey, url) {

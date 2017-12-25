@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import store from 'store'
-import {Google, VK, Facebook} from '../components/Social'
+import {Google, VK, Facebook} from '../modules/Social'
 import Component from 'vue-class-component'
 
 @Component({})
