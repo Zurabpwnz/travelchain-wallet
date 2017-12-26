@@ -32,11 +32,16 @@ Vue.use(VueClipboard);
     }
 })
 export default class Index extends Vue {
+  copySucceeded1:boolean = false;
 
   get username () {
     return store.get('account').name
   }
 
+  get copyButtonText () {
+    return this.copySucceeded1 ? 'Copied!' : 'Copy';
+  }
+  
   get copy () {
     return `https://data.travelchain.io/?r=${this.username}`;
   }
