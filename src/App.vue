@@ -20,23 +20,27 @@
           
           q-list-header Menu
           
-          q-item(@click="$router.push('/')")
+          q-item(v-if="isAuth" @click="$router.push('/')")
             q-item-side(icon="home")
             q-item-main(label="Dashboard" sublabel="Manage your account")
           
-          q-item(@click="$router.push('/data')")
+          q-item(v-if="isAuth" @click="$router.push('/data')")
             q-item-side(icon="data_usage")
             q-item-main(label="My Data" sublabel="Publish data into the blockchain")
           
-          q-item(@click="$router.push('/purchase')")
+          q-item(v-if="isAuth" @click="$router.push('/purchase')")
             q-item-side(icon="assignment_returned")
             q-item-main(label="Buy data" sublabel="Purchase data from the blockchain")
 
-          q-item(@click="$router.push('/proposals')")
+          q-item(v-if="isAuth" @click="$router.push('/proposals')")
             q-item-side(icon="monetization_on")
             q-item-main(label="My proposals" sublabel="Proposals for the purchase of my data")  
          
-          q-item(@click="$router.push('/analyse')")
+          q-item(v-if="!isAuth" @click="$router.push('/sign-in')")
+            q-item-side(icon="fa-sign-in")
+            q-item-main(label="Login" )
+
+          q-item(v-if="isAuth" @click="logout")
             q-item-side(icon="exit_to_app")
             q-item-main(label="Log Out")
     
@@ -52,7 +56,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Blockchain from './modules/blockchain.js'
 import store from 'store'
-
+import './modules/class-component-hooks';
 import {
     dom,
     event,
@@ -86,6 +90,7 @@ import {
     }
 })
 export default class App extends Vue {
+  // TODO VUEX state
   isAuth = false;
 
   get username () {
@@ -94,11 +99,22 @@ export default class App extends Vue {
 
   mounted () {
     if (store.get('account')) {
+      // TODO VUEX check
       Blockchain.isAuth = true;
       this.isAuth = true;
     } 
+
+     Blockchain.init().catch(() => document.write('Not connected to node!'))
+  }
+
+  logout () {
+    store.remove('account')
+    store.remove('wifs')
+    location.reload()
+    // TODO VUEX logout
   }
 }
 </script>
 
-<style></style>
+<style>
+</style>

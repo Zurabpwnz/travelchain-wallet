@@ -48,11 +48,6 @@ export default class SignInContainer extends Vue {
       this.validationErrors.password.errorMessage = e
     }
   }
-
-  mounted () { 
-    Blockchain.init().catch(() => document.write('Not connected to node!'))
-  }
-
 }
 </script>
 

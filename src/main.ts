@@ -29,6 +29,10 @@ import 'quasar-extras/material-icons';
 // import 'quasar-extras/fontawesome'
 // import 'quasar-extras/animate'
 
+
+import './modules/class-component-hooks';
+
+
 Quasar.start(() => {
   /* eslint-disable no-new */
   new Vue({

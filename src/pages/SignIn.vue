@@ -12,7 +12,10 @@ import SignInContainer from "../components/containers/SignIn.vue"
 })
 export default class SignInPage extends Vue {
 
-  mounted() { }
+  mounted() { 
+  //@ts-ignore
+    this.$parent.$parent.$refs.layout.hideLeft()
+  }
 }
 </script>
 

@@ -28,4 +28,9 @@ import {
 })
 export default class Index extends Vue {
 
+  mounted () {
+    //@ts-ignore
+    // this.$parent.$parent.$refs.layout.showLeft()
+  }
+
 }

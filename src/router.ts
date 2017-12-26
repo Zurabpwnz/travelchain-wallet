@@ -16,16 +16,6 @@ Vue.use(VueRouter);
 export const AppRouter = new VueRouter({
   mode: 'history',
   routes: [
-
-    { path: '/', component: Welcome },
-    { path: '/sign-in', component: SignIn },
-    { path: '/data', component: Data }, 
-    { path: '/purchase', component: Purchase },
-    { path: '/news', component: News }, 
-    { path: '/proposals', component: Proposals},
-    { path: '/analyse', component: Analyse },
-    { path: '*', component: Error404 },
-
     { 
       path: '/', 
       name: 'dashboard',
@@ -82,12 +72,10 @@ export const AppRouter = new VueRouter({
 });
 
 AppRouter.beforeEach((to, from, next) => {
-  if (to.meta.auth && !Blockchain.isAuth) {
+  if (to.meta.auth && !store.get('account')) {
     next({name: 'login'})
-  // } else if (to.meta.hiddenForAuth && store.get('account')) {
-    // console.log(to)
-    // next({ name: 'data' });
-    // next()
+  } else if (to.meta.hiddenForAuth && store.get('account')) {
+    next({ name: 'dashboard' });
   } else {
     next()
   }
