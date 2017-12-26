@@ -22,7 +22,7 @@
             q-card-separator
             q-card-main
                 p
-                    q-input(value="https://data.travelchain.io/?r=me" readonly)#reflink
+                    q-input(:value="'https://data.travelchain.io/?r=' + username" readonly)#reflink
             q-card-separator
             q-card-actions(align="end")
                 q-btn(flat) 

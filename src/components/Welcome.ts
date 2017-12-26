@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import store from 'store'
+import '../modules/class-component-hooks';
 import {
     QLayout,
     QInput,
@@ -28,9 +30,17 @@ import {
 })
 export default class Index extends Vue {
 
-  mounted () {
-    //@ts-ignore
-    // this.$parent.$parent.$refs.layout.showLeft()
+  get username () {
+    return store.get('account').name
+  }
+
+
+  beforeRouteEnter (to, from, next) {
+    if (from.name === 'login') {
+      location.reload()
+      next()
+    }
+    next()
   }
 
 }
