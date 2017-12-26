@@ -1,22 +1,8 @@
 <template lang="pug">
     q-layout
-            q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | Buy Data
-            q-card-main
-                q-data-table(:data="table" :columns="columns")
-                    template(slot="col-message" scope="cell")
-                        span.light-paragraph
-                            | Hello
-
-                    template(slot="col-source" scope="cell")
-                        span.label.text-white.bg-primary
-                            | Audit
-                            q-tooltip
-                                | Some data
 
             q-card-title
-                q-icon.head-icon(name="assignment ind")
+                q-icon.head-icon(name="vertical_align_bottom")
                 | Purchased Data
             q-card-main
                 q-data-table(:data="table" :columns="columns")
@@ -29,6 +15,22 @@
                             | Audit
                             q-tooltip
                                 | Some data
+            q-card-title
+                q-icon.head-icon(name="search")
+                | Data Search
+            q-card-main
+                q-data-table(:data="table" :columns="columns")
+                    template(slot="col-message" scope="cell")
+                        span.light-paragraph
+                            | Hello
+
+                    template(slot="col-source" scope="cell")
+                        span.label.text-white.bg-primary
+                            | Audit
+                            q-tooltip
+                                | Some data
+
+            
 </template>
 
 <script lang="ts">

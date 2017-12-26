@@ -66,6 +66,10 @@ export default class Data extends Vue {
             field: 'type'
         },
         {
+            label: 'Amount, TT',
+            field: 'amount'
+        },
+        {
             label: 'Action',
             field: 'action'
         }
@@ -74,16 +78,19 @@ export default class Data extends Vue {
     public table = [
         {
             "username": "TheDeveloperTom",
+            "amount": 10,
             "type": "Type",
             "action": "Sell",
         },
         {
             "username": "TheDeveloperTom",
+            "amount": 10,
             "type": "Type",
             "action": "Sell",
         },
         {
             "username": "TheDeveloperTom",
+            "amount": 10,
             "type": "Type",
             "action": "Sell",
         },
