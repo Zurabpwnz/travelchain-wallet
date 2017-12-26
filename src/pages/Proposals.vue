@@ -2,7 +2,7 @@
     q-layout
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | Purchase Data
+                | My proposals
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")

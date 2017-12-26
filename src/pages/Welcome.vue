@@ -1,18 +1,6 @@
 <template lang="pug">
     q-layout
       div.row.justify-center.md-gutter
-        q-card.col-md-4.col-xs-12.col-sm-10
-            q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | Data Sources
-            q-card-separator
-            q-card-main(align="center")
-                p.big
-                    | 1/3
-            q-card-separator
-            q-card-actions(align="end")
-                q-btn(flat @click="$router.push('/data')")
-                    | Go to my data
 
         q-card.col-md-4.col-xs-12.col-sm-10
             q-card-title
@@ -39,6 +27,33 @@
             q-card-actions(align="end")
                 q-btn(flat @click="$router.push('/data')")
                     | How it works
+
+        q-card.col-md-4.col-xs-12.col-sm-10
+            q-card-title
+                q-icon.head-icon(name="assignment ind")
+                | Information Units
+            q-card-separator
+            q-card-main(align="center")
+                p.big
+                    | 0
+            q-card-separator
+            q-card-actions(align="end")
+                q-btn(flat @click="$router.push('/data')")
+                    | Go to my data
+
+        q-card.col-md-4.col-xs-12.col-sm-10
+            q-card-title
+                q-icon.head-icon(name="account balance wallet")
+                | Active proposals
+            q-card-separator
+            q-card-main(align="center")
+                p.big
+                    | 0
+            q-card-separator
+            q-card-actions(align="end")
+                q-btn(flat @click="$router.push('/data')")
+                    | Go to Proposals
+
 </template>
 
 <script lang="ts">

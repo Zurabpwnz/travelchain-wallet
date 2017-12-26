@@ -31,11 +31,11 @@
           q-item(@click="$router.push('/purchase')")
             q-item-side(icon="assessment")
             q-item-main(label="Purchase data" sublabel="Purchase data from the network")
-          
-          q-item(@click="$router.push('/analyse')")
-            q-item-side(icon="remove_red_eye")
-            q-item-main(label="Wallet" sublabel="Manage your funds")
 
+          q-item(@click="$router.push('/proposals')")
+            q-item-side(icon="assessment")
+            q-item-main(label="Proposals" sublabel="Proposals for the purchase of your data")  
+         
           q-item(@click="$router.push('/analyse')")
             q-item-side(icon="remove_red_eye")
             q-item-main(label="Log Out")
