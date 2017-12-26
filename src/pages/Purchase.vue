@@ -1,39 +1,8 @@
 <template lang="pug">
-    q-layout.row
-        q-card.col-5
+    q-layout
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | Данные
-            q-card-separator
-
-            q-card-main#social-logger
-                p
-                    q-btn.roudedtt(round color="primary")
-                        | + 1
-                        br
-                        | TT
-                    q-btn.connect(icon="phone")
-                        | Телефон
-
-                p(v-for="social in socials")
-                    template(v-if="!social.info.name")
-                        q-btn.roudedtt(round color="primary")
-                            | + 1
-                            br
-                            | TT
-
-                    q-btn.connect(:class="'fa fa-' + social.name" @click="connectSocial(social)")
-                        template(v-if="social.info.name")
-                            span
-                                | {{ social.info.name }}
-
-                        span(v-else)
-                            | Подключить
-            q-card-separator
-
-            q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | Мои данные
+                | Network Data
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")
@@ -97,26 +66,26 @@ export default class Data extends Vue {
             field: 'type'
         },
         {
-            label: 'Show',
-            field: 'show'
+            label: 'Action',
+            field: 'action'
         }
     ];
 
     public table = [
         {
-            "username": "DrGmes",
+            "username": "TheDeveloperTom",
             "type": "Type",
-            "show": "Show",
+            "action": "Buy",
         },
         {
-            "username": "DrGmes",
+            "username": "TheDeveloperTom",
             "type": "Type",
-            "show": "Show",
+            "action": "Buy",
         },
         {
-            "username": "DrGmes",
+            "username": "TheDeveloperTom",
             "type": "Type",
-            "show": "Show",
+            "action": "Buy",
         },
     ];
 

@@ -9,21 +9,36 @@
           q-icon(name="menu")
       
         q-toolbar-title TravelChain
-          div(slot="subtitle") Beta 0.1
+          div(slot="subtitle") Data Wallet
   
   
       div(slot="left")
         q-list(no-border link inset-delimiter)
-          q-list-header Essential Links
+          q-item(@click="$router.push('/')")
+            q-item-side(icon="face")
+            q-item-main(label="Nickname")
+          
+          q-list-header Menu
+          
+          q-item(@click="$router.push('/')")
+            q-item-side(icon="assessment")
+            q-item-main(label="Dashboard" sublabel="Manage your account")
+          
           q-item(@click="$router.push('/data')")
             q-item-side(icon="assessment")
-            q-item-main(label="Data" sublabel="Your data")
-          q-item(@click="$router.push('/news')")
-            q-item-side(icon="library_books")
-            q-item-main(label="News" sublabel="Some news")
+            q-item-main(label="My Data" sublabel="Publish data into the blockchain")
+          
+          q-item(@click="$router.push('/purchase')")
+            q-item-side(icon="assessment")
+            q-item-main(label="Purchase data" sublabel="Purchase data from the network")
+          
           q-item(@click="$router.push('/analyse')")
             q-item-side(icon="remove_red_eye")
-            q-item-main(label="Analyse" sublabel="Analyse your personality")
+            q-item-main(label="Wallet" sublabel="Manage your funds")
+
+          q-item(@click="$router.push('/analyse')")
+            q-item-side(icon="remove_red_eye")
+            q-item-main(label="Log Out")
     
       div
         router-view

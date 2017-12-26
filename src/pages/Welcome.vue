@@ -2,10 +2,6 @@
     q-layout
         q-card
             q-card-title
-                | Nickname
-
-        q-card
-            q-card-title
                 q-icon.head-icon(name="assignment ind")
                 | Data Sources
             q-card-separator
