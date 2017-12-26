@@ -5,8 +5,8 @@
                 q-field(
                     icon="fa-user"
                     helper="Enter your username"
-                    :error="!isUsernameValid"
-                    error-label="This username does not exist"
+                    :error="!errors.username.isValid"
+                    :error-label="errors.username.errorMessage"
                 )
                     q-input(
                         float-label="Username"
@@ -17,13 +17,15 @@
                 q-field(
                     icon="fa-key"
                     helper="Enter your password"
-                    :error="!isPasswordValid"
-                    error-label="Wrong password"
+                    :error="!errors.password.isValid"
+                    :error-label="errors.password.errorMessage"
+                    count
                 )
                     q-input(
                         type="password"
                         float-label="Password"
-                        v-model="password"
+                        v-model="password",
+                        @input="updatePassword"
                     )
             q-card-actions(align="center")
                 q-btn.full-width(
@@ -60,8 +62,8 @@ import {
   }
 })
 export default class SignIn extends Vue {
-  @Prop(Boolean)
-  isDisabled: boolean
+  @Prop(Object)
+  errors
 
   @Prop(Boolean)
   isUsernameValid: boolean
@@ -75,16 +77,18 @@ export default class SignIn extends Vue {
   @Emit('passwordChanged')
   updatePassword (password) {}
 
-  @Emit('login')
-  signIn (username = this.username, password = this.password) {}
+  signIn (username = this.username, password = this.password) {
+    this.$emit('login', this.username, this.password)
+  }
 
   username: String = ''
   password: String = ''
 
   get isSubbmitAllowed (): boolean {
-    return this.isDisabled && !this.username && !this.password
+    return !this.username || !this.password
+           || !this.errors.username.isValid
+           || !this.errors.password.isValid
   }
-  
 }
 </script>
 
