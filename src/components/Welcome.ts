@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import store from 'store'
 import '../modules/class-component-hooks';
 import {
     QLayout,
@@ -28,6 +29,11 @@ import {
     }
 })
 export default class Index extends Vue {
+
+  get username () {
+    return store.get('account').name
+  }
+
 
   beforeRouteEnter (to, from, next) {
     if (from.name === 'login') {
