@@ -40,6 +40,7 @@ export default class SignInContainer extends Vue {
   async login (username: string, password: string) {
     try {
       await Blockchain.login(username, password)
+      Blockchain.isAuth = true
       this.$router.push('/')
     } catch (e) {
       this.validationErrors.password.isValid = false
