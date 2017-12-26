@@ -10,6 +10,10 @@
       
         q-toolbar-title TravelChain
           div(slot="subtitle") Data Wallet
+
+        div
+          p.no-margin
+            | 10.000 TT
   
   
       div(slot="left")
@@ -56,6 +60,8 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Blockchain from './modules/blockchain.js'
 import store from 'store'
+import Dacom from './modules/dacom.js'
+
 import './modules/class-component-hooks';
 import {
     dom,
@@ -93,6 +99,9 @@ export default class App extends Vue {
   // TODO VUEX state
   isAuth = false;
 
+
+  userBalance = Blockchain.account
+
   get username () {
     return Blockchain.account.name || 'Username'
   }
@@ -104,7 +113,9 @@ export default class App extends Vue {
       this.isAuth = true;
     } 
 
-     Blockchain.init().catch(() => document.write('Not connected to node!'))
+     Blockchain.init()
+      // .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
+      .catch(() => document.write('Not connected to node!'))
   }
 
   logout () {
