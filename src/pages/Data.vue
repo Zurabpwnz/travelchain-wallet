@@ -2,9 +2,8 @@
     q-layout
         q-card
             q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | Basic Data-Sources
-            q-card-separator
+                q-icon.head-icon(name="work")
+                | Basic Data-Sources - Connect your basic data-sources and get TravelToken for it.
 
             q-card-main#social-logger
                 p
@@ -25,11 +24,11 @@
 
                         span(v-else)
                             | Подключить
+            
             q-card-separator
-
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | My Data
+                | My Data - your published and encrypted data. 
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")
@@ -93,7 +92,7 @@ export default class Data extends Vue {
             field: 'type'
         },
         {
-            label: 'Show',
+            label: 'Action',
             field: 'show'
         }
     ];

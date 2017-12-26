@@ -1,8 +1,8 @@
 <template lang="pug">
     q-layout
             q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | My proposals
+                q-icon.head-icon(name="vertical_align_top")
+                | My proposals - you can sell your information, if somebody request it 
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")

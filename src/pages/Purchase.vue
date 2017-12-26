@@ -3,7 +3,7 @@
 
             q-card-title
                 q-icon.head-icon(name="vertical_align_bottom")
-                | Purchased Data
+                | Purchased Data - check purchased information
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")
@@ -15,9 +15,10 @@
                             | Audit
                             q-tooltip
                                 | Some data
+            q-card-separator
             q-card-title
                 q-icon.head-icon(name="search")
-                | Data Search
+                | Data Search - find and buy information with TT
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")
