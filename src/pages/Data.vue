@@ -1,26 +1,22 @@
 <template lang="pug">
-    q-layout.row
-        q-card.col-5
+    q-layout
+        q-card
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | Данные
+                | Basic Data-Sources
             q-card-separator
 
             q-card-main#social-logger
                 p
-                    q-btn.roudedtt(round color="primary")
-                        | + 1
-                        br
-                        | TT
+                    q-btn.roudedtt(round color="green")
+                        | + 1 TT
                     q-btn.connect(icon="phone")
                         | Телефон
 
                 p(v-for="social in socials")
                     template(v-if="!social.info.name")
-                        q-btn.roudedtt(round color="primary")
-                            | + 1
-                            br
-                            | TT
+                        q-btn.roudedtt(round color="green")
+                            | + 2 TT
 
                     q-btn.connect(:class="'fa fa-' + social.name" @click="connectSocial(social)")
                         template(v-if="social.info.name")
@@ -33,7 +29,7 @@
 
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | Мои данные
+                | My Data
             q-card-main
                 q-data-table(:data="table" :columns="columns")
                     template(slot="col-message" scope="cell")

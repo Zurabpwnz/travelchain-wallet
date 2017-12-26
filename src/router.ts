@@ -5,6 +5,7 @@ import Analyse from './pages/Analyse.vue';
 import Data from './pages/Data.vue';
 import News from './pages/News.vue';
 import Purchase from './pages/Purchase.vue';
+import Proposals from './pages/Proposals.vue';
 import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
 import Blockchain from './modules/blockchain';
@@ -15,6 +16,16 @@ Vue.use(VueRouter);
 export const AppRouter = new VueRouter({
   mode: 'history',
   routes: [
+
+    { path: '/', component: Welcome },
+    { path: '/sign-in', component: SignIn },
+    { path: '/data', component: Data }, 
+    { path: '/purchase', component: Purchase },
+    { path: '/news', component: News }, 
+    { path: '/proposals', component: Proposals},
+    { path: '/analyse', component: Analyse },
+    { path: '*', component: Error404 },
+
     { 
       path: '/', 
       name: 'dashboard',
