@@ -7,22 +7,21 @@
 
             q-card-main#social-logger
                 p
-                    q-btn.roudedtt(round color="green")
-                        | + 1 TT
                     q-btn.connect(icon="phone")
-                        | Телефон
+                        span.cost
+                            | + 1 TT
+                        span.text
+                            | Телефон
 
                 p(v-for="social in socials")
-                    template(v-if="!social.info.name")
-                        q-btn.roudedtt(round color="green")
-                            | + 2 TT
-
-                    q-btn.connect(:class="'fa fa-' + social.name" @click="connectSocial(social)")
+                    q-btn.connect(@click="connectSocial(social)")
+                        template(v-if="!social.info.name")
+                            span.cost
+                                | + 2 TT
+                        span(:class="'fa fa-' + social.name")
                         template(v-if="social.info.name")
-                            span
-                                | {{ social.info.name }}
-
-                        span(v-else)
+                            | {{ social.info.name }}
+                        span.text(v-else)
                             | Подключить
             
             q-card-separator
@@ -77,9 +76,9 @@ import {
 })
 export default class Data extends Vue {
     public socials = [
-        new Google(),
         new VK(),
-        new Facebook()
+        new Facebook(),
+        new Google(),
     ];
 
     public columns = [
@@ -161,50 +160,3 @@ export default class Data extends Vue {
     }
 }
 </script>
-
-<style lang="stylus">
-    social-facebook-back = #3f5d9b
-    social-google-back = #db4437
-    social-vk-back = #5281b7
-
-    hoverize(color)
-        background-color color
-
-
-    .head-icon
-        font-size 1.5em
-        margin-top -0.25rem
-        margin-right 0.5rem
-
-    #social-logger
-        .q-btn
-            &.connect
-                min-width 180px
-            &.roudedtt
-                height 45px
-                width 45px
-                margin-right 1rem
-                font-size 0.8em
-                line-height 1
-
-        .fa:before
-            width 40px
-            min-height 36px
-            margin -16px 15px -16px -16px
-            justify-content center
-            align-items center
-            display flex
-            color #fff
-
-        span
-            font-family 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
-
-        .fa-google-plus:before
-            hoverize(social-google-back)
-
-        .fa-facebook:before
-            hoverize(social-facebook-back)
-
-        .fa-vk:before
-            hoverize(social-vk-back)
-</style>
