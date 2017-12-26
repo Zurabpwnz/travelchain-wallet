@@ -23,7 +23,7 @@ export const AppRouter = new VueRouter({
     { path: '/news', component: News }, 
     { path: '/proposals', component: Proposals},
     { path: '/analyse', component: Analyse },
-    { path: '*', component: Error404 }
+    { path: '*', component: Error404 },
 
     { 
       path: '/', 
