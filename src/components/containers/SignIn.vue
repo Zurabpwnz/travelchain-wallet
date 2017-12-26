@@ -1,9 +1,8 @@
 <template lang="pug">
   sign-in(
-    :is-username-valid="isUsernameValid", 
-    :is-password-valid="isPasswordValid", 
-    :isDisabled="true",
+    :errors="validationErrors",
     @usernameChanged="validateUsername",
+    @passwordChanged="validatePassword"
     @login="login"
   )
 </template>
@@ -19,22 +18,37 @@ import Blockchain from '../../modules/blockchain.js'
   components: { SignIn }
 })
 export default class SignInContainer extends Vue {
-  isUsernameValid: boolean = false
-  isPasswordValid: boolean = false
+  validationErrors = {
+    username: { isValid: true, errorMessage: 'User does not exists' },
+    password: { isValid: true, errorMessage: 'Wrong Password' }
+  }
 
   async validateUsername (username: string = '') {
-    this.isUsernameValid = await Blockchain.doesUserExist(username)
+    this.validationErrors.username.isValid = await Blockchain.doesUserExist(username)
   }
 
   validatePassword (password): void {
-    this.isPasswordValid = false
+    if (password.length < 12) {
+      this.validationErrors.password.isValid = false
+      this.validationErrors.password.errorMessage = 'Password must be at least 12 symbols'
+    } else {
+     this.validationErrors.password.isValid = true
+     this.validationErrors.password.errorMessage = ''
+    }
   }
 
-  login (username, password): void {
-    Blockchain.login(username, password)
+  async login (username: string, password: string) {
+    try {
+      await Blockchain.login(username, password)
+      Blockchain.isAuth = true
+      this.$router.push('/')
+    } catch (e) {
+      this.validationErrors.password.isValid = false
+      this.validationErrors.password.errorMessage = e
+    }
   }
 
-  mounted() { 
+  mounted () { 
     Blockchain.init().catch(() => document.write('Not connected to node!'))
   }
 
