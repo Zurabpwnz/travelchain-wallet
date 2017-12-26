@@ -9,8 +9,9 @@ require(`quasar/dist/quasar.${__THEME}.css`);
 // Uncomment the following lines if you need IE11/Edge support
 require(`quasar/dist/quasar.ie`);
 require(`quasar/dist/quasar.ie.${__THEME}.css`);
+require(`./assets/stylesheets/app.styl`);
 
-import Vue from 'vue';
+import Vue, {Component} from 'vue';
 import Quasar from 'quasar';
 import router from './router';
 import app from './App.vue';
@@ -38,6 +39,6 @@ Quasar.start(() => {
   new Vue({
     el: '#q-app',
     router,
-    render: h => h(app)
+    render: h => h(app as Component)
   });
 });
