@@ -21,23 +21,23 @@
           q-list-header Menu
           
           q-item(@click="$router.push('/')")
-            q-item-side(icon="assessment")
+            q-item-side(icon="home")
             q-item-main(label="Dashboard" sublabel="Manage your account")
           
           q-item(@click="$router.push('/data')")
-            q-item-side(icon="assessment")
+            q-item-side(icon="data_usage")
             q-item-main(label="My Data" sublabel="Publish data into the blockchain")
           
           q-item(@click="$router.push('/purchase')")
-            q-item-side(icon="assessment")
-            q-item-main(label="Purchase data" sublabel="Purchase data from the network")
+            q-item-side(icon="assignment_returned")
+            q-item-main(label="Buy data" sublabel="Purchase data from the blockchain")
 
           q-item(@click="$router.push('/proposals')")
-            q-item-side(icon="assessment")
-            q-item-main(label="Proposals" sublabel="Proposals for the purchase of your data")  
+            q-item-side(icon="monetization_on")
+            q-item-main(label="My proposals" sublabel="Proposals for the purchase of my data")  
          
           q-item(@click="$router.push('/analyse')")
-            q-item-side(icon="remove_red_eye")
+            q-item-side(icon="exit_to_app")
             q-item-main(label="Log Out")
     
       div

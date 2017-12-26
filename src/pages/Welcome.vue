@@ -22,16 +22,18 @@
             q-card-separator
             q-card-main
                 p
-                    q-input(value="https://data.travelchain.io/?r=me" readonly)
+                    q-input(value="https://data.travelchain.io/?r=me" readonly)#reflink
             q-card-separator
             q-card-actions(align="end")
+                q-btn(flat) 
+                    | Copy
                 q-btn(flat @click="$router.push('/data')")
                     | How it works
 
         q-card.col-md-4.col-xs-12.col-sm-10
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | Information Units
+                | Units of Information
             q-card-separator
             q-card-main(align="center")
                 p.big
@@ -57,8 +59,15 @@
 </template>
 
 <script lang="ts">
+
+    function copy(){
+        alert("copy");
+    };
+
     import Welcome from '../components/Welcome'
     export default Welcome
+
+    
 </script>
 
 <style lang="stylus">
