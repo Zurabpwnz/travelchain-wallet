@@ -8,6 +8,7 @@ import Purchase from './pages/Purchase.vue';
 import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
 import Blockchain from './modules/blockchain';
+import store from 'store'
 
 Vue.use(VueRouter);
 
@@ -24,11 +25,14 @@ export const AppRouter = new VueRouter({
     },
     { path: '/sign-in',
       name: 'login',
-      component: SignIn
+      component: SignIn,
+      meta: {
+        hiddenForAuth: true
+      }
     },
     { 
       path: '/data', 
-      name: 'name',
+      name: 'data',
       component: Data,
       meta: {
         auth: true
@@ -69,6 +73,10 @@ export const AppRouter = new VueRouter({
 AppRouter.beforeEach((to, from, next) => {
   if (to.meta.auth && !Blockchain.isAuth) {
     next({name: 'login'})
+  // } else if (to.meta.hiddenForAuth && store.get('account')) {
+    // console.log(to)
+    // next({ name: 'data' });
+    // next()
   } else {
     next()
   }

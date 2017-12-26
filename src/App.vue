@@ -14,9 +14,9 @@
   
       div(slot="left")
         q-list(no-border link inset-delimiter)
-          q-item(@click="$router.push('/')")
+          q-item(v-if="isAuth" @click="$router.push('/')")
             q-item-side(icon="face")
-            q-item-main(label="Nickname")
+            q-item-main(:label="username")
           
           q-list-header Menu
           
@@ -50,6 +50,9 @@
  */
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import Blockchain from './modules/blockchain.js'
+import store from 'store'
+
 import {
     dom,
     event,
@@ -83,6 +86,18 @@ import {
     }
 })
 export default class App extends Vue {
+  isAuth = false;
+
+  get username () {
+    return Blockchain.account.name || 'Username'
+  }
+
+  mounted () {
+    if (store.get('account')) {
+      Blockchain.isAuth = true;
+      this.isAuth = true;
+    } 
+  }
 }
 </script>
 

@@ -23,6 +23,7 @@ export default class SignInContainer extends Vue {
     password: { isValid: true, errorMessage: 'Wrong Password' }
   }
 
+  // @Debounce(500)
   async validateUsername (username: string = '') {
     this.validationErrors.username.isValid = await Blockchain.doesUserExist(username)
   }
@@ -56,5 +57,4 @@ export default class SignInContainer extends Vue {
 </script>
 
 <style lang="stylus">
-
 </style>

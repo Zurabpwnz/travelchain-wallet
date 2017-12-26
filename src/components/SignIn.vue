@@ -77,7 +77,8 @@ export default class SignIn extends Vue {
   @Emit('passwordChanged')
   updatePassword (password) {}
 
-  signIn (username = this.username, password = this.password) {
+  // TODO wrap in Emit decorator
+  signIn () {
     this.$emit('login', this.username, this.password)
   }
 
@@ -85,9 +86,10 @@ export default class SignIn extends Vue {
   password: String = ''
 
   get isSubbmitAllowed (): boolean {
-    return !this.username || !this.password
-           || !this.errors.username.isValid
-           || !this.errors.password.isValid
+    return !this.username 
+          || !this.password
+          || !this.errors.username.isValid
+          || !this.errors.password.isValid
   }
 }
 </script>
