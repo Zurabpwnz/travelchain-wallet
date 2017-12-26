@@ -3,7 +3,8 @@
     :is-username-valid="isUsernameValid", 
     :is-password-valid="isPasswordValid", 
     :isDisabled="true",
-    @usernameChanged="validateUsername"
+    @usernameChanged="validateUsername",
+    @login="login"
   )
 </template>
 
@@ -12,7 +13,7 @@ import Vue from "vue"
 import { Component, Model, Prop } from 'vue-property-decorator'
 import SignIn from "../SignIn.vue"
 import Blockchain from '../../modules/blockchain.js'
-import { debounce } from 'quasar'
+// import Debounce from 'debounce-decorator'
 
 @Component({
   components: { SignIn }
@@ -21,16 +22,16 @@ export default class SignInContainer extends Vue {
   isUsernameValid: boolean = false
   isPasswordValid: boolean = false
 
-  validateUsername (username) {
-    debounce(async () => {
-       this.isUsernameValid  = await Blockchain.doesUserExist(username)
-       console.log(this.isUsernameValid)
-    }, 500).call(this)
-    
+  async validateUsername (username: string = '') {
+    this.isUsernameValid = await Blockchain.doesUserExist(username)
   }
 
   validatePassword (password): void {
     this.isPasswordValid = false
+  }
+
+  login (username, password): void {
+    Blockchain.login(username, password)
   }
 
   mounted() { 

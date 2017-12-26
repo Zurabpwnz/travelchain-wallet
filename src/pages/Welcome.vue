@@ -1,6 +1,7 @@
 <template lang="pug">
     q-layout
-        q-card
+      div.row.justify-center.md-gutter
+        q-card.col-md-4.col-xs-12.col-sm-10
             q-card-title
                 q-icon.head-icon(name="assignment ind")
                 | Data Sources
@@ -13,7 +14,7 @@
                 q-btn(flat @click="$router.push('/data')")
                     | Go to my data
 
-        q-card
+        q-card.col-md-4.col-xs-12.col-sm-10
             q-card-title
                 q-icon.head-icon(name="account balance wallet")
                 | Wallet
@@ -26,7 +27,7 @@
                 q-btn(flat @click="$router.push('/data')")
                     | Transfer
 
-        q-card
+        q-card.col-md-4.col-xs-12.col-sm-10
             q-card-title
                 q-icon.head-icon(name="linear scale")
                 | Referal link

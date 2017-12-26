@@ -98,12 +98,15 @@ export default {
 
   doesUserExist (accountName) {
       return FetchChain('getAccount', [accountName]).then(
-        () => true,
-        () => false
+        () => {console.log('true'); return true},
+        () => {console.log('false'); return false}
       )
   },
 
   login(accountName, password) {
+
+console.log('login inside start')
+console.log(accountName, password)
     if (!accountName || !password) { return Promise.reject('Empty creditials') }
 
     return new Promise((resolve, reject) => {

@@ -26,7 +26,12 @@
                         v-model="password"
                     )
             q-card-actions(align="center")
-                q-btn.full-width(:disable="isSubbmitAllowed" big color="secondary")
+                q-btn.full-width(
+                  @click="signIn()"
+                  :disable="isSubbmitAllowed" 
+                  big 
+                  color="secondary"
+                  )
                     | Sign In
 
 </template>
@@ -65,10 +70,13 @@ export default class SignIn extends Vue {
   isPasswordValid: boolean
 
   @Emit('usernameChanged')
-  updateUsername (username) {}
+  updateUsername (username) {}  
 
   @Emit('passwordChanged')
   updatePassword (password) {}
+
+  @Emit('login')
+  signIn (username = this.username, password = this.password) {}
 
   username: String = ''
   password: String = ''
@@ -76,6 +84,7 @@ export default class SignIn extends Vue {
   get isSubbmitAllowed (): boolean {
     return this.isDisabled && !this.username && !this.password
   }
+  
 }
 </script>
 
