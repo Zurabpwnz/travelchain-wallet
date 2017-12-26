@@ -64,9 +64,14 @@ export const AppRouter = new VueRouter({
       }
     },
     { 
+      path: '/proposals',
+      name: 'proposals',
+      component: Proposals
+    },
+    {
       path: '*',
       name: 'error',
-      component: Error404 
+      component: Error404
     }
   ]
 });
