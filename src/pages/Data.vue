@@ -1,15 +1,47 @@
 <template lang="pug">
-    #social-logger
-        p.social-line(v-for="social in socials")
-            span(:class="'fa fa-' + social.name" @click="connectSocial(social)")
-            template(v-if="social.info.name")
-                span.img
-                    img(:src="social.info.avatar")
-                span.name
-                    | {{ social.info.name }}
-            
-            span(v-else)
-                | Не привязан
+    q-layout
+        q-card
+            q-card-title
+                q-icon.head-icon(name="assignment ind")
+                | Данные
+            q-card-separator
+
+            q-card-main#social-logger
+                p
+                    q-btn.roudedtt(round color="primary")
+                        | + 1
+                        br
+                        | TT
+                    q-btn.connect(icon="phone")
+                        | Телефон
+
+                p(v-for="social in socials")
+                    template(v-if="!social.info.name")
+                        q-btn.roudedtt(round color="primary")
+                            | + 1
+                            br
+                            | TT
+
+                    q-btn.connect(:class="'fa fa-' + social.name" @click="connectSocial(social)")
+                        template(v-if="social.info.name")
+                            span
+                                | {{ social.info.name }}
+
+                        span(v-else)
+                            | Подключить
+            q-card-separator
+
+            q-card-main
+                q-data-table(:data="table" :columns="columns")
+                    template(slot="col-message" scope="cell")
+                        span.light-paragraph
+                            | Hello
+
+                    template(slot="col-source" scope="cell")
+                        span.label.text-white.bg-primary
+                            | Audit
+                            q-tooltip
+                                | Some data
 </template>
 
 <script lang="ts">
@@ -17,14 +49,73 @@ import Vue from 'vue'
 import store from 'store'
 import {Google, VK, Facebook} from '../modules/Social'
 import Component from 'vue-class-component'
+import {
+    QLayout,
+    QInput,
+    QCard,
+    QCardMain,
+    QCardTitle,
+    QCardActions,
+    QCardSeparator,
+    QDataTable,
+    QIcon,
+    QBtn,
+} from 'quasar';
 
-@Component({})
+@Component({
+    name: 'appdata',
+    components: {
+        QLayout,
+        QInput,
+        QCard,
+        QCardMain,
+        QCardTitle,
+        QCardActions,
+        QCardSeparator,
+        QDataTable,
+        QIcon,
+        QBtn,
+    }
+})
 export default class Data extends Vue {
     public socials = [
         new Google(),
         new VK(),
         new Facebook()
-    ]
+    ];
+
+    public columns = [
+        {
+            label: 'Username',
+            field: 'username'
+        },
+        {
+            label: 'Type',
+            field: 'type'
+        },
+        {
+            label: 'Show',
+            field: 'show'
+        }
+    ];
+
+    public table = [
+        {
+            "username": "DrGmes",
+            "type": "Type",
+            "show": "Show",
+        },
+        {
+            "username": "TheDeveloperTom",
+            "type": "Type",
+            "show": "Show",
+        },
+        {
+            "username": "DarkSun",
+            "type": "Type",
+            "show": "Show",
+        },
+    ];
 
     mounted()
     {
@@ -81,49 +172,41 @@ export default class Data extends Vue {
     hoverize(color)
         background-color color
 
+
+    .head-icon
+        font-size 1.5em
+        margin-top -0.25rem
+        margin-right 0.5rem
+
     #social-logger
-        display flex
-        flex-wrap wrap
-        flex-direction column
+        .q-btn
+            &.connect
+                min-width 180px
+            &.roudedtt
+                height 45px
+                width 45px
+                margin-right 1rem
+                font-size 0.8em
+                line-height 1
 
-        .social-line
-            min-height 4em
-            display flex
+        .fa:before
+            width 40px
+            min-height 36px
+            margin -16px 15px -16px -16px
+            justify-content center
             align-items center
+            display flex
+            color #fff
 
-            span.fa
-                width 2.5em
-                height 2.5em
-                margin-right 0.5em
-                display flex
-                align-items center
-                justify-content center
-                transition 200ms background
-                border-radius 3px
-                cursor pointer
-                color #fff
+        span
+            font-family 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
 
-                &.fa-google-plus
-                    hoverize(social-google-back)
+        .fa-google-plus:before
+            hoverize(social-google-back)
 
-                &.fa-facebook
-                    hoverize(social-facebook-back)
+        .fa-facebook:before
+            hoverize(social-facebook-back)
 
-                &.fa-vk
-                    hoverize(social-vk-back)
-
-            span.img
-                width 3em
-                height 3em
-                overflow hidden
-                border-radius 50%
-                margin-left 2em
-                margin-right 1em
-                box-shadow #000 1px 1px 4px -1px
-
-                img
-                    width 100%
-                    height 100%
-                    object-fit cover
-                    object-position 50% 0
+        .fa-vk:before
+            hoverize(social-vk-back)
 </style>
