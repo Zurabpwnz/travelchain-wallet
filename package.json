@@ -24,6 +24,7 @@
     "quasar-framework": "git+https://git@github.com/quasarframework/quasar-edge.git",
     "store": "^2.0.12",
     "vue": "^2.5.11",
+    "vue-clipboard2": "^0.0.8",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1"
   },

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import store from 'store'
+import VueClipboard from 'vue-clipboard2'
 import '../modules/class-component-hooks';
 import {
     QLayout,
@@ -13,6 +14,8 @@ import {
     QIcon,
     QBtn,
 } from 'quasar';
+
+Vue.use(VueClipboard);
 
 @Component({
     name: 'welcome',
@@ -34,6 +37,9 @@ export default class Index extends Vue {
     return store.get('account').name
   }
 
+  get copy () {
+    return `https://data.travelchain.io/?r=${this.username}`;
+  }
 
   beforeRouteEnter (to, from, next) {
     if (from.name === 'login') {
