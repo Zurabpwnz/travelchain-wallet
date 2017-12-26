@@ -75,17 +75,17 @@ export default class Data extends Vue {
         {
             "username": "TheDeveloperTom",
             "type": "Type",
-            "action": "Buy",
+            "action": "Sell",
         },
         {
             "username": "TheDeveloperTom",
             "type": "Type",
-            "action": "Buy",
+            "action": "Sell",
         },
         {
             "username": "TheDeveloperTom",
             "type": "Type",
-            "action": "Buy",
+            "action": "Sell",
         },
     ];
 
