@@ -3,17 +3,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+    import Vue from 'vue'
+    import Component from 'vue-class-component'
 
-@Component({})
-export default class Data extends Vue {
-  
-}
+    @Component({})
+    export default class Analyse extends Vue {
+
+    }
 </script>
-
-<style lang="stylus">
-
-</style>
-
-

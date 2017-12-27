@@ -32,52 +32,28 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import Quasar from 'quasar';
-import Component from 'vue-class-component';
-import {
-    QBtn,
-    QIcon
-} from 'quasar';
+  import Vue from 'vue';
+  import Quasar from 'quasar';
+  import Component from 'vue-class-component';
+  import {
+      QBtn,
+      QIcon
+  } from 'quasar';
 
-@Component({
-    name: 'error404',
-    components: {
-        QBtn,
-        QIcon
-    }
-})
-export default class Error404 extends Vue {
+  @Component({
+      name: 'error404',
+      components: {
+          QBtn,
+          QIcon
+      }
+  })
+  export default class Error404 extends Vue {
 
-    get canGoBack(): boolean { return window.history.length > 1; }
+      get canGoBack(): boolean { return window.history.length > 1; }
 
-    goBack(): void {
-        window.history.go(-1);
-    }
+      goBack(): void {
+          window.history.go(-1);
+      }
 
-}
+  }
 </script>
-
-<style lang="stylus">
-.error-page
-  .error-code
-    height 50vh
-    width 100%
-    padding-top 15vh
-    @media (orientation: landscape) { 
-      font-size 30vw
-    }
-    @media (orientation: portrait) { 
-      font-size 30vh
-    }
-    color rgba(255, 255, 255, .2)
-    overflow hidden
-  .error-card
-    border-radius 2px
-    margin-top -50px
-    width 80vw
-    max-width 600px
-    padding 25px
-    > i
-      font-size 5rem
-</style>

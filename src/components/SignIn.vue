@@ -39,64 +39,57 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Model, Prop, Emit } from 'vue-property-decorator'
-import { 
-  QField, 
-  QInput, 
-  QCard, 
-  QCardTitle, 
-  QCardMain, 
-  QCardActions,
-  QBtn
-  } from 'quasar'
+    import Vue from 'vue'
+    import { Component, Model, Prop, Emit } from 'vue-property-decorator'
+    import {
+      QField,
+      QInput,
+      QCard,
+      QCardTitle,
+      QCardMain,
+      QCardActions,
+      QBtn
+      } from 'quasar'
 
-@Component({
-  components: { 
-    QField, 
-    QInput, 
-    QCard,
-    QCardActions,
-    QCardMain,
-    QBtn
-  }
-})
-export default class SignIn extends Vue {
-  @Prop(Object)
-  errors
+    @Component({
+      components: {
+        QField,
+        QInput,
+        QCard,
+        QCardActions,
+        QCardMain,
+        QBtn
+      }
+    })
+    export default class SignIn extends Vue {
+      @Prop(Object)
+      errors
 
-  @Prop(Boolean)
-  isUsernameValid: boolean
+      @Prop(Boolean)
+      isUsernameValid: boolean
 
-  @Prop(Boolean)
-  isPasswordValid: boolean
+      @Prop(Boolean)
+      isPasswordValid: boolean
 
-  @Emit('usernameChanged')
-  updateUsername (username) {}  
+      @Emit('usernameChanged')
+      updateUsername (username) {}
 
-  @Emit('passwordChanged')
-  updatePassword (password) {}
+      @Emit('passwordChanged')
+      updatePassword (password) {}
 
-  // TODO wrap in Emit decorator
-  signIn () {
-    this.$emit('login', this.username, this.password)
-  }
+      // TODO wrap in Emit decorator
+      signIn () {
+        this.$emit('login', this.username, this.password)
+      }
 
-  username: String = ''
-  password: String = ''
+      username: String = ''
+      password: String = ''
 
-  get isSubbmitAllowed (): boolean {
-    return !this.username 
-          || !this.password
-          || !this.errors.username.isValid
-          || !this.errors.password.isValid
-  }
-}
+      get isSubbmitAllowed (): boolean {
+        return !this.username
+              || !this.password
+              || !this.errors.username.isValid
+              || !this.errors.password.isValid
+      }
+    }
 </script>
-
-<style lang="stylus">
-.max-available-height
-  min-height: calc(100vh - 50px);
-</style>
-
-

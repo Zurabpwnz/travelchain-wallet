@@ -59,20 +59,6 @@
 </template>
 
 <script lang="ts">
-
     import Welcome from '../components/Welcome'
     export default Welcome
-
-    
 </script>
-
-<style lang="stylus">
-.big
-    margin 1rem 0
-    font-size 2em
-
-.head-icon
-    font-size 1.5em
-    margin-top -0.25rem
-    margin-right 0.5rem
-</style>
