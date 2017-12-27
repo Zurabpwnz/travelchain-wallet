@@ -25,8 +25,8 @@
                     q-input(:value="'https://data.travelchain.io/?r=' + username" readonly)#reflink
             q-card-separator
             q-card-actions(align="end")
-                q-btn(flat) 
-                    | Copy
+                q-btn(@click="copySucceeded1 = true" v-clipboard:copy="copy" flat) 
+                    | {{ copyButtonText }}
                 q-btn(flat @click="$router.push('/data')")
                     | How it works
 
@@ -59,10 +59,6 @@
 </template>
 
 <script lang="ts">
-
-    function copy(){
-        alert("copy");
-    };
 
     import Welcome from '../components/Welcome'
     export default Welcome
