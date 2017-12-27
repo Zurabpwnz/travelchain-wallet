@@ -12,7 +12,6 @@
 
 <script lang="ts">
     import Vue from "vue"
-    import { QSideLink } from 'quasar'
     import { Component, Model, Prop } from 'vue-property-decorator'
     import SignIn from "../SignIn.vue"
     import Blockchain from '../../modules/blockchain.js'

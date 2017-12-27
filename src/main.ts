@@ -33,6 +33,8 @@ import 'quasar-extras/material-icons';
 
 import './modules/class-component-hooks';
 
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
 
 Quasar.start(() => {
   /* eslint-disable no-new */
