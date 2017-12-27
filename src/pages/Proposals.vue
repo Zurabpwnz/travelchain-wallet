@@ -5,15 +5,11 @@
                 | My proposals - you can sell your information, if somebody request it 
             q-card-main
                 q-data-table(:data="table" :columns="columns")
-                    template(slot="col-message" scope="cell")
-                        span.light-paragraph
-                            | Hello
-
-                    template(slot="col-source" scope="cell")
-                        span.label.text-white.bg-primary
-                            | Audit
-                            q-tooltip
-                                | Some data
+                    template(slot="col-action" scope="cell")
+                        q-btn(color="red")
+                            | Decline
+                        q-btn(color="green")
+                            | Accept
 </template>
 
 <script lang="ts">

@@ -27,18 +27,13 @@
             q-card-separator
             q-card-title
                 q-icon.head-icon(name="assignment ind")
-                | My Data - your published and encrypted data. 
+                | My Data - your published and encrypted data.
+
             q-card-main
                 q-data-table(:data="table" :columns="columns")
-                    template(slot="col-message" scope="cell")
-                        span.light-paragraph
-                            | Hello
-
-                    template(slot="col-source" scope="cell")
-                        span.label.text-white.bg-primary
-                            | Audit
-                            q-tooltip
-                                | Some data
+                    template(slot="col-action" scope="cell")
+                        q-btn(color="blue")
+                            | {{ cell.data }}
 </template>
 
 <script lang="ts">
@@ -92,7 +87,7 @@ export default class Data extends Vue {
         },
         {
             label: 'Action',
-            field: 'show'
+            field: 'action'
         }
     ];
 
@@ -100,17 +95,17 @@ export default class Data extends Vue {
         {
             "username": "DrGmes",
             "type": "Type",
-            "show": "Show",
+            "action": "Show",
         },
         {
             "username": "DrGmes",
             "type": "Type",
-            "show": "Show",
+            "action": "Show",
         },
         {
             "username": "DrGmes",
             "type": "Type",
-            "show": "Show",
+            "action": "Show",
         },
     ];
 
