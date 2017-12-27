@@ -35,6 +35,7 @@
                   color="secondary"
                   )
                     | Sign In
+            slot(name="footer")   
 
 </template>
 

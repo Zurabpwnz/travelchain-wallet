@@ -50,7 +50,7 @@
             q-item-side(icon="exit_to_app")
             q-item-main(label="Log Out")
     
-      div
+      div(:class="'page-'+ getPage()")
         router-view
 </template>
 
@@ -106,6 +106,10 @@ export default class App extends Vue {
 
   get username () {
     return Blockchain.account.name || 'Username'
+  }
+
+  getPage() {
+      return window.location.pathname.substring(1)
   }
 
   mounted () {

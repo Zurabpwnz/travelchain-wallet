@@ -38,10 +38,16 @@ export default class Social {
         this.store = storekey;
         this.url = url;
         this.redirectURL = window.location.origin;
-        // this.redirectURL = "http://data.travelchain.io/";
     }
 
-    getGoto() {}
+    getGoto(pars) {
+        let goto = new Array();
+        Object.keys(pars).forEach(function(key)
+        {
+            goto.push( key + '=' + pars[key] );
+        });
+        return this.url + '?' + goto.join('&');
+    }
     process(data) {}
 }
 
@@ -51,17 +57,16 @@ export class Google extends Social {
     }
 
     getGoto() {
-        let goto = this.url +'?';
-        goto += 'client_id='+ AuthData.google.id +'&';
-        goto += 'redirect_uri='+ encodeURIComponent(this.redirectURL) +'&';
-        goto += 'response_type=token' +'&';
-        goto += 'scope='+ encodeURIComponent('profile email') +'&';
-
-        return goto;
+        return super.getGoto({
+            response_type: 'token',
+            client_id: AuthData.google.id,
+            redirect_uri: encodeURIComponent(this.redirectURL),
+            scope: encodeURIComponent('profile email'),
+        });
     }
 
     process(data) {
-        axios.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+ data.access_token)
+        axios.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + data.access_token)
         .then((userinfo) => {
             this.sd.setName( userinfo.data.name );
             this.sd.setAvatar( userinfo.data.picture );
@@ -75,14 +80,13 @@ export class VK extends Social {
     }
 
     getGoto() {
-        let goto = this.url +'?';
-        goto += 'client_id='+ AuthData.vk.id +'&';
-        goto += 'redirect_uri='+ encodeURIComponent(this.redirectURL) +'&';
-        goto += 'response_type=token' +'&';
-        goto += 'scope=4525214' +'&';
-        goto += 'revoke=1' +'&';
-
-        return goto;
+        return super.getGoto({
+            response_type: 'token',
+            client_id: AuthData.vk.id,
+            redirect_uri: encodeURIComponent(this.redirectURL),
+            scope: 4525214,
+            revoke: 1
+        });
     }
 
     process(data) {
@@ -94,11 +98,13 @@ export class VK extends Social {
             'photo'
         ].join(',');
 
-        axios.get('https://api.vk.com/method/users.get?fields='+ fields +'&access_token='+ data.access_token, {
-
+        axios.get('https://api.vk.com/method/users.get?fields=' + fields + '&access_token=' + data.access_token, {
+            headers: {
+                // 'Allow-Control-Allow-Origin': "*"
+            }
         })
         .then((userinfo) => {
-            this.sd.setName( userinfo.data.response[0].first_name +' '+ userinfo.data.response[0].last_name );
+            this.sd.setName( userinfo.data.response[0].first_name + ' ' + userinfo.data.response[0].last_name );
             this.sd.setAvatar( userinfo.data.response[0].photo );
         });
     }
@@ -110,12 +116,11 @@ export class Facebook extends Social {
     }
 
     getGoto() {
-        let goto = this.url +'?';
-        goto += 'client_id='+ AuthData.facebook.id +'&';
-        goto += 'redirect_uri='+ encodeURIComponent(this.redirectURL) +'&';
-        goto += 'response_type=token' +'&';
-
-        return goto;
+        return super.getGoto({
+            response_type: 'token',
+            client_id: AuthData.facebook.id,
+            redirect_uri: encodeURIComponent(this.redirectURL),
+        });
     }
 
     process(data) {
@@ -124,10 +129,10 @@ export class Facebook extends Social {
             'name'
         ].join(',');
 
-        axios.get('https://graph.facebook.com/me?fields='+ fields +'&access_token='+ data.access_token)
+        axios.get('https://graph.facebook.com/me?fields=' + fields + '&access_token=' + data.access_token)
         .then((userinfo) => {
             this.sd.setName( userinfo.data.name );
-            return axios.get('https://graph.facebook.com/'+ userinfo.data.id +'/picture?access_token='+ data.access_token)
+            return axios.get('https://graph.facebook.com/' + userinfo.data.id + '/picture?access_token=' + data.access_token);
         })
         .then((avatar) => {
             this.sd.setAvatar( avatar );
