@@ -12,8 +12,8 @@ require(`quasar/dist/quasar.ie.${__THEME}.css`);
 require(`./assets/stylesheets/app.styl`);
 
 import Vue, {Component} from 'vue';
-import Quasar from 'quasar';
 import router from './router';
+import Quasar from 'quasar';
 import app from './App.vue';
 
 Vue.config.productionTip = false;

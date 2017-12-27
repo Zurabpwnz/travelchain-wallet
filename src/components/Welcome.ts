@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import store from 'store'
-import VueClipboard from 'vue-clipboard2'
+import store from 'store';
+import VueClipboard from 'vue-clipboard2';
 import '../modules/class-component-hooks';
 import {
     QLayout,
@@ -32,10 +32,10 @@ Vue.use(VueClipboard);
     }
 })
 export default class Index extends Vue {
-  copySucceeded1:boolean = false;
+  copySucceeded1: boolean = false;
 
   get username () {
-    return store.get('account').name
+    return store.get('account').name;
   }
 
   get copyButtonText () {
@@ -48,10 +48,10 @@ export default class Index extends Vue {
 
   beforeRouteEnter (to, from, next) {
     if (from.name === 'login') {
-      location.reload()
-      next()
+      location.reload();
+      next();
     }
-    next()
+    next();
   }
 
 }

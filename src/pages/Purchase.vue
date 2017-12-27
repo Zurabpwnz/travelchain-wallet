@@ -5,7 +5,7 @@
             | Purchased Data - check purchased information
         q-card-main
             q-data-table(:data="table" :columns="columns")
-                template(slot="col-action" scope="cell")
+                template(slot="col-action" slot-scope="cell")
                     q-btn(color="blue" @click="openModal = true")
                         | {{ cell.data }}
 
@@ -15,7 +15,7 @@
             | Data Search - find and buy information with TT
         q-card-main
             q-data-table(:data="table" :columns="columns")
-                template(slot="col-action" scope="cell")
+                template(slot="col-action" slot-scope="cell")
                     q-btn(color="blue")
                         | {{ cell.data }}
 
