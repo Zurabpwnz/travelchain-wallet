@@ -1,14 +1,18 @@
 <template lang="pug">
-  sign-in(
-    :errors="validationErrors",
-    @usernameChanged="validateUsername",
-    @passwordChanged="validatePassword"
-    @login="login"
-  )
+  div
+    sign-in(
+      :errors="validationErrors",
+      @usernameChanged="validateUsername",
+      @passwordChanged="validatePassword"
+      @login="login"
+    )
+      .row.justify-center(slot="footer")
+        router-link.text-center.full-wdith(to="/sign-up") Or Sign Up
 </template>
 
 <script lang="ts">
     import Vue from "vue"
+    import { QSideLink } from 'quasar'
     import { Component, Model, Prop } from 'vue-property-decorator'
     import SignIn from "../SignIn.vue"
     import Blockchain from '../../modules/blockchain.js'

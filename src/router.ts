@@ -8,6 +8,7 @@ import Purchase from './pages/Purchase.vue';
 import Proposals from './pages/Proposals.vue';
 import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
+import SignUp from './pages/SignUp.vue';
 import Blockchain from './modules/blockchain';
 import store from 'store'
 
@@ -27,6 +28,13 @@ export const AppRouter = new VueRouter({
     { path: '/sign-in',
       name: 'login',
       component: SignIn,
+      meta: {
+        hiddenForAuth: true
+      }
+    },
+    { path: '/sign-up',
+      name: 'sign-up',
+      component: SignUp,
       meta: {
         hiddenForAuth: true
       }
