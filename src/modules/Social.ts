@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AuthData from '../AuthData';
+import { Alert } from 'quasar';
 
 export class SocialData {
     public name: string;
@@ -26,6 +27,7 @@ export class SocialData {
 }
 
 export default class Social {
+    private alert;
     public url: string;
     public name: string;
     public store: string;
@@ -49,6 +51,29 @@ export default class Social {
         return this.url + '?' + goto.join('&');
     }
     process(data) {}
+
+    notify(error) {
+        let socialName = this.name.replace('-', ' ');
+        socialName = socialName.split(' ').map((part) => {
+            return part[0].toUpperCase() + part.substring(1);
+        })
+        .join(' ');
+
+        let msg = !error ?
+            'Successfully binded your social account from ' + socialName + '!' :
+            'Failed bind your social account from ' + socialName + ':<br>' + error;
+
+        if ( this.alert ) this.alert.dismiss();
+        this.alert = Alert.create({
+            html: msg,
+            color: !error ? 'teal-5' : '',
+            icon: !error ? 'done' : '',
+            enter: 'bounceInRight',
+            leave: 'slideOutRight',
+        });
+        if ( !error )
+            setTimeout(() => { if ( this.alert ) this.alert.dismiss(); }, 5000 );
+    }
 }
 
 export class Google extends Social {
@@ -70,7 +95,9 @@ export class Google extends Social {
         .then((userinfo) => {
             this.sd.setName( userinfo.data.name );
             this.sd.setAvatar( userinfo.data.picture );
-        });
+            this.notify('');
+        })
+        .catch((err) => this.notify(err) );
     }
 }
 
@@ -106,7 +133,9 @@ export class VK extends Social {
         .then((userinfo) => {
             this.sd.setName( userinfo.data.response[0].first_name + ' ' + userinfo.data.response[0].last_name );
             this.sd.setAvatar( userinfo.data.response[0].photo );
-        });
+            this.notify('');
+        })
+        .catch((err) => this.notify(err) );
     }
 }
 
@@ -136,6 +165,8 @@ export class Facebook extends Social {
         })
         .then((avatar) => {
             this.sd.setAvatar( avatar );
-        });
+            this.notify('');
+        })
+        .catch((err) => this.notify(err) );
     }
 }

@@ -7,7 +7,7 @@
 
             q-card-main#social-logger
                 p
-                    q-btn.connect(icon="phone" @click="openModal_Phone=!openModal_Phone")
+                    q-btn.connect(icon="phone" @click="isOpenedModalPhone=!isOpenedModalPhone")
                         span.cost
                             | + 1 TT
                         span.text
@@ -36,20 +36,34 @@
                         q-btn(color="blue")
                             | {{ cell.data }}
 
-            q-modal(v-model="openModal_Phone" minimized)
-                h4
-                    | Hello
+            template(v-if="!isVerifiedPhone")
+                q-modal(v-model="isOpenedModalPhone" minimized)
+                    h5
+                        | Bind your phone
 
-                q-input(
-                    v-model="phoneNumber"
-                    placeholder="Your phone"
-                )
+                    ai-phone(
+                        :number="phoneNumber"
+                        @onComplete="(number) => this.phoneNumber = number"
+                        @onClear="() => this.phoneNumber = ''"
+                    )
 
-                br
-                q-btn(color="green" @click="connectPhoneNumber" :disabled="!phoneNumberValidate()")
-                    | Connect number
-                q-btn(color="red" @click="openModal_Phone=false")
-                    | Cancel
+                    template(v-if="isWaitingForSMS")
+                        q-input(v-model="smsCode" placeholder="Code")
+                        br
+                        q-btn(color="green" @click="connectPhoneNumber")
+                            | Bind number
+
+                    br(v-if="!isWaitingForSMS")
+                    q-btn(
+                        color="green"
+                        @click="connectPhoneNumber"
+                        :disabled="!phoneNumber.length"
+                        v-if="!isWaitingForSMS"
+                    )
+                        | Verify number
+
+                    q-btn(color="red" @click="isOpenedModalPhone=false")
+                        | Cancel
 </template>
 
 <script lang="ts">
@@ -58,6 +72,7 @@
     import {Google, VK, Facebook} from '../modules/Social'
     import Component from 'vue-class-component'
     import {
+        Alert,
         QLayout,
         QInput,
         QCard,
@@ -66,6 +81,7 @@
         QCardActions,
         QCardSeparator,
         QDataTable,
+        QSelect,
         QModal,
         QIcon,
         QBtn,
@@ -74,6 +90,7 @@
     @Component({
         name: 'appdata',
         components: {
+            Alert,
             QLayout,
             QInput,
             QCard,
@@ -82,79 +99,82 @@
             QCardActions,
             QCardSeparator,
             QDataTable,
+            QSelect,
             QModal,
             QIcon,
             QBtn,
         }
     })
     export default class Data extends Vue {
-        public openModal_Phone = false
-        public phoneNumber = ""
+        public isOpenedModalPhone = false;
+        public isWaitingForSMS = false;
+        public isVerifiedPhone = false;
+        public phoneNumber = "";
+        public verifyCode = "";
+        public smsCode = "";
+        private alert;
 
-        public socials = [
-            new VK(),
-            new Facebook(),
-            new Google(),
-        ];
+        public socials = [ new VK(), new Facebook(), new Google(), ];
 
         public columns = [
-            {
-                label: 'Username',
-                field: 'username'
-            },
-            {
-                label: 'Type',
-                field: 'type'
-            },
-            {
-                label: 'Action',
-                field: 'action'
-            }
+            { label: 'Username', field: 'username' },
+            { label: 'Type', field: 'type' },
+            { label: 'Action', field: 'action' }
         ];
 
         public table = [
-            {
-                "username": "DrGmes",
-                "type": "Type",
-                "action": "Show",
-            },
-            {
-                "username": "DrGmes",
-                "type": "Type",
-                "action": "Show",
-            },
-            {
-                "username": "DrGmes",
-                "type": "Type",
-                "action": "Show",
-            },
+            { "username": "DrGmes", "type": "Type", "action": "Show", },
+            { "username": "DrGmes", "type": "Type", "action": "Show", },
         ];
 
         mounted()
         {
+            // console.log( $notifier );
+
             for(let social of this.socials)
                 if(social.store && store.get(social.store)
                    && store.get(social.store).hasOwnProperty("access_token"))
                     social.process( store.get(social.store) )
-
-            this.$watch('phoneNumber', (value) => {
-                value = value.match(/([0-9])/g)
-                value = value ? value.join('') : ""
-                if( value[0] != "+" ) value = "+"+ value
-                if( value.length > 13 ) value = value.substring(0, 13)
-                this.phoneNumber = value
-            })
         }
 
         connectPhoneNumber()
         {
-            this.openModal_Phone = false;
-            console.log( this.phoneNumber );
-        }
+            if( this.isWaitingForSMS )
+            {
+                if( this.verifyCode == this.smsCode )
+                {
+                    // TODO save this.phoneNumber into DB by backend
+                    this.isVerifiedPhone = true;
+                    this.isWaitingForSMS = false;
+                    this.isOpenedModalPhone = false;
+                    if( this.alert ) this.alert.dismiss();
+                    this.alert = Alert.create({ html: 'Number binded!', color: "teal-5", icon: "done" });
+                    setTimeout(() => { if ( this.alert ) this.alert.dismiss() }, 5000 );
+                }
+                else
+                {
+                    if( this.alert ) this.alert.dismiss();
+                    this.alert = Alert.create({ html: 'Code is not true!' });
+                }
 
-        phoneNumberValidate()
-        {
-            return this.phoneNumber.length == 13
+                return;
+            }
+
+            new Promise((resolve, reject) =>
+            {
+                // TODO sending request to sms-service by backend
+                resolve();
+            })
+            .then((response) =>
+            {
+                this.isWaitingForSMS = true;
+                this.verifyCode = "123456";
+            })
+            .catch((err) =>
+            {
+                if( this.alert ) this.alert.dismiss();
+                this.alert = Alert.create({ html: err });
+            });
         }
 
         connectSocial(social)

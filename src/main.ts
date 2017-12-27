@@ -27,14 +27,17 @@ if (__THEME === 'mat') {
 }
 import 'quasar-extras/material-icons';
 // import 'quasar-extras/ionicons'
-// import 'quasar-extras/fontawesome'
-// import 'quasar-extras/animate'
+import 'quasar-extras/fontawesome';
+import 'quasar-extras/animate';
 
 
 import './modules/class-component-hooks';
 
 import Vuelidate from 'vuelidate';
 Vue.use(Vuelidate);
+
+import AiPhone from './components/PhoneInput.vue';
+Vue.component('ai-phone', AiPhone);
 
 Quasar.start(() => {
   /* eslint-disable no-new */
