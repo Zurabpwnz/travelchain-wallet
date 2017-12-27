@@ -52,6 +52,8 @@
     
       div(:class="'page-'+ getPage()")
         router-view
+
+    ai-notifier
 </template>
 
 <script lang="ts">
@@ -63,6 +65,7 @@ import Component from 'vue-class-component';
 import Blockchain from './modules/blockchain.js'
 import store from 'store'
 import Dacom from './modules/dacom.js'
+import Notifier from '../modules/Notifier'
 
 import './modules/class-component-hooks';
 import {

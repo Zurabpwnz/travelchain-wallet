@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AuthData from '../AuthData';
-import { Alert } from 'quasar';
+import Notifier from '../modules/Notifier';
 
 export class SocialData {
     public name: string;
@@ -63,16 +63,7 @@ export default class Social {
             'Successfully binded your social account from ' + socialName + '!' :
             'Failed bind your social account from ' + socialName + ':<br>' + error;
 
-        if ( this.alert ) this.alert.dismiss();
-        this.alert = Alert.create({
-            html: msg,
-            color: !error ? 'teal-5' : '',
-            icon: !error ? 'done' : '',
-            enter: 'bounceInRight',
-            leave: 'slideOutRight',
-        });
-        if ( !error )
-            setTimeout(() => { if ( this.alert ) this.alert.dismiss(); }, 5000 );
+        Notifier.notify({ msg, isNegative: !!error });
     }
 }
 

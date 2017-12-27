@@ -71,6 +71,7 @@
     import store from 'store'
     import {Google, VK, Facebook} from '../modules/Social'
     import Component from 'vue-class-component'
+    import Notifier from '../modules/Notifier';
     import {
         Alert,
         QLayout,
@@ -112,7 +113,6 @@
         public phoneNumber = "";
         public verifyCode = "";
         public smsCode = "";
-        private alert;
 
         public socials = [ new VK(), new Facebook(), new Google(), ];
 
@@ -129,8 +129,6 @@
 
         mounted()
         {
-            // console.log( $notifier );
-
             for(let social of this.socials)
                 if(social.store && store.get(social.store)
                    && store.get(social.store).hasOwnProperty("access_token"))
@@ -147,15 +145,9 @@
                     this.isVerifiedPhone = true;
                     this.isWaitingForSMS = false;
                     this.isOpenedModalPhone = false;
-                    if( this.alert ) this.alert.dismiss();
-                    this.alert = Alert.create({ html: 'Number binded!', color: "teal-5", icon: "done" });
-                    setTimeout(() => { if ( this.alert ) this.alert.dismiss() }, 5000 );
+                    Notifier.notify({ msg: 'Number binded!' });
                 }
-                else
-                {
-                    if( this.alert ) this.alert.dismiss();
-                    this.alert = Alert.create({ html: 'Code is not true!' });
-                }
+                else Notifier.notify({ msg: 'Code is not true!', isNegative: true, id: "connectphonenumber" });
 
                 return;
             }
@@ -172,8 +164,7 @@
             })
             .catch((err) =>
             {
-                if( this.alert ) this.alert.dismiss();
-                this.alert = Alert.create({ html: err });
+                Notifier.notify({ msg: err, isNegative: true });
             });
         }
 
