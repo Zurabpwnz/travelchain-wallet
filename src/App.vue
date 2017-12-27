@@ -13,9 +13,7 @@
         q-toolbar-title TravelChain
           div(slot="subtitle") Data Wallet
 
-        div
-          p.no-margin
-            | 10.000 TT
+        
   
   
       div(slot="left")
@@ -23,7 +21,9 @@
           q-item(v-if="isAuth" @click="$router.push('/')")
             q-item-side(icon="face")
             q-item-main(:label="username")
-          
+            div
+              p.no-margin
+              | 10.000 TT
           q-list-header Menu
           
           q-item(v-if="isAuth" @click="$router.push('/')")
