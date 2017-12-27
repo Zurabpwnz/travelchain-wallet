@@ -20,7 +20,8 @@
                                 | + 2 TT
                         span(:class="'fa fa-' + social.name")
                         template(v-if="social.info.name")
-                            | {{ social.info.name }}
+                            span.text
+                                | {{ social.info.name }}
                         span.text(v-else)
                             | Подключить
             
@@ -143,7 +144,7 @@
             .then((response) =>
             {
                 let data = {};
-                ( response as String ).substring(2).split("&").forEach(function(par)
+                ( response as String ).substring(1).split("&").forEach(function(par)
                 {
                     data[ par.split("=")[0] ] = par.split("=")[1]
                 })
