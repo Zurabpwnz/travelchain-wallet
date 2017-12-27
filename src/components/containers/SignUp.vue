@@ -3,28 +3,33 @@
       :validator="$v" 
       @usernameChanged="e => username = e"
       @passwordChanged="e => password = e"
-      @repeatPasswordChanged="e => repeatPassword = e"
+      @repeatPasswordChanged="e => repeatPassword = e",
+      @submit="signUp"
     )
 </template>
 
 <script lang="ts">
 import Vue from "vue"
 import Component from "vue-class-component"
+import Blockchain from '../../modules/blockchain.js'
 import SignUp from '../SignUp.vue'
 import { Toast } from 'quasar'
 import { required, sameAs, minLength } from 'vuelidate/lib/validators'
-
 
 @Component({
   components: { SignUp },
   validations: {
     username: {
       required,
-      minLength: minLength(3)
+      minLength: minLength(3),
+      async isUnique (value) {
+        if (value === '' || value.length <= 3) return true
+        return !(await Blockchain.doesUserExist(value))
+      }
     },
     password: {
       required,
-      minLength: minLength(6)
+      minLength: minLength(12)
     },
     repeatPassword: {
       required,
@@ -37,12 +42,19 @@ export default class SignUpContainer extends Vue {
     password: string = ''
     repeatPassword: string = '' 
 
-  signUp () {
-    this.$v.form.$touch()
-    if (this.$v.form.$error) {
+  async signUp () {
+    this.$v.$touch()
+    if (this.$v.$invalid) {
       Toast.create('Please review fields again.')
       return
     }
+
+    try {
+      await Blockchain.signUp(this.username, this.password)
+    } catch (e) {
+       Toast.create(e)
+    }
+    
   }
 }
 </script>

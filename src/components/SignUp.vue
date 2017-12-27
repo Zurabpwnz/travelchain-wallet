@@ -6,25 +6,26 @@
                     icon="fa-user"
                     helper="Enter your username"
                     :error="validator.username.$error"
-                    error-label="Username already exists"
+                    :error-label="!validator.username.isUnique ? 'Username is already taken' : 'Minimum 3 symbols'"
                 )
                     q-input(
                         float-label="Username"
-                        @input="updateUsername($event); validator.username.$touch();"
-                        v-model="username"
+                        :after="conditionIcon('username')"
+                        @input="updateUsername(username); validator.username.$touch();"
+                        v-model.lazy="username"
                     )
 
                 q-field(
                     icon="fa-key"
                     helper="Enter your password"
                     :error="validator.password.$error"
-                    error-label="Password must contains at least 6 symbols"
+                    error-label="Password must contains at least 12 symbols"
                     count
                 )
                     q-input(
                         type="password"
                         float-label="Password"
-                        :after="[{ icon: 'error', error: true, handler () {alert('copied!')}}]"
+                        :after="conditionIcon('password')"
                         @input="updatePassword($event); validator.password.$touch();"
                         v-model="password"
                     )
@@ -39,14 +40,14 @@
                     q-input(
                         type="password"
                         float-label="Password confirmation"
-                        :after="[{ icon: 'error', error: true, handler () {}}]"
+                        :after="conditionIcon('repeatPassword')"
                         @input="updateRepeatPassword($event); validator.repeatPassword.$touch();"
                         v-model="repeatPassword"
                     )
             q-card-actions(align="center")
                 q-btn.full-width(
-                  @click="signIn()"
-                  :disable="isSubbmitAllowed" 
+                  @click="submit"
+                  :disable="validator.$invalid" 
                   big 
                   color="secondary"
                   )
@@ -106,6 +107,21 @@ export default class SignUpPresentation extends Vue {
 
   @Emit('repeatPasswordChanged')
   updateRepeatPassword (e) {/* Pass repeatPassword to the container component */}
+
+  @Emit('submit')
+  submit() {}
+
+  conditionIcon (property) {
+    const v = this.validator;
+    return [
+      { icon: 'error', error: true, handler () {}}, 
+      { 
+        icon: 'done', 
+        condition: (!v[property].$error && v[property].$dirty), 
+        handler () {}
+      }
+    ]
+  }
 }
 </script>
 
