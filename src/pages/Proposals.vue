@@ -5,7 +5,7 @@
                 | My proposals - you can sell your information, if somebody request it 
             q-card-main
                 q-data-table(:data="table" :columns="columns")
-                    template(slot="col-action" scope="cell")
+                    template(slot="col-action" slot-scope="cell")
                         q-btn(color="red")
                             | Decline
                         q-btn(color="green")

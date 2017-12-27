@@ -9,8 +9,7 @@ import Proposals from './pages/Proposals.vue';
 import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
 import SignUp from './pages/SignUp.vue';
-import Blockchain from './modules/blockchain';
-import store from 'store'
+import store from 'store';
 
 Vue.use(VueRouter);
 
@@ -89,12 +88,12 @@ export const AppRouter = new VueRouter({
 
 AppRouter.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.get('account')) {
-    next({name: 'login'})
+    next({name: 'login'});
   } else if (to.meta.hiddenForAuth && store.get('account')) {
     next({ name: 'dashboard' });
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default AppRouter;

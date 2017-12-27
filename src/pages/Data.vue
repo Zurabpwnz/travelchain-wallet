@@ -7,7 +7,7 @@
 
             q-card-main#social-logger
                 p
-                    q-btn.connect(icon="phone")
+                    q-btn.connect(icon="phone" @click="openModal_Phone=!openModal_Phone")
                         span.cost
                             | + 1 TT
                         span.text
@@ -32,9 +32,24 @@
 
             q-card-main
                 q-data-table(:data="table" :columns="columns")
-                    template(slot="col-action" scope="cell")
+                    template(slot="col-action" slot-scope="cell")
                         q-btn(color="blue")
                             | {{ cell.data }}
+
+            q-modal(v-model="openModal_Phone" minimized)
+                h4
+                    | Hello
+
+                q-input(
+                    v-model="phoneNumber"
+                    placeholder="Your phone"
+                )
+
+                br
+                q-btn(color="green" @click="connectPhoneNumber" :disabled="!phoneNumberValidate()")
+                    | Connect number
+                q-btn(color="red" @click="openModal_Phone=false")
+                    | Cancel
 </template>
 
 <script lang="ts">
@@ -51,6 +66,7 @@
         QCardActions,
         QCardSeparator,
         QDataTable,
+        QModal,
         QIcon,
         QBtn,
     } from 'quasar';
@@ -66,11 +82,15 @@
             QCardActions,
             QCardSeparator,
             QDataTable,
+            QModal,
             QIcon,
             QBtn,
         }
     })
     export default class Data extends Vue {
+        public openModal_Phone = false
+        public phoneNumber = ""
+
         public socials = [
             new VK(),
             new Facebook(),
@@ -116,6 +136,25 @@
                 if(social.store && store.get(social.store)
                    && store.get(social.store).hasOwnProperty("access_token"))
                     social.process( store.get(social.store) )
+
+            this.$watch('phoneNumber', (value) => {
+                value = value.match(/([0-9])/g)
+                value = value ? value.join('') : ""
+                if( value[0] != "+" ) value = "+"+ value
+                if( value.length > 13 ) value = value.substring(0, 13)
+                this.phoneNumber = value
+            })
+        }
+
+        connectPhoneNumber()
+        {
+            this.openModal_Phone = false;
+            console.log( this.phoneNumber );
+        }
+
+        phoneNumberValidate()
+        {
+            return this.phoneNumber.length == 13
         }
 
         connectSocial(social)
