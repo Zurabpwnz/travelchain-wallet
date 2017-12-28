@@ -47,7 +47,7 @@
                     )
 
                     template(v-if="isWaitingForSMS")
-                        q-input(v-model="smsCode" placeholder="Code")
+                        q-input(v-model="smsCode" placeholder="Enter any code")
                         br
                         q-btn(color="green" @click="connectPhoneNumber")
                             | Bind number
@@ -66,11 +66,12 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import store from '../../node_modules/store'
-    import {Google, VK, Facebook} from '../modules/Social'
-    import Component from 'vue-class-component'
+    import Vue from 'vue';
+    import store from '../../node_modules/store';
+    import {Google, VK, Facebook} from '../modules/Social';
+    import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
+    import { State, Mutation } from 'vuex-class';
     import {
         Alert,
         QLayout,
@@ -105,7 +106,11 @@
             QBtn,
         }
     })
-    export default class Data extends Vue {
+    export default class Data extends Vue
+    {
+        @State auth
+        @Mutation balanceUp
+
         public isOpenedModalPhone = false;
         public isWaitingForSMS = false;
         public isVerifiedPhone = false;
@@ -151,6 +156,7 @@
                     // TODO save this.phoneNumber into DB by backend
 
                     store.set('account.phone', this.phoneNumber);
+                    this.balanceUp(1);
 
                     this.tableContactsData.push({
                         username: this.phoneNumber,
@@ -216,16 +222,18 @@
 
                 authWindow.close()
                 if( social.store ) store.set(social.store, data)
-                social.process( data, true ).then(this.updateData);
+                social.process( data, true ).then((social) => this.updateData(social, true));
             })
         }
 
-        updateData(social)
+        updateData(social, userInitiated = false)
         {
             let socialName = social.name.replace('-', ' ');
             socialName = socialName.split(' ').map((part) => {
                 return part[0].toUpperCase() + part.substring(1);
             }).join(' ');
+
+            if( userInitiated ) this.balanceUp(2);
 
             this.tableContactsData.push({
                 avatar: social.info.avatar,

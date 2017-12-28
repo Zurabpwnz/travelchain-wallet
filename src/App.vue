@@ -23,7 +23,7 @@
             q-item-main(:label="username")
             div
               p.no-margin
-              | 10.000 TT
+              | {{ auth.userBalance }} TT
           q-list-header Menu
           
           q-item(v-if="auth.isLoggedIn" @click="$router.push('/')")
@@ -119,15 +119,6 @@ export default class App extends Vue {
     }
 
     mounted () {
-        if (store.get('account')) {
-          console.log(store.get('account'))
-          console.log('store.get()')
-          // this.login(store.get('account').name)
-
-          //@ts-ignore
-          console.log(this.$store.state.auth.isLoggedIn)
-        }
-
         Blockchain.init()
         .catch(() => document.write('Not connected to node!'))
     }

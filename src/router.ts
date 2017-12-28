@@ -92,6 +92,11 @@ if (store.get('account')) {
   vuex.commit('login', store.get('account').name);
 }
 
+if (store.get('account.balance')) {
+  // TODO bind and save by backend
+  vuex.commit('balanceSet', store.get('account.balance'));
+}
+
 AppRouter.beforeEach((to, from, next) => {
   //@ts-ignore
   if (to.meta.auth && !vuex.state.auth.isLoggedIn) {
