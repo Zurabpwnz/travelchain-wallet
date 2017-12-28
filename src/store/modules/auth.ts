@@ -6,6 +6,8 @@ const state: LoginState = {
   username: '',
   isLoggedIn: false,
   userBalance: 0,
+  userContacts: [],
+  userProposals: [],
 };
 
 const mutations: MutationTree<LoginState> = {
@@ -14,23 +16,41 @@ const mutations: MutationTree<LoginState> = {
     state.username = username;
   },
 
-  balanceSet (state, amount: number) {
-    state.userBalance = amount;
+
+  contactAdd (state, contact: Object) {
+    state.userContacts.push(contact);
+
+    // TODO bind and save by backend
+    store.set('account.contacts', state.userContacts);
   },
 
-  balanceUp (state, amount: number) {
-    state.userBalance += amount;
+
+  proposalAdd (state, proposal: Object) {
+    state.userProposals.push(proposal);
+
+    // TODO bind and save by backend
+    store.set('account.proposals', state.userProposals);
+  },
+
+
+  balanceSet (state, amount: number) {
+    state.userBalance = Number(amount);
+    if ( state.userBalance < 0 ) state.userBalance = 0;
 
     // TODO bind and save by backend
     store.set('account.balance', state.userBalance);
   },
 
+  balanceUp (state, amount: number) {
+    mutations.balanceSet(state, state.userBalance + Number(amount));
+  },
+
   balanceDown (state, amount: number) {
-    state.userBalance -= amount;
+    mutations.balanceSet(state, state.userBalance - Number(amount));
   }
 };
 
 export const auth = {
   state,
   mutations
-}
+};

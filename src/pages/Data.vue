@@ -12,13 +12,14 @@
                         span.text
                             | Phone
 
-                p(v-for="social in socials" v-if="!social.info.name")
+                p(v-for="social in socials" v-if="socialsBinded.indexOf( social.name ) == -1")
                     q-btn.connect(@click="connectSocial(social)")
                         span.cost
                             | + 2 TT
                         span(:class="'fa fa-' + social.name")
                         span.text
                             | Bind social
+
 
 
             q-card-separator
@@ -29,10 +30,11 @@
             q-card-main
                 q-data-table(:data="tableContactsData" :columns="tableContactsColumns")
                     template(slot="col-action" slot-scope="cell")
-                        q-btn(color="blue")
-                            | {{ cell.data }}
+                        q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
+                            | Show
                     template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
                         img.rounded(:src="cell.data")
+
 
 
             template(v-if="!isVerifiedPhone")
@@ -63,6 +65,24 @@
 
                     q-btn(color="red" @click="isOpenedModalPhone = false")
                         | Cancel
+
+
+
+            q-modal(ref="decodedData" v-model="isOpenDecodedDataModal" minimized)
+                h5
+                    | View binded decoded Data
+
+                q-input(
+                    type="textarea"
+                    v-model="decodedUserData"
+                    float-label="Decoded data"
+                    style="width: 600px; max-width: 100%"
+                )
+
+                br
+
+                q-btn(@click="isOpenDecodedDataModal = false" color="blue")
+                    | Close
 </template>
 
 <script lang="ts">
@@ -110,14 +130,18 @@
     {
         @State auth
         @Mutation balanceUp
+        @Mutation contactAdd
 
+        public isOpenDecodedDataModal = false;
         public isOpenedModalPhone = false;
         public isWaitingForSMS = false;
         public isVerifiedPhone = false;
+        public decodedUserData = "";
         public phoneNumber = "";
         public verifyCode = "";
         public smsCode = "";
 
+        public socialsBinded = new Array();
         public socials = [ new VK(), new Facebook(), new Google(), ];
 
         public tableContactsColumns = [
@@ -128,26 +152,40 @@
         ];
         public tableContactsData = new Array();
 
-        mounted()
+        mounted ()
         {
-            for(let social of this.socials)
-                if(social.store && store.get(social.store)
-                   && store.get(social.store).hasOwnProperty("access_token"))
-                    social.process( store.get(social.store) ).then(this.updateData);
-
-            if( store.get('account.phone') )
+            this.$watch('auth.userContacts', (value) =>
             {
-                this.isVerifiedPhone = true;
-                this.phoneNumber = store.get('account.phone');
-                this.tableContactsData.push({
-                    username: this.phoneNumber,
-                    type: "Phone",
-                    action: 'Show',
-                });
+                this.updateContactData();
+            });
+            this.updateContactData();
+        }
+
+        updateContactData ()
+        {
+            this.tableContactsData = new Array();
+            for ( let i in this.auth.userContacts )
+            {
+                let contact = this.auth.userContacts[i];
+
+                this.socialsBinded.push(contact.type.replace(" ", "-").toLowerCase());
+
+                if ( contact.type == "phone" )
+                {
+                    this.isVerifiedPhone = true;
+                    this.phoneNumber = contact.value;
+                }
+
+                if ( contact.global )
+                    this.tableContactsData.push({
+                        avatar: contact.avatar,
+                        username: contact.value,
+                        type: contact.type,
+                    })
             }
         }
 
-        connectPhoneNumber()
+        connectPhoneNumber ()
         {
             if( this.isWaitingForSMS )
             {
@@ -155,14 +193,13 @@
                 {
                     // TODO save this.phoneNumber into DB by backend
 
-                    store.set('account.phone', this.phoneNumber);
                     this.balanceUp(1);
-
-                    this.tableContactsData.push({
-                        username: this.phoneNumber,
-                        type: "Phone",
-                        action: 'Show',
+                    this.contactAdd({
+                        value: this.phoneNumber,
+                        type: 'phone',
+                        global: false
                     });
+
                     this.isVerifiedPhone = true;
                     this.isWaitingForSMS = false;
                     this.isOpenedModalPhone = false;
@@ -189,7 +226,7 @@
             });
         }
 
-        connectSocial(social)
+        connectSocial (social)
         {
             if( !social.url ) return
 
@@ -221,26 +258,33 @@
                 })
 
                 authWindow.close()
-                if( social.store ) store.set(social.store, data)
                 social.process( data, true ).then((social) => this.updateData(social, true));
             })
         }
 
-        updateData(social, userInitiated = false)
+        updateData (social, userInitiated = false)
         {
             let socialName = social.name.replace('-', ' ');
             socialName = socialName.split(' ').map((part) => {
                 return part[0].toUpperCase() + part.substring(1);
             }).join(' ');
 
-            if( userInitiated ) this.balanceUp(2);
+            if( userInitiated )
+            {
+                this.balanceUp(2);
+                this.contactAdd({
+                    avatar: social.info.avatar,
+                    value: social.info.name,
+                    type: socialName,
+                    global: true
+                });
+            }
+        }
 
-            this.tableContactsData.push({
-                avatar: social.info.avatar,
-                username: social.info.name,
-                type: socialName,
-                action: 'Show',
-            });
+        openDecodedDataModal (data)
+        {
+            this.decodedUserData = JSON.stringify(data, null, 4);
+            this.isOpenDecodedDataModal = true;
         }
     }
 </script>

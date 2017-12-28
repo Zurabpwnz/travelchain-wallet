@@ -9,10 +9,10 @@
             q-card-separator
             q-card-main(align="center")
                 p.big
-                    | 10 TT
+                    | {{ auth.userBalance }} TT
             q-card-separator
             q-card-actions(align="end")
-                q-btn(flat @click="$router.push('/data')")
+                q-btn(flat @click="$router.push('/purchase')")
                     | Transfer
 
         q-card.col-md-4.col-xs-12.col-sm-10
@@ -37,7 +37,7 @@
             q-card-separator
             q-card-main(align="center")
                 p.big
-                    | 0
+                    | {{ auth.userContacts.length }}
             q-card-separator
             q-card-actions(align="end")
                 q-btn(flat @click="$router.push('/data')")
@@ -50,15 +50,15 @@
             q-card-separator
             q-card-main(align="center")
                 p.big
-                    | 0
+                    | {{ auth.userProposals.length }}
             q-card-separator
             q-card-actions(align="end")
-                q-btn(flat @click="$router.push('/data')")
+                q-btn(flat @click="$router.push('/proposals')")
                     | Go to Proposals
 
 </template>
 
 <script lang="ts">
-    import Welcome from '../components/Welcome'
-    export default Welcome
+    import Welcome from '../components/Welcome';
+    export default Welcome;
 </script>

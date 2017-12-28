@@ -88,20 +88,54 @@ export const AppRouter = new VueRouter({
   ]
 });
 
+if (!store.get('account.proposals')) {
+    store.set('account.proposals', [
+        {
+            username: 'TheDevTom',
+            type: 'Google',
+            amount: 16,
+        },
+        {
+            username: 'TheDevTom',
+            type: 'Vk',
+            amount: 5,
+        },
+        {
+            username: 'TheDevTom',
+            type: 'Facebook',
+            amount: 7,
+        },
+    ]);
+}
+
 if (store.get('account')) {
   vuex.commit('login', store.get('account').name);
 }
 
-if (store.get('account.balance')) {
-  // TODO bind and save by backend
-  vuex.commit('balanceSet', store.get('account.balance'));
+// TODO bind and save by backend
+if (store.get('account.balance')) vuex.commit('balanceSet', store.get('account.balance'));
+
+// TODO bind and save by backend
+if (store.get('account.contacts')) {
+  let contacts = store.get('account.contacts');
+  for ( let key in contacts ) {
+    vuex.commit('contactAdd', contacts[key]);
+  }
+}
+
+// TODO bind and save by backend
+if (store.get('account.proposals')) {
+  let proposals = store.get('account.proposals');
+  for ( let key in proposals ) {
+    vuex.commit('proposalAdd', proposals[key]);
+  }
 }
 
 AppRouter.beforeEach((to, from, next) => {
-  //@ts-ignore
+  // @ts-ignore
   if (to.meta.auth && !vuex.state.auth.isLoggedIn) {
     next({name: 'login'});
-    //@ts-ignore
+    // @ts-ignore
   } else if (to.meta.hiddenForAuth && vuex.state.auth.isLoggedIn) {
     next({ name: 'dashboard' });
   } else {

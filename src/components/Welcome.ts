@@ -3,6 +3,7 @@ import Component from 'vue-class-component';
 import store from '../../node_modules/store';
 import VueClipboard from 'vue-clipboard2';
 import '../modules/class-component-hooks';
+import { State, Mutation } from 'vuex-class';
 import {
     QLayout,
     QInput,
@@ -32,17 +33,19 @@ Vue.use(VueClipboard);
     }
 })
 export default class Index extends Vue {
-  copySucceeded1: boolean = false;
+    @State auth;
 
-  get username () {
-    return this.$store.state.auth.username || 'Username';
-  }
+    copySucceeded1: boolean = false;
 
-  get copyButtonText () {
-    return this.copySucceeded1 ? 'Copied!' : 'Copy';
-  }
-  
-  get copy () {
-    return `https://data.travelchain.io/?r=${this.username}`;
-  }
+    get username () {
+        return this.$store.state.auth.username || 'Username';
+    }
+
+    get copyButtonText () {
+        return this.copySucceeded1 ? 'Copied!' : 'Copy';
+    }
+
+    get copy () {
+        return `https://data.travelchain.io/?r=${this.username}`;
+    }
 }
