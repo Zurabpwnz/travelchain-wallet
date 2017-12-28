@@ -9,7 +9,7 @@ import Proposals from './pages/Proposals.vue';
 import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
 import SignUp from './pages/SignUp.vue';
-import store from 'store';
+import store from '../node_modules/store';
 import { store as vuex } from './store';
 
 
@@ -87,6 +87,10 @@ export const AppRouter = new VueRouter({
     }
   ]
 });
+
+if (store.get('account')) {
+  vuex.commit('login', store.get('account').name);
+}
 
 AppRouter.beforeEach((to, from, next) => {
   //@ts-ignore

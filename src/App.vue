@@ -108,22 +108,24 @@ export default class App extends Vue {
  
     @State auth
 
-
-    userBalance = Blockchain.account
+    @Mutation login
 
     get username () {
-        return Blockchain.account.name || 'Username'
+        return this.auth.username || 'Username'
     }
 
-    getPage() {
+    getPage () {
         return window.location.pathname.substring(1)
     }
 
     mounted () {
         if (store.get('account')) {
-            // TODO VUEX check
-            Blockchain.isAuth = true;
-            this.isAuth = true;
+          console.log(store.get('account'))
+          console.log('store.get()')
+          // this.login(store.get('account').name)
+
+          //@ts-ignore
+          console.log(this.$store.state.auth.isLoggedIn)
         }
 
         Blockchain.init()

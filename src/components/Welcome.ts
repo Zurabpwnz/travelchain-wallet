@@ -35,7 +35,7 @@ export default class Index extends Vue {
   copySucceeded1: boolean = false;
 
   get username () {
-    return store.get('account').name;
+    return this.$store.state.auth.username || 'Username';
   }
 
   get copyButtonText () {
