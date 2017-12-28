@@ -109,9 +109,9 @@
         public decodedUserData = ""
 
         public tableColumns = [
-            { label: 'Username', field: 'username' },
-            { label: 'Type', field: 'type' },
-            { label: 'Action', field: 'action' }
+            { label: 'Username', field: 'username', filter: true, },
+            { label: 'Type', field: 'type', filter: true, },
+            { label: 'Action', field: 'action', }
         ];
 
         public tablePurchasedData = [
