@@ -4,37 +4,36 @@
             q-card-title
                 q-icon.head-icon(name="work")
                 | Basic Data-Sources - Connect your basic data-sources and get TravelToken for it.
-
             q-card-main#social-logger
-                p
+                p(v-if="!isVerifiedPhone")
                     q-btn.connect(icon="phone" @click="isOpenedModalPhone=!isOpenedModalPhone")
                         span.cost
                             | + 1 TT
                         span.text
-                            | Телефон
+                            | Phone
 
-                p(v-for="social in socials")
+                p(v-for="social in socials" v-if="!social.info.name")
                     q-btn.connect(@click="connectSocial(social)")
-                        template(v-if="!social.info.name")
-                            span.cost
-                                | + 2 TT
+                        span.cost
+                            | + 2 TT
                         span(:class="'fa fa-' + social.name")
-                        template(v-if="social.info.name")
-                            span.text
-                                | {{ social.info.name }}
-                        span.text(v-else)
-                            | Подключить
-            
+                        span.text
+                            | Bind social
+
+
             q-card-separator
             q-card-title
                 q-icon.head-icon(name="assignment ind")
                 | My Data - your published and encrypted data.
 
             q-card-main
-                q-data-table(:data="table" :columns="columns")
+                q-data-table(:data="tableContactsData" :columns="tableContactsColumns")
                     template(slot="col-action" slot-scope="cell")
                         q-btn(color="blue")
                             | {{ cell.data }}
+                    template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
+                        img.rounded(:src="cell.data")
+
 
             template(v-if="!isVerifiedPhone")
                 q-modal(v-model="isOpenedModalPhone" minimized)
@@ -71,6 +70,7 @@
     import store from 'store'
     import {Google, VK, Facebook} from '../modules/Social'
     import Component from 'vue-class-component'
+    import Notifier from '../modules/Notifier';
     import {
         Alert,
         QLayout,
@@ -112,29 +112,34 @@
         public phoneNumber = "";
         public verifyCode = "";
         public smsCode = "";
-        private alert;
 
         public socials = [ new VK(), new Facebook(), new Google(), ];
 
-        public columns = [
+        public tableContactsColumns = [
+            { label: 'Avatar', field: 'avatar', width: '60px' },
             { label: 'Username', field: 'username' },
             { label: 'Type', field: 'type' },
             { label: 'Action', field: 'action' }
         ];
-
-        public table = [
-            { "username": "DrGmes", "type": "Type", "action": "Show", },
-            { "username": "DrGmes", "type": "Type", "action": "Show", },
-        ];
+        public tableContactsData = new Array();
 
         mounted()
         {
-            // console.log( $notifier );
-
             for(let social of this.socials)
                 if(social.store && store.get(social.store)
                    && store.get(social.store).hasOwnProperty("access_token"))
-                    social.process( store.get(social.store) )
+                    social.process( store.get(social.store) ).then(this.updateData);
+
+            if( store.get('account.phone') )
+            {
+                this.isVerifiedPhone = true;
+                this.phoneNumber = store.get('account.phone');
+                this.tableContactsData.push({
+                    username: this.phoneNumber,
+                    type: "Phone",
+                    action: 'Show',
+                });
+            }
         }
 
         connectPhoneNumber()
@@ -144,18 +149,20 @@
                 if( this.verifyCode == this.smsCode )
                 {
                     // TODO save this.phoneNumber into DB by backend
+
+                    store.set('account.phone', this.phoneNumber);
+
+                    this.tableContactsData.push({
+                        username: this.phoneNumber,
+                        type: "Phone",
+                        action: 'Show',
+                    });
                     this.isVerifiedPhone = true;
                     this.isWaitingForSMS = false;
                     this.isOpenedModalPhone = false;
-                    if( this.alert ) this.alert.dismiss();
-                    this.alert = Alert.create({ html: 'Number binded!', color: "teal-5", icon: "done" });
-                    setTimeout(() => { if ( this.alert ) this.alert.dismiss() }, 5000 );
+                    Notifier.notify({ msg: 'Number binded!' });
                 }
-                else
-                {
-                    if( this.alert ) this.alert.dismiss();
-                    this.alert = Alert.create({ html: 'Code is not true!' });
-                }
+                else Notifier.notify({ msg: 'Code is not true!', isNegative: true, id: "connectphonenumber" });
 
                 return;
             }
@@ -172,8 +179,7 @@
             })
             .catch((err) =>
             {
-                if( this.alert ) this.alert.dismiss();
-                this.alert = Alert.create({ html: err });
+                Notifier.notify({ msg: err, isNegative: true });
             });
         }
 
@@ -210,8 +216,23 @@
 
                 authWindow.close()
                 if( social.store ) store.set(social.store, data)
-                social.process( data )
+                social.process( data ).then(this.updateData);
             })
+        }
+
+        updateData(social)
+        {
+            let socialName = social.name.replace('-', ' ');
+            socialName = socialName.split(' ').map((part) => {
+                return part[0].toUpperCase() + part.substring(1);
+            }).join(' ');
+
+            this.tableContactsData.push({
+                avatar: social.info.avatar,
+                username: social.info.name,
+                type: socialName,
+                action: 'Show',
+            });
         }
     }
 </script>
