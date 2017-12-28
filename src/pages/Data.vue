@@ -67,7 +67,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import store from 'store'
+    import store from '../../node_modules/store'
     import {Google, VK, Facebook} from '../modules/Social'
     import Component from 'vue-class-component'
     import Notifier from '../modules/Notifier';

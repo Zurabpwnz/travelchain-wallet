@@ -63,7 +63,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import Blockchain from './modules/blockchain.js'
-import store from 'store'
+import store from '../node_modules/store'
 import Dacom from './modules/dacom.js'
 import Notifier from './modules/Notifier'
 import { State, Mutation } from 'vuex-class'
@@ -127,7 +127,7 @@ export default class App extends Vue {
         }
 
         Blockchain.init()
-        // .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
+        .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
         .catch(() => document.write('Not connected to node!'))
     }
 

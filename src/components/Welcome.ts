@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import store from 'store';
+import store from '../../node_modules/store';
 import VueClipboard from 'vue-clipboard2';
 import '../modules/class-component-hooks';
 import {

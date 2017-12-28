@@ -1,4 +1,4 @@
-import store from 'store'
+import store from '../../node_modules/store'
 import axios from 'axios'
 import {ChainStore, FetchChain, Login, PrivateKey} from 'bitsharesjs'
 import {Apis, ChainConfig} from 'bitsharesjs-ws'
