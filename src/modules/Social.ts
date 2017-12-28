@@ -51,7 +51,7 @@ export default class Social {
         return this.url + '?' + goto.join('&');
     }
 
-    process(data) {}
+    process(data, userInitiated = false) {}
 
     notify(error) {
         let socialName = this.name.replace('-', ' ');
@@ -82,13 +82,13 @@ export class Google extends Social {
         });
     }
 
-    process(data) {
+    process(data, userInitiated = false) {
         return new Promise((resolve, reject) => {
             axios.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + data.access_token)
             .then((userinfo) => {
                 this.sd.setName( userinfo.data.name );
                 this.sd.setAvatar( userinfo.data.picture );
-                this.notify('');
+                if ( userInitiated ) this.notify('');
                 resolve(this);
             })
             .catch((err) => {
@@ -113,7 +113,7 @@ export class VK extends Social {
         });
     }
 
-    process(data) {
+    process(data, userInitiated = false) {
         let fields = [
             'uid',
             'first_name',
@@ -131,7 +131,7 @@ export class VK extends Social {
             .then((userinfo) => {
                 this.sd.setName( userinfo.data.response[0].first_name + ' ' + userinfo.data.response[0].last_name );
                 this.sd.setAvatar( userinfo.data.response[0].photo );
-                this.notify('');
+                if ( userInitiated ) this.notify('');
                 resolve(this);
             })
             .catch((err) => {
@@ -151,10 +151,11 @@ export class Facebook extends Social {
             response_type: 'token',
             client_id: AuthData.facebook.id,
             redirect_uri: encodeURIComponent(this.redirectURL),
+            auth_type: 'reauthenticate',
         });
     }
 
-    process(data) {
+    process(data, userInitiated = false) {
         let fields = [
             'id',
             'name'
@@ -168,7 +169,7 @@ export class Facebook extends Social {
             })
             .then((avatar) => {
                 this.sd.setAvatar( avatar.request.responseURL );
-                this.notify('');
+                if ( userInitiated ) this.notify('');
                 resolve(this);
             })
             .catch((err) => {
