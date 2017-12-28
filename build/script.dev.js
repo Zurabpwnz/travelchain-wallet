@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'development'
 
 require('colors')
-var server = require("../server.conf")
+
 var
   path = require('path'),
   express = require('express'),
@@ -13,7 +13,7 @@ var
   webpackConfig = require('./webpack.dev.conf'),
   app = express(),
   port = process.env.PORT || config.dev.port,
-  uri = server.protocol +'://'+ server.host +':' + server.port
+  uri = 'http://travelai.com:' + port
 
 console.log(' Starting dev server with "' + (process.argv[2] || env.platform.theme).bold + '" theme...')
 console.log(' Will listen at ' + uri.bold)
