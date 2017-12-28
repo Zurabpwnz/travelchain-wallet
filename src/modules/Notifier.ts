@@ -13,7 +13,7 @@ export default class Notifier {
         return this.notifiesList;
     }
 
-    static notify(params) {
+    static notify(params, toConsole = false) {
         let data = {
             id: this.notifiesList.length + 1 + Math.random().toString().slice(2),
             msg: 'NO MESSAGE',
@@ -26,9 +26,11 @@ export default class Notifier {
         };
         Object.assign(data, params);
 
-        let consoleMsg = data.msg.replace('<br>', '\n');
-        if( data.isNegative ) console.error( consoleMsg );
-        else console.log( consoleMsg );
+        if ( toConsole ) {
+            let consoleMsg = data.msg.replace('<br>', '\n');
+            if ( data.isNegative ) console.error( consoleMsg );
+            else console.log( consoleMsg );
+        }
 
         if ( params.id ) this.remove(params.id, true);
         this.notifiesList.push(data);

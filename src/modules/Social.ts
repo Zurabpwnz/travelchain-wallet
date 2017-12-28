@@ -50,6 +50,7 @@ export default class Social {
         });
         return this.url + '?' + goto.join('&');
     }
+
     process(data) {}
 
     notify(error) {
@@ -82,13 +83,18 @@ export class Google extends Social {
     }
 
     process(data) {
-        axios.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + data.access_token)
-        .then((userinfo) => {
-            this.sd.setName( userinfo.data.name );
-            this.sd.setAvatar( userinfo.data.picture );
-            this.notify('');
-        })
-        .catch((err) => this.notify(err) );
+        return new Promise((resolve, reject) => {
+            axios.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + data.access_token)
+            .then((userinfo) => {
+                this.sd.setName( userinfo.data.name );
+                this.sd.setAvatar( userinfo.data.picture );
+                this.notify('');
+                resolve(this);
+            })
+            .catch((err) => {
+                this.notify(err);
+            });
+        });
     }
 }
 
@@ -116,17 +122,22 @@ export class VK extends Social {
             'photo'
         ].join(',');
 
-        axios.get('https://api.vk.com/method/users.get?fields=' + fields + '&access_token=' + data.access_token, {
-            headers: {
-                // 'Allow-Control-Allow-Origin': "*"
-            }
-        })
-        .then((userinfo) => {
-            this.sd.setName( userinfo.data.response[0].first_name + ' ' + userinfo.data.response[0].last_name );
-            this.sd.setAvatar( userinfo.data.response[0].photo );
-            this.notify('');
-        })
-        .catch((err) => this.notify(err) );
+        return new Promise((resolve, reject) => {
+            axios.get('https://api.vk.com/method/users.get?fields=' + fields + '&access_token=' + data.access_token, {
+                headers: {
+                    // 'Allow-Control-Allow-Origin': "*"
+                }
+            })
+            .then((userinfo) => {
+                this.sd.setName( userinfo.data.response[0].first_name + ' ' + userinfo.data.response[0].last_name );
+                this.sd.setAvatar( userinfo.data.response[0].photo );
+                this.notify('');
+                resolve(this);
+            })
+            .catch((err) => {
+                this.notify(err);
+            });
+        });
     }
 }
 
@@ -149,15 +160,20 @@ export class Facebook extends Social {
             'name'
         ].join(',');
 
-        axios.get('https://graph.facebook.com/me?fields=' + fields + '&access_token=' + data.access_token)
-        .then((userinfo) => {
-            this.sd.setName( userinfo.data.name );
-            return axios.get('https://graph.facebook.com/' + userinfo.data.id + '/picture?access_token=' + data.access_token);
-        })
-        .then((avatar) => {
-            this.sd.setAvatar( avatar );
-            this.notify('');
-        })
-        .catch((err) => this.notify(err) );
+        return new Promise((resolve, reject) => {
+            axios.get('https://graph.facebook.com/me?fields=' + fields + '&access_token=' + data.access_token)
+            .then((userinfo) => {
+                this.sd.setName( userinfo.data.name );
+                return axios.get('https://graph.facebook.com/' + userinfo.data.id + '/picture?access_token=' + data.access_token);
+            })
+            .then((avatar) => {
+                this.sd.setAvatar( avatar.request.responseURL );
+                this.notify('');
+                resolve(this);
+            })
+            .catch((err) => {
+                this.notify(err);
+            });
+        });
     }
 }
