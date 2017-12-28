@@ -6,9 +6,9 @@
             q-card-main
                 q-data-table(:data="auth.userProposals" :columns="tableProposalsColumns")
                     template(slot="col-action" slot-scope="cell")
-                        q-btn(color="red")
+                        q-btn(color="red" @click="declineProposal(cell.row.username, cell.row.type)")
                             | Decline
-                        q-btn(color="green")
+                        q-btn(color="green" @click="acceptProposal(cell.row.username, cell.row.type)")
                             | Accept
 </template>
 
@@ -17,6 +17,7 @@
     import store from 'store';
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
+    import Notifier from '../modules/Notifier';
     import { State, Mutation } from 'vuex-class';
     import {
         QLayout,
@@ -49,6 +50,8 @@
     export default class Proposals extends Vue
     {
         @State auth
+        @Mutation balanceUp
+        @Mutation proposalRemove
 
         public tableProposalsColumns = [
             { label: 'Username', field: 'username'},
@@ -56,5 +59,37 @@
             { label: 'Amount, TT', field: 'amount' },
             { label: 'Action', field: 'action' }
         ];
+
+        declineProposal (user, type)
+        {
+            this.proposalRemove({ user, type });
+        }
+
+        acceptProposal (user, type)
+        {
+            let proposalPrice = false;
+            for ( let i in this.auth.userProposals )
+            {
+                if ( this.auth.userProposals[i].username == user && this.auth.userProposals[i].type == type )
+                {
+                    proposalPrice = this.auth.userProposals[i].amount;
+                    break;
+                }
+            }
+
+            if ( proposalPrice === false )
+            {
+                Notifier.notify({
+                    msg: 'No finded needed data for accepting. Try again',
+                    id: 'nofindedneededdata',
+                    isNegative: true,
+                });
+            }
+            else
+            {
+                this.proposalRemove({ user, type });
+                this.balanceUp(proposalPrice);
+            }
+        }
     }
 </script>
