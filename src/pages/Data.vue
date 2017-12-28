@@ -6,7 +6,7 @@
                 | Basic Data-Sources - Connect your basic data-sources and get TravelToken for it.
             q-card-main#social-logger
                 p(v-if="!isVerifiedPhone")
-                    q-btn.connect(icon="phone" @click="isOpenedModalPhone=!isOpenedModalPhone")
+                    q-btn.connect(icon="phone" @click="isOpenedModalPhone = true")
                         span.cost
                             | + 1 TT
                         span.text
@@ -36,7 +36,7 @@
 
 
             template(v-if="!isVerifiedPhone")
-                q-modal(v-model="isOpenedModalPhone" minimized)
+                q-modal(ref="bindingPhoneModal" v-model="isOpenedModalPhone" minimized)
                     h5
                         | Bind your phone
 
@@ -61,7 +61,7 @@
                     )
                         | Verify number
 
-                    q-btn(color="red" @click="isOpenedModalPhone=false")
+                    q-btn(color="red" @click="isOpenedModalPhone = false")
                         | Cancel
 </template>
 
@@ -216,7 +216,7 @@
 
                 authWindow.close()
                 if( social.store ) store.set(social.store, data)
-                social.process( data ).then(this.updateData);
+                social.process( data, true ).then(this.updateData);
             })
         }
 
