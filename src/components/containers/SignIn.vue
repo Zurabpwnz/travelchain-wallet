@@ -15,12 +15,17 @@
     import { Component, Model, Prop } from 'vue-property-decorator'
     import SignIn from "../SignIn.vue"
     import Blockchain from '../../modules/blockchain.js'
-    // import Debounce from 'debounce-decorator'
+    import { State, Mutation } from 'vuex-class'
+    import { LoginState } from '../../types'
 
     @Component({
       components: { SignIn }
     })
     export default class SignInContainer extends Vue {
+
+      @State('auth') loginState: LoginState
+      @Mutation('login') loginMutation
+
       validationErrors = {
         username: { isValid: true, errorMessage: 'User does not exists' },
         password: { isValid: true, errorMessage: 'Wrong Password' }
@@ -45,6 +50,7 @@
         try {
           await Blockchain.login(username, password)
           Blockchain.isAuth = true
+          this.loginMutation(username)
           this.$router.push('/')
         } catch (e) {
           this.validationErrors.password.isValid = false

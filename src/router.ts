@@ -10,6 +10,8 @@ import Error404 from './pages/Error404.vue';
 import SignIn from './pages/SignIn.vue';
 import SignUp from './pages/SignUp.vue';
 import store from 'store';
+import { store as vuex } from './store';
+
 
 Vue.use(VueRouter);
 
@@ -87,9 +89,11 @@ export const AppRouter = new VueRouter({
 });
 
 AppRouter.beforeEach((to, from, next) => {
-  if (to.meta.auth && !store.get('account')) {
+  //@ts-ignore
+  if (to.meta.auth && !vuex.state.auth.isLoggedIn) {
     next({name: 'login'});
-  } else if (to.meta.hiddenForAuth && store.get('account')) {
+    //@ts-ignore
+  } else if (to.meta.hiddenForAuth && vuex.state.auth.isLoggedIn) {
     next({ name: 'dashboard' });
   } else {
     next();

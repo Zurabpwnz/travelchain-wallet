@@ -45,13 +45,4 @@ export default class Index extends Vue {
   get copy () {
     return `https://data.travelchain.io/?r=${this.username}`;
   }
-
-  beforeRouteEnter (to, from, next) {
-    if (from.name === 'login') {
-      location.reload();
-      next();
-    }
-    next();
-  }
-
 }

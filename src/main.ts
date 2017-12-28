@@ -39,10 +39,14 @@ Vue.use(Vuelidate);
 import AiPhone from './components/PhoneInput.vue';
 Vue.component('ai-phone', AiPhone);
 
+
+import { store } from './store';
+
 Quasar.start(() => {
   /* eslint-disable no-new */
   new Vue({
     el: '#q-app',
+    store,
     router,
     render: h => h(app as Component)
   });

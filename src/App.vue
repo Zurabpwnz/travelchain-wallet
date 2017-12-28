@@ -18,7 +18,7 @@
   
       div(slot="left")
         q-list(no-border link inset-delimiter)
-          q-item(v-if="isAuth" @click="$router.push('/')")
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/')")
             q-item-side(icon="face")
             q-item-main(:label="username")
             div
@@ -26,27 +26,27 @@
               | 10.000 TT
           q-list-header Menu
           
-          q-item(v-if="isAuth" @click="$router.push('/')")
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/')")
             q-item-side(icon="home")
             q-item-main(label="Dashboard" sublabel="Manage your account")
           
-          q-item(v-if="isAuth" @click="$router.push('/data')")
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/data')")
             q-item-side(icon="data_usage")
             q-item-main(label="My Data" sublabel="Publish data into the blockchain")
           
-          q-item(v-if="isAuth" @click="$router.push('/purchase')")
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/purchase')")
             q-item-side(icon="assignment_returned")
             q-item-main(label="Buy data" sublabel="Purchase data from the blockchain")
 
-          q-item(v-if="isAuth" @click="$router.push('/proposals')")
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/proposals')")
             q-item-side(icon="monetization_on")
             q-item-main(label="My proposals" sublabel="Proposals for the purchase of my data")  
          
-          q-item(v-if="!isAuth" @click="$router.push('/sign-in')")
+          q-item(v-if="!auth.isLoggedIn" @click="$router.push('/sign-in')")
             q-item-side(icon="fa-sign-in")
             q-item-main(label="Login" )
 
-          q-item(v-if="isAuth" @click="logout")
+          q-item(v-if="auth.isLoggedIn" @click="logout")
             q-item-side(icon="exit_to_app")
             q-item-main(label="Log Out")
     
@@ -66,6 +66,8 @@ import Blockchain from './modules/blockchain.js'
 import store from 'store'
 import Dacom from './modules/dacom.js'
 import Notifier from './modules/Notifier'
+import { State, Mutation } from 'vuex-class'
+
 
 import './modules/class-component-hooks';
 import {
@@ -103,6 +105,8 @@ import {
 export default class App extends Vue {
     // TODO VUEX state
     isAuth = false;
+ 
+    @State auth
 
 
     userBalance = Blockchain.account
