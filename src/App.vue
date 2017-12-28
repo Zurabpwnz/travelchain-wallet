@@ -127,7 +127,6 @@ export default class App extends Vue {
         }
 
         Blockchain.init()
-        .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
         .catch(() => document.write('Not connected to node!'))
     }
 
