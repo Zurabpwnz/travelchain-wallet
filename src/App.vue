@@ -65,7 +65,7 @@ import Component from 'vue-class-component';
 import Blockchain from './modules/blockchain.js'
 import store from 'store'
 import Dacom from './modules/dacom.js'
-import Notifier from '../modules/Notifier'
+import Notifier from './modules/Notifier'
 
 import './modules/class-component-hooks';
 import {
@@ -86,8 +86,8 @@ import {
 
 
 @Component({
-  name: 'App',
-  components: {
+    name: 'App',
+    components: {
         QLayout,
         QToolbar,
         QToolbarTitle,
@@ -101,40 +101,37 @@ import {
     }
 })
 export default class App extends Vue {
-  // TODO VUEX state
-  isAuth = false;
+    // TODO VUEX state
+    isAuth = false;
 
 
-  userBalance = Blockchain.account
+    userBalance = Blockchain.account
 
-  get username () {
-    return Blockchain.account.name || 'Username'
-  }
+    get username () {
+        return Blockchain.account.name || 'Username'
+    }
 
-  getPage() {
-      return window.location.pathname.substring(1)
-  }
+    getPage() {
+        return window.location.pathname.substring(1)
+    }
 
-  mounted () {
-    if (store.get('account')) {
-      // TODO VUEX check
-      Blockchain.isAuth = true;
-      this.isAuth = true;
-    } 
+    mounted () {
+        if (store.get('account')) {
+            // TODO VUEX check
+            Blockchain.isAuth = true;
+            this.isAuth = true;
+        }
 
-     Blockchain.init()
-      // .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
-      .catch(() => document.write('Not connected to node!'))
-  }
+        Blockchain.init()
+        // .then (async () => console.log(await Dacom.dacom_assets(store.get('account').name)))
+        .catch(() => document.write('Not connected to node!'))
+    }
 
-  logout () {
-    store.remove('account')
-    store.remove('wifs')
-    location.reload()
-    // TODO VUEX logout
-  }
+    logout () {
+        store.remove('account')
+        store.remove('wifs')
+        location.reload()
+        // TODO VUEX logout
+    }
 }
 </script>
-
-<style>
-</style>
