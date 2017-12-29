@@ -129,8 +129,8 @@
     export default class Data extends Vue
     {
         @State auth
-        @Mutation balanceUp
-        @Mutation contactAdd
+        @Mutation riseUpBalance
+        @Mutation addContact
 
         public isOpenDecodedDataModal = false;
         public isOpenedModalPhone = false;
@@ -193,8 +193,8 @@
                 {
                     // TODO save this.phoneNumber into DB by backend
 
-                    this.balanceUp(1);
-                    this.contactAdd({
+                    this.riseUpBalance(1);
+                    this.addContact({
                         value: this.phoneNumber,
                         type: 'phone',
                         global: false
@@ -271,8 +271,8 @@
 
             if( userInitiated )
             {
-                this.balanceUp(2);
-                this.contactAdd({
+                this.riseUpBalance(2);
+                this.addContact({
                     avatar: social.info.avatar,
                     value: social.info.name,
                     type: socialName,

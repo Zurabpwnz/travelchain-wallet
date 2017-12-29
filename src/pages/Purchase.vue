@@ -102,8 +102,8 @@
     export default class Purchase extends Vue
     {
         @State auth
-        @Mutation balanceDown
-        @Action buyableDataChangeState
+        @Mutation riseDownBalance
+        @Action changeStateBuyableData
 
         public isOpenDecodedDataModal = false
         public isOpenPurchasingModal = false
@@ -173,12 +173,12 @@
             }
             else
             {
-                this.buyableDataChangeState({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType })
+                this.changeStateBuyableData({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType })
                 .then((res) =>
                 {
                     if ( res )
                     {
-                        this.balanceDown(this.requestedPrice);
+                        this.riseDownBalance(this.requestedPrice);
                         this.closePurchasingModal();
                     }
                     else

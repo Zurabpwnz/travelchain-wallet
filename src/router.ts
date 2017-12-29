@@ -132,13 +132,13 @@ if (store.get('account')) {
 }
 
 // TODO bind and save by backend
-if (store.get('account.balance')) vuex.commit('balanceSet', store.get('account.balance'));
+if (store.get('account.balance')) vuex.commit('setBalance', store.get('account.balance'));
 
 // TODO bind and save by backend
 if (store.get('account.contacts')) {
   let contacts = store.get('account.contacts');
   for ( let key in contacts ) {
-    vuex.commit('contactAdd', contacts[key]);
+    vuex.commit('addContact', contacts[key]);
   }
 }
 
@@ -146,7 +146,7 @@ if (store.get('account.contacts')) {
 if (store.get('account.proposals')) {
   let proposals = store.get('account.proposals');
   for ( let key in proposals ) {
-    vuex.commit('proposalAdd', proposals[key]);
+    vuex.commit('addProposal', proposals[key]);
   }
 }
 
@@ -154,7 +154,7 @@ if (store.get('account.proposals')) {
 if (store.get('account.buyabledata')) {
   let buyabledata = store.get('account.buyabledata');
   for ( let key in buyabledata ) {
-    vuex.commit('buyableDataAdd', buyabledata[key]);
+    vuex.commit('addBuyableData', buyabledata[key]);
   }
 }
 

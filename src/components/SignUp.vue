@@ -93,8 +93,6 @@ export default class SignUpPresentation extends Vue {
   @Prop()
   validator: SignUpForm
 
-  isSubbmitAllowed: boolean = true
-
   username: string = ''
   password: string = ''
   repeatPassword: string = ''

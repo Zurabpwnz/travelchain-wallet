@@ -50,8 +50,8 @@
     export default class Proposals extends Vue
     {
         @State auth
-        @Mutation balanceUp
-        @Action proposalRemove
+        @Mutation riseUpBalance
+        @Action removeProposal
 
         public tableProposalsColumns = [
             { label: 'Username', field: 'username'},
@@ -62,7 +62,7 @@
 
         declineProposal (user, type)
         {
-            this.proposalRemove({ user, type });
+            this.removeProposal({ user, type });
         }
 
         acceptProposal (user, type)
@@ -87,12 +87,12 @@
             }
             else
             {
-                this.proposalRemove({ user, type })
+                this.removeProposal({ user, type })
                 .then((res) =>
                 {
                     if( res )
                     {
-                        this.balanceUp(proposalPrice);
+                        this.riseUpBalance(proposalPrice);
                     }
                     else
                     {

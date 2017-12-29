@@ -12,13 +12,13 @@ const state: LoginState = {
 };
 
 const mutations: MutationTree<LoginState> = {
-    login(state, username: string) {
+    login (state, username: string) {
         state.isLoggedIn = true;
         state.username = username;
     },
 
 
-    contactAdd(state, contact: Object) {
+    addContact (state, contact: Object) {
         state.userContacts.push(contact);
 
         // TODO bind and save by backend
@@ -26,14 +26,14 @@ const mutations: MutationTree<LoginState> = {
     },
 
 
-    proposalAdd(state, proposal: Object) {
+    addProposal (state, proposal: Object) {
         state.userProposals.push(proposal);
 
         // TODO bind and save by backend
         store.set('account.proposals', state.userProposals);
     },
 
-    proposalRemove(state, index: number) {
+    removeProposal (state, index: number) {
         state.userProposals.splice(index, 1);
 
         // TODO bind and save by backend
@@ -41,14 +41,14 @@ const mutations: MutationTree<LoginState> = {
     },
 
 
-    buyableDataAdd(state, data: Object) {
+    addBuyableData (state, data: Object) {
         state.buyableData.push(data);
 
         // TODO bind and save by backend
         store.set('account.buyabledata', state.buyableData);
     },
 
-    buyableDataChangeState(state, index: number): boolean {
+    changeStateBuyableData (state, index: number): boolean {
         if ( !( state.buyableData[index] as any ).requested )
             ( state.buyableData[index] as any ).requested = true;
         else
@@ -60,7 +60,7 @@ const mutations: MutationTree<LoginState> = {
     },
 
 
-    balanceSet(state, amount: number) {
+    setBalance (state, amount: number) {
         state.userBalance = Number(amount);
         if (state.userBalance < 0) state.userBalance = 0;
 
@@ -68,34 +68,34 @@ const mutations: MutationTree<LoginState> = {
         store.set('account.balance', state.userBalance);
     },
 
-    balanceUp(state, amount: number) {
-        mutations.balanceSet(state, state.userBalance + Number(amount));
+    riseUpBalance (state, amount: number) {
+        mutations.setBalance(state, state.userBalance + Number(amount));
     },
 
-    balanceDown(state, amount: number) {
-        mutations.balanceSet(state, state.userBalance - Number(amount));
+    riseDownBalance (state, amount: number) {
+        mutations.setBalance(state, state.userBalance - Number(amount));
     }
 };
 
 const actions: ActionTree<LoginState, MutationTree<LoginState>> = {
-    proposalRemove(context, data: Object): boolean {
-        let finddata = data as any;
+    removeProposal (context, data: Object): boolean {
+        let desiredData = data as any;
         for (let i in state.userProposals) {
             let proposal = state.userProposals[i] as any;
-            if (proposal.username === finddata.user && proposal.type === finddata.type) {
-                context.commit('proposalRemove', i);
+            if (proposal.username === desiredData.user && proposal.type === desiredData.type) {
+                context.commit('removeProposal', i);
                 return true;
             }
         }
         return false;
     },
 
-    buyableDataChangeState(context, data: Object): boolean {
-        let finddata = data as any;
+    changeStateBuyableData (context, data: Object): boolean {
+        let desiredData = data as any;
         for (let i in state.buyableData) {
             let data = state.buyableData[i] as any;
-            if (data.username === finddata.user && data.type === finddata.type) {
-                context.commit('buyableDataChangeState', i);
+            if (data.username === desiredData.user && data.type === desiredData.type) {
+                context.commit('changeStateBuyableData', i);
                 return true;
             }
         }
