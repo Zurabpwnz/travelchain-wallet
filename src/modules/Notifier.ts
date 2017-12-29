@@ -36,14 +36,13 @@ export default class Notifier {
         this.notifiesList.push(data);
         this.refresh();
 
-        if ( data.autohide )
-            setTimeout(() => {
-                this.apply((el, comp, index, ref) => {
-                    if ( data.id === ref ) this.remove(comp);
-                });
-                this.refresh();
-            },
-            8000);
+        setTimeout(() => {
+            this.apply((el, comp, index, ref) => {
+                if ( data.id === ref ) this.remove(comp);
+            });
+            this.refresh();
+        },
+        5000);
     }
 
     static listen(listener) {

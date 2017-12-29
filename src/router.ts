@@ -91,19 +91,38 @@ export const AppRouter = new VueRouter({
 if (!store.get('account.proposals')) {
     store.set('account.proposals', [
         {
-            username: 'TheDevTom',
+            username: 'Avral',
             type: 'Google',
             amount: 16,
         },
         {
-            username: 'TheDevTom',
+            username: 'Avral',
             type: 'Vk',
             amount: 5,
         },
         {
-            username: 'TheDevTom',
+            username: 'Avral',
             type: 'Facebook',
             amount: 7,
+        },
+    ]);
+}
+if (!store.get('account.buyabledata')) {
+    store.set('account.buyabledata', [
+        {
+            username: 'Avral',
+            type: 'Google',
+            requested: false,
+        },
+        {
+            username: 'Avral',
+            type: 'Vk',
+            requested: false,
+        },
+        {
+            username: 'Avral',
+            type: 'Facebook',
+            requested: false,
         },
     ]);
 }
@@ -128,6 +147,14 @@ if (store.get('account.proposals')) {
   let proposals = store.get('account.proposals');
   for ( let key in proposals ) {
     vuex.commit('proposalAdd', proposals[key]);
+  }
+}
+
+// TODO bind and save by backend
+if (store.get('account.buyabledata')) {
+  let buyabledata = store.get('account.buyabledata');
+  for ( let key in buyabledata ) {
+    vuex.commit('buyableDataAdd', buyabledata[key]);
   }
 }
 

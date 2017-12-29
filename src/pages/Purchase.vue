@@ -16,10 +16,13 @@
             q-icon.head-icon(name="search")
             | Data Search - find and buy information with TT
         q-card-main
-            q-data-table(:data="tableOfferedData" :columns="tableColumns")
+            q-data-table(:data="auth.buyableData" :columns="tableColumns")
                 template(slot="col-action" slot-scope="cell")
-                    q-btn(color="blue" @click="openPurchasingModal(cell.row.username, cell.row.type)")
-                        | Buy
+                    template(v-if="!cell.row.requested")
+                        q-btn(color="blue" @click="openPurchasingModal(cell.row.username, cell.row.type)")
+                            | Buy
+                    template(v-else) Waiting for confirmation...
+
 
 
 
@@ -100,6 +103,7 @@
     {
         @State auth
         @Mutation balanceDown
+        @Mutation buyableDataChangeState
 
         public isOpenDecodedDataModal = false
         public isOpenPurchasingModal = false
@@ -126,13 +130,6 @@
             {
                 "username": "TheDevTom",
                 "type": "Facebook",
-            },
-        ];
-
-        public tableOfferedData = [
-            {
-                "username": "DrGmes",
-                "type": "Google",
             },
         ];
 
@@ -176,32 +173,9 @@
             }
             else
             {
-                let isFindedNeedData = false;
-                for ( let i in this.tableOfferedData )
-                {
-                    if ( this.tableOfferedData[i].username == this.watchBuyingFromUser
-                        && this.tableOfferedData[i].type == this.watchBuyingFromType )
-                    {
-                        this.tableOfferedData.splice(Number(i), 1);
-                        isFindedNeedData = true;
-                        // TODO save status 'Requested' by backend
-                        break;
-                    }
-                }
-
-                if ( !isFindedNeedData )
-                {
-                    Notifier.notify({
-                        msg: 'No finded needed data for purchasing. Try again',
-                        id: 'nofindedneededdata',
-                        isNegative: true,
-                    });
-                }
-                else
-                {
-                    this.balanceDown(this.requestedPrice);
-                    this.closePurchasingModal();
-                }
+                this.buyableDataChangeState({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType });
+                this.balanceDown(this.requestedPrice);
+                this.closePurchasingModal();
             }
         }
     }

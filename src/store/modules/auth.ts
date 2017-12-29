@@ -5,9 +5,10 @@ import {LoginState} from '../../types';
 const state: LoginState = {
     username: '',
     isLoggedIn: false,
-    userBalance: 0,
+    userBalance: 10,
     userContacts: [],
     userProposals: [],
+    buyableData: [],
 };
 
 const mutations: MutationTree<LoginState> = {
@@ -44,6 +45,32 @@ const mutations: MutationTree<LoginState> = {
 
         // TODO bind and save by backend
         store.set('account.proposals', state.userProposals);
+    },
+
+
+    buyableDataAdd(state, data: Object) {
+        state.buyableData.push(data);
+
+        // TODO bind and save by backend
+        store.set('account.buyabledata', state.buyableData);
+    },
+
+    buyableDataChangeState(state, data: Object) {
+        let finddata = data as any;
+        for (let i in state.buyableData) {
+            let data = state.buyableData[i] as any;
+            if (data.username === finddata.user && data.type === finddata.type) {
+                if ( !( state.buyableData[i] as any ).requested )
+                    ( state.buyableData[i] as any ).requested = true;
+                else
+                    state.buyableData.splice(Number(i), 1);
+
+                break;
+            }
+        }
+
+        // TODO bind and save by backend
+        store.set('account.buyabledata', state.buyableData);
     },
 
 
