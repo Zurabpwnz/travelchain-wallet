@@ -1,5 +1,5 @@
 import store from '../../../node_modules/store';
-import {MutationTree} from 'vuex';
+import {ActionTree, MutationTree} from 'vuex';
 import {LoginState} from '../../types';
 
 const state: LoginState = {
@@ -33,15 +33,8 @@ const mutations: MutationTree<LoginState> = {
         store.set('account.proposals', state.userProposals);
     },
 
-    proposalRemove(state, data: Object) {
-        let finddata = data as any;
-        for (let i in state.userProposals) {
-            let proposal = state.userProposals[i] as any;
-            if (proposal.username === finddata.user && proposal.type === finddata.type) {
-                state.userProposals.splice(Number(i), 1);
-                break;
-            }
-        }
+    proposalRemove(state, index: number) {
+        state.userProposals.splice(index, 1);
 
         // TODO bind and save by backend
         store.set('account.proposals', state.userProposals);
@@ -55,22 +48,15 @@ const mutations: MutationTree<LoginState> = {
         store.set('account.buyabledata', state.buyableData);
     },
 
-    buyableDataChangeState(state, data: Object) {
-        let finddata = data as any;
-        for (let i in state.buyableData) {
-            let data = state.buyableData[i] as any;
-            if (data.username === finddata.user && data.type === finddata.type) {
-                if ( !( state.buyableData[i] as any ).requested )
-                    ( state.buyableData[i] as any ).requested = true;
-                else
-                    state.buyableData.splice(Number(i), 1);
-
-                break;
-            }
-        }
+    buyableDataChangeState(state, index: number): boolean {
+        if ( !( state.buyableData[index] as any ).requested )
+            ( state.buyableData[index] as any ).requested = true;
+        else
+            state.buyableData.splice(index, 1);
 
         // TODO bind and save by backend
         store.set('account.buyabledata', state.buyableData);
+        return false;
     },
 
 
@@ -91,7 +77,34 @@ const mutations: MutationTree<LoginState> = {
     }
 };
 
+const actions: ActionTree<LoginState, MutationTree<LoginState>> = {
+    proposalRemove(context, data: Object): boolean {
+        let finddata = data as any;
+        for (let i in state.userProposals) {
+            let proposal = state.userProposals[i] as any;
+            if (proposal.username === finddata.user && proposal.type === finddata.type) {
+                context.commit('proposalRemove', i);
+                return true;
+            }
+        }
+        return false;
+    },
+
+    buyableDataChangeState(context, data: Object): boolean {
+        let finddata = data as any;
+        for (let i in state.buyableData) {
+            let data = state.buyableData[i] as any;
+            if (data.username === finddata.user && data.type === finddata.type) {
+                context.commit('buyableDataChangeState', i);
+                return true;
+            }
+        }
+        return false;
+    },
+};
+
 export const auth = {
     state,
-    mutations
+    mutations,
+    actions,
 };

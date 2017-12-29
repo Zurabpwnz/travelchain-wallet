@@ -18,7 +18,7 @@
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
-    import { State, Mutation } from 'vuex-class';
+    import { State, Mutation, Action } from 'vuex-class';
     import {
         QLayout,
         QInput,
@@ -51,7 +51,7 @@
     {
         @State auth
         @Mutation balanceUp
-        @Mutation proposalRemove
+        @Action proposalRemove
 
         public tableProposalsColumns = [
             { label: 'Username', field: 'username'},
@@ -87,8 +87,21 @@
             }
             else
             {
-                this.proposalRemove({ user, type });
-                this.balanceUp(proposalPrice);
+                this.proposalRemove({ user, type })
+                .then((res) =>
+                {
+                    if( res )
+                    {
+                        this.balanceUp(proposalPrice);
+                    }
+                    else
+                    {
+                        Notifier.notify({
+                            msg: 'Unknown error',
+                            isNegative: true,
+                        });
+                    }
+                });
             }
         }
     }

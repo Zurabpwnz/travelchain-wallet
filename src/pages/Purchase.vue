@@ -70,7 +70,7 @@
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
-    import { State, Mutation } from 'vuex-class';
+    import { State, Mutation, Action } from 'vuex-class';
     import {
         QLayout,
         QInput,
@@ -103,7 +103,7 @@
     {
         @State auth
         @Mutation balanceDown
-        @Mutation buyableDataChangeState
+        @Action buyableDataChangeState
 
         public isOpenDecodedDataModal = false
         public isOpenPurchasingModal = false
@@ -173,9 +173,22 @@
             }
             else
             {
-                this.buyableDataChangeState({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType });
-                this.balanceDown(this.requestedPrice);
-                this.closePurchasingModal();
+                this.buyableDataChangeState({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType })
+                .then((res) =>
+                {
+                    if ( res )
+                    {
+                        this.balanceDown(this.requestedPrice);
+                        this.closePurchasingModal();
+                    }
+                    else
+                    {
+                        Notifier.notify({
+                            msg: 'Unknown error',
+                            isNegative: true,
+                        });
+                    }
+                });
             }
         }
     }
