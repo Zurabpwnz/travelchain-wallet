@@ -8,6 +8,7 @@ const state: LoginState = {
     userBalance: 10,
     userContacts: [],
     userProposals: [],
+    userBoughtData: [],
     buyableData: [],
 };
 
@@ -41,6 +42,14 @@ const mutations: MutationTree<LoginState> = {
     },
 
 
+    buyData (state, data: Object) {
+        state.userBoughtData.push(data);
+
+        // TODO bind and save by backend
+        store.set('account.boughtdata', state.userBoughtData);
+    },
+
+
     addBuyableData (state, data: Object) {
         state.buyableData.push(data);
 
@@ -48,15 +57,11 @@ const mutations: MutationTree<LoginState> = {
         store.set('account.buyabledata', state.buyableData);
     },
 
-    changeStateBuyableData (state, index: number): boolean {
-        if ( !( state.buyableData[index] as any ).requested )
-            ( state.buyableData[index] as any ).requested = true;
-        else
-            state.buyableData.splice(index, 1);
+    changeStateBuyableData (state, index: number) {
+        state.buyableData.splice(index, 1);
 
         // TODO bind and save by backend
         store.set('account.buyabledata', state.buyableData);
-        return false;
     },
 
 
@@ -96,6 +101,9 @@ const actions: ActionTree<LoginState, MutationTree<LoginState>> = {
             let data = state.buyableData[i] as any;
             if (data.username === desiredData.user && data.type === desiredData.type) {
                 context.commit('changeStateBuyableData', i);
+                context.commit('buyData', Object.assign(data, {
+                    requested: true
+                }));
                 return true;
             }
         }

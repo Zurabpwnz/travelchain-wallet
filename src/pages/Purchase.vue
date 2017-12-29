@@ -4,10 +4,12 @@
             q-icon.head-icon(name="vertical_align_bottom")
             | Purchased Data - check purchased information
         q-card-main
-            q-data-table(:data="tablePurchasedData" :columns="tableColumns")
+            q-data-table(:data="auth.userBoughtData" :columns="tableColumns")
                 template(slot="col-action" slot-scope="cell")
-                    q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
-                        | Show
+                    template(v-if="!cell.row.requested")
+                        q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
+                            | Show
+                    template(v-else) Waiting for confirmation...
 
 
 
@@ -18,10 +20,8 @@
         q-card-main
             q-data-table(:data="auth.buyableData" :columns="tableColumns")
                 template(slot="col-action" slot-scope="cell")
-                    template(v-if="!cell.row.requested")
-                        q-btn(color="blue" @click="openPurchasingModal(cell.row.username, cell.row.type)")
-                            | Buy
-                    template(v-else) Waiting for confirmation...
+                    q-btn(color="blue" @click="openPurchasingModal(cell.row.username, cell.row.type)")
+                        | Buy
 
 
 
@@ -108,29 +108,14 @@
         public isOpenDecodedDataModal = false
         public isOpenPurchasingModal = false
         public requestedPrice = 0
-        public watchBuyingFromUser = ""
-        public watchBuyingFromType = ""
+        public sellerUser = ""
+        public sellerType = ""
         public decodedUserData = ""
 
         public tableColumns = [
             { label: 'Username', field: 'username', filter: true, },
             { label: 'Type', field: 'type', filter: true, },
             { label: 'Action', field: 'action', }
-        ];
-
-        public tablePurchasedData = [
-            {
-                "username": "TheDevTom",
-                "type": "Google",
-            },
-            {
-                "username": "TheDevTom",
-                "type": "VK",
-            },
-            {
-                "username": "TheDevTom",
-                "type": "Facebook",
-            },
         ];
 
         openDecodedDataModal (data)
@@ -141,48 +126,41 @@
 
         openPurchasingModal (user, type)
         {
-            this.watchBuyingFromUser = user;
-            this.watchBuyingFromType = type;
+            this.sellerUser = user;
+            this.sellerType = type;
             this.isOpenPurchasingModal = true;
         }
 
         closePurchasingModal ()
         {
-            this.watchBuyingFromUser = "";
-            this.watchBuyingFromType = "";
+            this.sellerUser = "";
+            this.sellerType = "";
             this.isOpenPurchasingModal = false;
         }
 
         buyData ()
         {
-            if ( !this.requestedPrice || this.requestedPrice == 0 )
-            {
+            if ( !this.requestedPrice || this.requestedPrice == 0 ) {
                 Notifier.notify({
                     msg: 'Offered price must been more of null',
                     id: 'offeredpurchaseprice',
                     isNegative: true,
                 });
             }
-            else if ( this.requestedPrice > this.auth.userBalance )
-            {
+            else if ( this.requestedPrice > this.auth.userBalance ) {
                 Notifier.notify({
                     msg: 'Your haven\'t the required number of TT',
                     id: 'offeredpurchasepricehavent',
                     isNegative: true,
                 });
-            }
-            else
-            {
-                this.changeStateBuyableData({ user: this.watchBuyingFromUser, type: this.watchBuyingFromType })
+            } else {
+                this.changeStateBuyableData({ user: this.sellerUser, type: this.sellerType })
                 .then((res) =>
                 {
-                    if ( res )
-                    {
+                    if ( res ) {
                         this.riseDownBalance(this.requestedPrice);
                         this.closePurchasingModal();
-                    }
-                    else
-                    {
+                    } else {
                         Notifier.notify({
                             msg: 'Unknown error',
                             isNegative: true,

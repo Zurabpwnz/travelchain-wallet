@@ -151,6 +151,14 @@ if (store.get('account.proposals')) {
 }
 
 // TODO bind and save by backend
+if (store.get('account.boughtdata')) {
+  let buyabledata = store.get('account.boughtdata');
+  for ( let key in buyabledata ) {
+    vuex.commit('buyData', buyabledata[key]);
+  }
+}
+
+// TODO bind and save by backend
 if (store.get('account.buyabledata')) {
   let buyabledata = store.get('account.buyabledata');
   for ( let key in buyabledata ) {

@@ -4,5 +4,6 @@ export interface LoginState {
   userBalance: number,
   userContacts: Array<Object>,
   userProposals: Array<Object>,
+  userBoughtData: Array<Object>,
   buyableData: Array<Object>,
 }
