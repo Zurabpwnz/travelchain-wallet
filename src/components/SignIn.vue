@@ -1,41 +1,40 @@
 <template lang="pug">
-    .row.justify-center.items-center.max-available-height.col-12
-        q-card(:flat="true").col-xs-12.col-md-6.col-sm-10.md-gutter
-            q-card-main
-                q-field(
-                    icon="fa-user"
-                    helper="Enter your username"
-                    :error="!errors.username.isValid"
-                    :error-label="errors.username.errorMessage"
+    div
+        q-card-main
+            q-field(
+                icon="fa-user"
+                helper="Enter your username"
+                :error="!errors.username.isValid"
+                :error-label="errors.username.errorMessage"
+            )
+                q-input(
+                    float-label="Username"
+                    @input="updateUsername"
+                    v-model="username"
                 )
-                    q-input(
-                        float-label="Username"
-                        @input="updateUsername"
-                        v-model="username"
-                    )
 
-                q-field(
-                    icon="fa-key"
-                    helper="Enter your password"
-                    :error="!errors.password.isValid"
-                    :error-label="errors.password.errorMessage"
-                    count
+            q-field(
+                icon="fa-key"
+                helper="Enter your password"
+                :error="!errors.password.isValid"
+                :error-label="errors.password.errorMessage"
+                count
+            )
+                q-input(
+                    type="password"
+                    float-label="Password"
+                    v-model="password",
+                    @input="updatePassword"
                 )
-                    q-input(
-                        type="password"
-                        float-label="Password"
-                        v-model="password",
-                        @input="updatePassword"
-                    )
-            q-card-actions(align="center")
-                q-btn.full-width(
-                  @click="signIn()"
-                  :disable="isSubbmitAllowed" 
-                  big 
-                  color="secondary"
-                  )
-                    | Sign In
-            slot(name="footer")   
+        q-card-actions(align="center")
+            q-btn.full-width(
+              @click="signIn()"
+              :disable="isSubbmitAllowed"
+              big
+              color="secondary"
+              )
+                | Sign In
+        slot(name="footer")
 
 </template>
 

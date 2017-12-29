@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Welcome from './pages/Welcome.vue';
+import Welcome from './pages/Dashboard.vue';
 import Analyse from './pages/Analyse.vue';
 import Data from './pages/Data.vue';
 import News from './pages/News.vue';
@@ -26,7 +26,7 @@ export const AppRouter = new VueRouter({
         auth: true
       }
     },
-    { path: '/sign-in',
+    { path: '/',
       name: 'login',
       component: SignIn,
       meta: {

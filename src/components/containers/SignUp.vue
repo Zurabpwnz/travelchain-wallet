@@ -1,6 +1,6 @@
 <template lang="pug">
     sign-up(
-      :validator="$v" 
+      :validator="$v"
       @usernameChanged="e => username = e"
       @passwordChanged="e => password = e"
       @repeatPasswordChanged="e => repeatPassword = e",

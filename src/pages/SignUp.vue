@@ -1,5 +1,6 @@
 <template lang="pug">
-  sign-up-container
+    .row.justify-center.items-center.max-available-height.col-12
+        sign-up-container.col-xs-12.col-md-6.col-sm-10.md-gutter
 </template>
 
 <script lang="ts">
