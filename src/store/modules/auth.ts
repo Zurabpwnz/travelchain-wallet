@@ -1,6 +1,7 @@
 import store from '../../../node_modules/store';
 import {ActionTree, MutationTree} from 'vuex';
 import {LoginState} from '../../types';
+import Notifier from '../../modules/Notifier';
 
 const state: LoginState = {
     username: '',
@@ -75,10 +76,12 @@ const mutations: MutationTree<LoginState> = {
 
     riseUpBalance (state, amount: number) {
         mutations.setBalance(state, state.userBalance + Number(amount));
+        Notifier.notify({ msg: 'You received ' + amount + ' TT!', icon: 'trending up' });
     },
 
     riseDownBalance (state, amount: number) {
         mutations.setBalance(state, state.userBalance - Number(amount));
+        Notifier.notify({ msg: 'You spent ' + amount + ' TT!', icon: 'trending down' });
     }
 };
 
