@@ -1,6 +1,6 @@
 <template lang="pug">
     div#welcome-page.column.items-center.justify-center.max-available-height
-        img(src="/statics/logo-travelchain.png")
+        img(src="/statics/favicon-travelai.png")
         p Welcome to TravelAi - service where you can exchange your social Data
         br
         br
