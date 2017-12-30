@@ -4,7 +4,7 @@ import {ChainStore, FetchChain, Login, PrivateKey} from 'bitsharesjs'
 import {Apis, ChainConfig} from 'bitsharesjs-ws'
 
 
-const FAUCET_URL = 'http://dacom.io/faucet/'
+const FAUCET_URL = 'https://sandbox.travelchain.io/api/faucet/'
 
 // Patch for TravelChain testnet node
 ChainConfig.networks.TTT_TESTNET = {
