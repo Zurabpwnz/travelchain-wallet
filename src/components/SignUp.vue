@@ -45,11 +45,13 @@
                 )
         q-card-actions(align="center")
             q-btn.full-width(
-              @click="submit"
-              :disable="validator.$invalid"
               big
+              :value="isProcessValidating"
+              :disable="validator.$invalid || isProcessValidating"
               color="secondary"
+              @click="submit"
               )
+                q-spinner-oval(slot="loading")
                 | Sign Up
 
         slot(name="footer")
@@ -57,70 +59,79 @@
 
 <script lang="ts">
 import Vue from "vue"
-import { Component, Model, Prop, Emit } from 'vue-property-decorator'
+import {Component, Model, Prop, Emit} from 'vue-property-decorator'
 import {
-  QField,
-  QInput,
-  QCard,
-  QCardTitle,
-  QCardMain,
-  QCardActions,
-  QBtn
+    QField,
+    QInput,
+    QCard,
+    QCardTitle,
+    QCardMain,
+    QSpinnerOval,
+    QCardActions,
+    QBtn
 } from 'quasar'
 
 
 export interface SignUpForm {
-  form: {
-    username: string;
-    password: string;
-    repeatPassword: string;
-  }
+    form: {
+        username: string;
+        password: string;
+        repeatPassword: string;
+    }
 }
 
 @Component({
-  components: {
-    QField,
-    QInput,
-    QCard,
-    QCardActions,
-    QCardMain,
-    QBtn
-  }
+    components: {
+        QField,
+        QInput,
+        QCard,
+        QSpinnerOval,
+        QCardActions,
+        QCardMain,
+        QBtn
+    }
 })
-
 export default class SignUpPresentation extends Vue {
-  @Prop()
-  validator: SignUpForm
+    @Prop()
+    validator: SignUpForm
 
-  username: string = ''
-  password: string = ''
-  repeatPassword: string = ''
+    @Prop()
+    isProcessValidating: boolean
 
-  @Emit('usernameChanged')
-  updateUsername (e) {/* Pass username to the container component */}
+    username: string = ''
+    password: string = ''
+    repeatPassword: string = ''
 
-  @Emit('passwordChanged')
-  updatePassword (e) {/* Pass password to the container component */}
+    @Emit('usernameChanged')
+    updateUsername(e) {/* Pass username to the container component */
+    }
 
-  @Emit('repeatPasswordChanged')
-  updateRepeatPassword (e) {/* Pass repeatPassword to the container component */}
+    @Emit('passwordChanged')
+    updatePassword(e) {/* Pass password to the container component */
+    }
 
-  @Emit('submit')
-  submit() {}
+    @Emit('repeatPasswordChanged')
+    updateRepeatPassword(e) {/* Pass repeatPassword to the container component */
+    }
 
-  conditionIcon (property) {
-    const v = this.validator;
-    return [
-      { icon: 'error', error: true, handler () {}}, 
-      { 
-        icon: 'done', 
-        condition: (!v[property].$error && v[property].$dirty), 
-        handler () {}
-      }
-    ]
-  }
+    @Emit('submit')
+    submit() {
+    }
+
+    conditionIcon(property) {
+        const v = this.validator;
+        return [
+            {
+                icon: 'error', error: true, handler() {
+                }
+            },
+            {
+                icon: 'done',
+                condition: (!v[property].$error && v[property].$dirty),
+                handler() {
+                }
+            }
+        ]
+    }
 }
 </script>
-
-<style lang="stylus">
-</style>
