@@ -315,7 +315,7 @@
         {
             let codeFormat = String( this.countries[ this.countryCode ].format );
             codeFormat = codeFormat.replace(new RegExp(/ /g), '');
-            codeFormat = codeFormat.replace(new RegExp(/[\(|\)]/g), '');
+            codeFormat = codeFormat.replace(new RegExp(/[\(|\)|-]/g), '');
 
             value = value.match(/([0-9])/g);
             value = value ? value.join('') : "";
@@ -339,7 +339,7 @@
         {
             let codeFormat = String( this.countries[ this.countryCode ].format );
             codeFormat = codeFormat.replace(new RegExp(/ /g), '');
-            codeFormat = codeFormat.replace(new RegExp(/[\(|\)]/g), '');
+            codeFormat = codeFormat.replace(new RegExp(/[\(|\)|-]/g), '');
 
             return this.phoneNumber.length == codeFormat.length;
         }
