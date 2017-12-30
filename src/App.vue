@@ -5,7 +5,7 @@
     q-layout(ref="layout" view="lHh Lpr fff" :left-class="{'bg-grey-2': true}")
       q-toolbar(slot="header" color="#2c3d75")
 
-        q-btn(flat @click="$refs.layout.toggleLeft()")
+        q-btn(flat @click="$refs.layout.toggleLeft()" v-if="auth.isLoggedIn")
           q-icon(name="menu")
 
         img.header-logo(src="/statics/favicon-travelchain.png")
@@ -16,7 +16,7 @@
         
   
   
-      div(slot="left")
+      div(slot="left" v-if="auth.isLoggedIn")
         q-list(no-border link inset-delimiter)
           q-item(v-if="auth.isLoggedIn" @click="$router.push('/')")
             q-item-side(icon="face")
@@ -40,11 +40,15 @@
 
           q-item(v-if="auth.isLoggedIn" @click="$router.push('/proposals')")
             q-item-side(icon="monetization_on")
-            q-item-main(label="My proposals" sublabel="Proposals for the purchase of my data")  
-         
-          q-item(v-if="!auth.isLoggedIn" @click="$router.push('/sign-in')")
-            q-item-side(icon="fa-sign-in")
-            q-item-main(label="Login" )
+            q-item-main(label="My proposals" sublabel="Proposals for the purchase of my data")
+
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/analyze')")
+            q-item-side(icon="assessment")
+            q-item-main(label="Ai" sublabel="Take your analyzed data")
+
+          q-item(v-if="auth.isLoggedIn" @click="$router.push('/hypergraph')")
+            q-item-side(icon="equalizer")
+            q-item-main(label="Hypergraph" sublabel="View your data in smart graph")
 
           q-item(v-if="auth.isLoggedIn" @click="logout")
             q-item-side(icon="exit_to_app")

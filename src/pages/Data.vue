@@ -93,7 +93,6 @@
     import Notifier from '../modules/Notifier';
     import { State, Mutation } from 'vuex-class';
     import {
-        Alert,
         QLayout,
         QInput,
         QCard,
@@ -111,7 +110,6 @@
     @Component({
         name: 'appdata',
         components: {
-            Alert,
             QLayout,
             QInput,
             QCard,

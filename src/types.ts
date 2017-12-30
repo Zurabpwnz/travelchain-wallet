@@ -6,4 +6,5 @@ export interface LoginState {
   userProposals: Array<Object>,
   userBoughtData: Array<Object>,
   buyableData: Array<Object>,
+  analyzedData: Array<Object>,
 }

@@ -11,12 +11,32 @@ const state: LoginState = {
     userProposals: [],
     userBoughtData: [],
     buyableData: [],
+    analyzedData: [],
 };
 
 const mutations: MutationTree<LoginState> = {
     login (state, username: string) {
         state.isLoggedIn = true;
         state.username = username;
+    },
+
+
+    setBalance (state, amount: number) {
+        state.userBalance = Number(amount);
+        if (state.userBalance < 0) state.userBalance = 0;
+
+        // TODO bind and save by backend
+        store.set('account.balance', state.userBalance);
+    },
+
+    riseUpBalance (state, amount: number) {
+        mutations.setBalance(state, state.userBalance + Number(amount));
+        Notifier.notify({ msg: 'You received ' + amount + ' TT!', icon: 'trending up' });
+    },
+
+    riseDownBalance (state, amount: number) {
+        mutations.setBalance(state, state.userBalance - Number(amount));
+        Notifier.notify({ msg: 'You spent ' + amount + ' TT!', icon: 'trending down' });
     },
 
 
@@ -66,23 +86,12 @@ const mutations: MutationTree<LoginState> = {
     },
 
 
-    setBalance (state, amount: number) {
-        state.userBalance = Number(amount);
-        if (state.userBalance < 0) state.userBalance = 0;
+    addAnalyzedData (state, contact: Object) {
+        state.analyzedData.push(contact);
 
         // TODO bind and save by backend
-        store.set('account.balance', state.userBalance);
+        store.set('account.analyzeddata', state.analyzedData);
     },
-
-    riseUpBalance (state, amount: number) {
-        mutations.setBalance(state, state.userBalance + Number(amount));
-        Notifier.notify({ msg: 'You received ' + amount + ' TT!', icon: 'trending up' });
-    },
-
-    riseDownBalance (state, amount: number) {
-        mutations.setBalance(state, state.userBalance - Number(amount));
-        Notifier.notify({ msg: 'You spent ' + amount + ' TT!', icon: 'trending down' });
-    }
 };
 
 const actions: ActionTree<LoginState, MutationTree<LoginState>> = {
