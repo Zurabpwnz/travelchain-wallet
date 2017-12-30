@@ -8,7 +8,7 @@
         q-btn(flat @click="$refs.layout.toggleLeft()")
           q-icon(name="menu")
 
-        img.header-logo(src="/statics/logo.svg")
+        img.header-logo(src="/statics/favicon-travelchain.png")
       
         q-toolbar-title TravelChain
           div(slot="subtitle") Data Wallet
