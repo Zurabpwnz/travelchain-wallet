@@ -44,7 +44,7 @@
       name: 'error404',
       components: {
           QBtn,
-          QIcon
+          QIcon,
       }
   })
   export default class Error404 extends Vue {

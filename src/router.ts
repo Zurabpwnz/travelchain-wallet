@@ -68,22 +68,6 @@ export const AppRouter = new VueRouter({
             }
         },
         {
-            path: '/analyze',
-            name: 'analyze',
-            component: Analyze,
-            meta: {
-                auth: true
-            }
-        },
-        {
-            path: '/hypergraph',
-            name: 'hypergraph',
-            component: HyperGraph,
-            meta: {
-                auth: true
-            }
-        },
-        {
             path: '/proposals',
             name: 'proposals',
             component: Proposals,
