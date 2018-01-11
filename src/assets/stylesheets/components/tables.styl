@@ -1,5 +1,33 @@
 
 .q-data-table
+  border none
+  table:not(.responsive) th
+    border none !important
+  table
+    thead
+      tr
+        th
+          padding 15px 50px
+          color #383838
+          font-family Roboto
+          font-size 13px
+          font-weight 500
+          line-height 24px
+          background #f4f3f8
+    tbody
+      tr
+        background #fff
+        &:nth-child(even)
+          background #faf9fc
+        td
+          padding 15px 50px
+          color #383838
+          font-family Roboto
+          font-size 13px
+          font-weight 300
+          line-height 24px
+          border-bottom none !important
+
   .q-btn
     font-size 1em
     min-height 28px

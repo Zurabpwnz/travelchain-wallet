@@ -1,22 +1,54 @@
-
 @import "base/*"
 //@import "fonts/*"
 @import "components/*"
 @import "pages/*"
 
+//html
+//  font-size 10px
+
 body
   background $back
 
-.layout-header .header-logo
-  width auto
-  height 1.5em
-  margin-left 1em
+.layout-header
+  margin 0 !important
+  .header-logo
+    width auto
+    height 1.5em
+    margin-left 1em
 
 .layout-aside
   height 100vh
+  padding-top 50px
 
 main, .layout
   min-height 100% !important
 
+.q-card-container
+  padding 0 40px
+
 .max-available-height
   min-height: calc(100vh - 50px);
+
+.page-title
+  margin: 30px 0 0
+  color #131a75
+  font-family Roboto
+  font-size 18px
+  font-weight 400
+  line-height 24px
+
+.page-subtitle
+  margin: 0 0 10px
+  color #d1d1d1
+  font-family Roboto
+  font-size 13px
+  font-weight 300
+  line-height 24px
+
+.page-desc
+  margin: 0 0 15px
+  color: #131a75;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24px;

@@ -1,8 +1,11 @@
 <template lang="pug">
     q-layout
             q-card-title
-                q-icon.head-icon(name="vertical_align_top")
-                | My proposals - you can sell your information, if somebody request it 
+              h3.page-title Proposals
+              h4.page-subtitle Proposals of the purchase of my data
+
+              p.page-desc You can sell information, if somebode requests it
+
             q-card-main
                 q-data-table(:data="auth.userProposals" :columns="tableProposalsColumns")
                     template(slot="col-action" slot-scope="cell")

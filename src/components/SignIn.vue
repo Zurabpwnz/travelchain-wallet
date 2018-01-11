@@ -27,7 +27,7 @@
                     @input="updatePassword"
                 )
         q-card-actions(align="center")
-            q-btn.full-width(
+            q-btn(
               @click="signIn()"
               :disable="isSubbmitAllowed"
               big
