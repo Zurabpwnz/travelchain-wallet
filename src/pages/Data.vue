@@ -1,88 +1,90 @@
 <template lang="pug">
     q-layout
-        q-card
-            q-card-title
-                q-icon.head-icon(name="work")
-                | Basic Data-Sources - Connect your basic data-sources and get TravelToken for it.
-            q-card-main#social-logger
-                p(v-if="!isVerifiedPhone")
-                    q-btn.connect(icon="phone" @click="isOpenedModalPhone = true")
-                        span.cost
-                            | + 1 TT
-                        span.text
-                            | Phone
-
-                p(v-for="social in socials" v-if="socialsBinded.indexOf( social.name ) == -1")
-                    q-btn.connect(@click="connectSocial(social)")
-                        span.cost
-                            | + 2 TT
-                        span(:class="'fa fa-' + social.name")
-                        span.text
-                            | Bind social
+        q-card-title
+            h3.page-title My data
+            h4.page-subtitle Publish data into the blockchain
+            p.page-desc Connect your basic data sources and get TravelToken for it.
 
 
+        q-card-main#social-logger
+            p(v-if="!isVerifiedPhone")
+                q-btn.connect(icon="phone" @click="isOpenedModalPhone = true")
+                    span.text
+                        | Phone
+                span.cost
+                    | + 1 TT
 
-            q-card-separator
-            q-card-title
-                q-icon.head-icon(name="assignment ind")
-                | My Data - your published and encrypted data.
-
-            q-card-main
-                q-data-table(:data="tableContactsData" :columns="tableContactsColumns")
-                    template(slot="col-action" slot-scope="cell")
-                        q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
-                            | Show
-                    template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
-                        img.rounded(:src="cell.data")
+            p(v-for="social in socials" v-if="socialsBinded.indexOf( social.name ) == -1")
+                q-btn.connect(@click="connectSocial(social)")
+                    span(:class="'fa fa-' + social.name")
+                    span.text
+                        | Bind social
+                span.cost
+                    | + 2 TT
 
 
 
-            template(v-if="!isVerifiedPhone")
-                q-modal(ref="bindingPhoneModal" v-model="isOpenedModalPhone" minimized)
-                    h5
-                        | Bind your phone
 
-                    ai-phone(
-                        :number="phoneNumber"
-                        @onComplete="(number) => this.phoneNumber = number"
-                        @onClear="() => this.phoneNumber = ''"
-                    )
+        q-card-title
+            p.page-desc My data - published and encryped data.
 
-                    template(v-if="isWaitingForSMS")
-                        q-input(v-model="smsCode" placeholder="Enter any code")
-                        br
-                        q-btn(color="green" @click="connectPhoneNumber")
-                            | Bind number
 
-                    br(v-if="!isWaitingForSMS")
-                    q-btn(
-                        color="green"
-                        @click="connectPhoneNumber"
-                        :disabled="!phoneNumber.length"
-                        v-if="!isWaitingForSMS"
-                    )
-                        | Verify number
-
-                    q-btn(color="red" @click="isOpenedModalPhone = false")
-                        | Cancel
+        q-card-main
+            q-data-table(:data="tableContactsData" :columns="tableContactsColumns")
+              template(slot="col-action" slot-scope="cell")
+                q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
+                  | Show
+              template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
+                img.rounded(:src="cell.data")
 
 
 
-            q-modal(ref="decodedData" v-model="isOpenDecodedDataModal" minimized)
-                h5
-                    | View binded decoded Data
+        template(v-if="!isVerifiedPhone")
+            q-modal(ref="bindingPhoneModal" v-model="isOpenedModalPhone" minimized)
+              h5
+                | Bind your phone
 
-                q-input(
-                    type="textarea"
-                    v-model="decodedUserData"
-                    float-label="Decoded data"
-                    style="width: 600px; max-width: 100%"
-                )
+              ai-phone(
+              :number="phoneNumber"
+                @onComplete="(number) => this.phoneNumber = number"
+                  @onClear="() => this.phoneNumber = ''"
+              )
 
+              template(v-if="isWaitingForSMS")
+                q-input(v-model="smsCode" placeholder="Enter any code")
                 br
+                q-btn(color="green" @click="connectPhoneNumber")
+                  | Bind number
 
-                q-btn(@click="isOpenDecodedDataModal = false" color="blue")
-                    | Close
+              br(v-if="!isWaitingForSMS")
+              q-btn(
+              color="green"
+                @click="connectPhoneNumber"
+                  :disabled="!phoneNumber.length"
+              v-if="!isWaitingForSMS"
+              )
+                | Verify number
+
+              q-btn(color="red" @click="isOpenedModalPhone = false")
+                | Cancel
+
+
+
+        q-modal(ref="decodedData" v-model="isOpenDecodedDataModal" minimized)
+          h5
+            | View binded decoded Data
+
+          q-input(
+          type="textarea"
+          v-model="decodedUserData"
+          float-label="Decoded data"
+          style="width: 600px; max-width: 100%"
+          )
+
+          br
+
+          q-btn(@click="isOpenDecodedDataModal = false" color="blue")
+            | Close
 </template>
 
 <script lang="ts">
