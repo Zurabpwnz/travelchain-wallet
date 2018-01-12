@@ -9,7 +9,7 @@
             )
                 q-input(
                     float-label="Username"
-                    @input="updateUsername"
+                    @input="updateUsername(username, errors)"
                     v-model="username"
                 )
 
@@ -29,7 +29,7 @@
         q-card-actions(align="center")
             q-btn(
               @click="signIn()"
-              :disable="isSubbmitAllowed"
+              :disable="isSubmitAllowed"
               big
               color="secondary"
               )
@@ -72,7 +72,7 @@
       isPasswordValid: boolean
 
       @Emit('usernameChanged')
-      updateUsername (username) {}
+      updateUsername (username, errors) {}
 
       @Emit('passwordChanged')
       updatePassword (password) {}
@@ -85,7 +85,7 @@
       username: String = ''
       password: String = ''
 
-      get isSubbmitAllowed (): boolean {
+      get isSubmitAllowed (): boolean {
         return !this.username
               || !this.password
               || !this.errors.username.isValid
