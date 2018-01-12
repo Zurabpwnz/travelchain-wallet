@@ -120,7 +120,7 @@
 
         mounted() {
             Blockchain.init()
-                .catch(() => document.write('Not connected to node!'))
+            .catch(() => document.write('Not connected to node!'))
         }
 
         get username() {

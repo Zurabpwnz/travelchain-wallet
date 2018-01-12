@@ -23,14 +23,15 @@ body
 main, .layout
   min-height 100% !important
 
-.q-item.active
+.q-item.active, .q-item.active:hover
   background #027be3
+  transition 200ms
   color #fff
-  &:hover
-    color #757575
-    .q-item-sublabel
-      color #757575
+
   .q-item-sublabel
+    color #fff
+
+  .q-item-icon
     color #fff
 
 .q-card-container
@@ -49,7 +50,7 @@ main, .layout
 
 .page-subtitle
   margin: 0 0 10px
-  color #d1d1d1
+  color #999999
   font-family Roboto
   font-size 13px
   font-weight 300
