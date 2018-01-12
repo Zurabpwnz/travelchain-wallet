@@ -1,8 +1,11 @@
 <template lang="pug">
     q-layout
         q-card-title
-            q-icon.head-icon(name="vertical_align_bottom")
-            | Purchased Data - check purchased information
+            h3.page-title Buy data
+            h4.page-subtitle Perchase data from the blockchain
+
+            p.page-desc Purchased data - check purchased information.
+
         q-card-main
             q-data-table(:data="auth.userBoughtData" :columns="tableColumns")
                 template(slot="col-action" slot-scope="cell")
@@ -13,14 +16,13 @@
 
 
 
-        q-card-separator
         q-card-title
-            q-icon.head-icon(name="search")
-            | Data Search - find and buy information with TT
+            p.page-desc Data search - find and buy information with TT
+
         q-card-main
             q-data-table(:data="auth.buyableData" :columns="tableColumns")
                 template(slot="col-action" slot-scope="cell")
-                    q-btn(color="blue" @click="openPurchasingModal(cell.row.username, cell.row.type)")
+                    q-btn(color="pink" @click="openPurchasingModal(cell.row.username, cell.row.type)")
                         | Buy
 
 

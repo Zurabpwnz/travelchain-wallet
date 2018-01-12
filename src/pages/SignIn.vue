@@ -1,6 +1,7 @@
 <template lang="pug">
-    div#welcome-page.column.items-center.justify-center.max-available-height
+    div#welcome-page.column.items-center.justify-center
         img(src="/statics/favicon-travelai.png")
+
         p Welcome to TravelAi - service where you can exchange your social Data
         br
         br
@@ -11,13 +12,13 @@
 
 
         q-modal#welcome-sigin(v-model="isOpenedModalSignIn")
-            h5 Sign in
+            h5.text-center Sign in
             sign-in-container
 
 
 
         q-modal#welcome-sigin(v-model="isOpenedModalSignUp")
-            h5 Sign up
+            h5.text-center Sign up
             sign-up-container
 </template>
 

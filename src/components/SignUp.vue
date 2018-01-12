@@ -44,7 +44,7 @@
                     v-model="repeatPassword"
                 )
         q-card-actions(align="center")
-            q-btn.full-width(
+            q-btn(
               big
               :value="isProcessValidating"
               :disable="validator.$invalid || isProcessValidating"
