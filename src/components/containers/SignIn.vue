@@ -12,6 +12,7 @@
     import Vue from "vue"
     import { Component, Model, Prop } from 'vue-property-decorator'
     import SignIn from "../SignIn.vue"
+    import Debounce from 'debounce-decorator'
     import Blockchain from '../../modules/blockchain.js'
     import { State, Mutation } from 'vuex-class'
     import { LoginState } from '../../types'
@@ -29,9 +30,11 @@
             password: { isValid: true, errorMessage: 'Wrong Password' }
         }
 
-        // @Debounce(500)
-        async validateUsername (username: string = '') {
-            this.validationErrors.username.isValid = await Blockchain.doesUserExist(username)
+        @Debounce(500)
+        validateUsername (username: string = '', validationErrors) {
+            Blockchain.doesUserExist(username).then((res) => {
+                validationErrors.username.isValid = res
+            })
         }
 
         validatePassword (password): void
