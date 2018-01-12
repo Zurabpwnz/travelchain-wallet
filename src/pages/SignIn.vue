@@ -1,6 +1,6 @@
 <template lang="pug">
     div#welcome-page.column.items-center.justify-center
-        img(src="/statics/logo.svg")
+        img(src="/statics/logo-travelchain.png" style="width: 520px; max-width: 100%;")
 
         p Welcome to TravelAi - service where you can exchange your social Data
         br
