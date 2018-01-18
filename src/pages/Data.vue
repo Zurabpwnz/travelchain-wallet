@@ -1,16 +1,16 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title My data
-            h4.page-subtitle Publish data into the blockchain
-            p.page-desc Connect your basic data sources and get TravelToken for it.
+            h3.page-title {{ $t('menu.data.name', i18n.locale) }}
+            h4.page-subtitle {{ $t('menu.data.title', i18n.locale) }}
+            p.page-desc {{ $t('menu.data.desc[0]', i18n.locale) }}
 
 
         q-card-main#social-logger
             p(v-if="!isVerifiedPhone")
                 q-btn.connect(icon="phone" @click="isOpenedModalPhone = true")
                     span.text
-                        | Phone
+                        | {{ $t('phone', i18n.locale) }}
                 span.cost
                     | + 1 TT
 
@@ -18,73 +18,69 @@
                 q-btn.connect(@click="connectSocial(social)")
                     span(:class="'fa fa-' + social.name")
                     span.text
-                        | Bind social
+                        | {{ $t('action.bind', i18n.locale) }} {{ $t('social', i18n.locale).toLowerCase() }}
                 span.cost
                     | + 2 TT
 
-
-
-
         q-card-title
-            p.page-desc My data - published and encryped data.
-
+            p.page-desc {{ $t('menu.data.desc[1]', i18n.locale) }}
 
         q-card-main
-            q-data-table(:data="tableContactsData" :columns="tableContactsColumns")
-              template(slot="col-action" slot-scope="cell")
-                q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
-                  | Show
-              template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
-                img.rounded(:src="cell.data")
+            q-data-table(:data="tableContactsData" :columns="tableContactsColumns" :config="tableConfig")
+                template(slot="col-action" slot-scope="cell")
+                    q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
+                        | Show
+                template(slot="col-avatar" slot-scope="cell" v-if="cell.data")
+                    img.rounded(:src="cell.data")
 
 
 
         template(v-if="!isVerifiedPhone")
             q-modal(ref="bindingPhoneModal" v-model="isOpenedModalPhone" minimized)
-              h5
-                | Bind your phone
+                h5
+                    | Bind your phone
 
-              ai-phone(
-              :number="phoneNumber"
-                @onComplete="(number) => this.phoneNumber = number"
-                  @onClear="() => this.phoneNumber = ''"
-              )
+                ai-phone(
+                :number="phoneNumber"
+                    @onComplete="(number) => this.phoneNumber = number"
+                        @onClear="() => this.phoneNumber = ''"
+                )
 
-              template(v-if="isWaitingForSMS")
-                q-input(v-model="smsCode" placeholder="Enter any code")
-                br
-                q-btn(color="green" @click="connectPhoneNumber")
-                  | Bind number
+                template(v-if="isWaitingForSMS")
+                    q-input(v-model="smsCode" placeholder="Enter any code")
+                    br
+                    q-btn(color="green" @click="connectPhoneNumber")
+                        | Bind number
 
-              br(v-if="!isWaitingForSMS")
-              q-btn(
-              color="green"
-                @click="connectPhoneNumber"
-                  :disabled="!phoneNumber.length"
-              v-if="!isWaitingForSMS"
-              )
-                | Verify number
+                br(v-if="!isWaitingForSMS")
+                q-btn(
+                color="green"
+                    @click="connectPhoneNumber"
+                        :disabled="!phoneNumber.length"
+                v-if="!isWaitingForSMS"
+                )
+                    | Verify number
 
-              q-btn(color="red" @click="isOpenedModalPhone = false")
-                | Cancel
+                q-btn(color="red" @click="isOpenedModalPhone = false")
+                    | Cancel
 
 
 
         q-modal(ref="decodedData" v-model="isOpenDecodedDataModal" minimized)
-          h5
-            | View binded decoded Data
+            h5
+                | View binded decoded Data
 
-          q-input(
-          type="textarea"
-          v-model="decodedUserData"
-          float-label="Decoded data"
-          style="width: 600px; max-width: 100%"
-          )
+            q-input(
+            type="textarea"
+            v-model="decodedUserData"
+            float-label="Decoded data"
+            style="width: 600px; max-width: 100%"
+            )
 
-          br
+            br
 
-          q-btn(@click="isOpenDecodedDataModal = false" color="blue")
-            | Close
+            q-btn(@click="isOpenDecodedDataModal = false" color="blue")
+                | Close
 </template>
 
 <script lang="ts">
@@ -93,7 +89,7 @@
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
-    import { State, Mutation } from 'vuex-class';
+    import {State, Mutation} from 'vuex-class';
     import {
         Alert,
         QLayout,
@@ -128,11 +124,11 @@
             QBtn,
         }
     })
-    export default class Data extends Vue
-    {
-        @State auth
-        @Mutation riseUpBalance
-        @Mutation addContact
+    export default class Data extends Vue {
+        @State auth;
+        @State i18n;
+        @Mutation riseUpBalance;
+        @Mutation addContact;
 
         public isOpenDecodedDataModal = false;
         public isOpenedModalPhone = false;
@@ -144,41 +140,60 @@
         public smsCode = "";
 
         public socialsBinded = new Array();
-        public socials = [ new VK(), new Facebook(), new Google(), ];
+        public socials = [new VK(), new Facebook(), new Google()];
 
-        public tableContactsColumns = [
-            { label: 'Avatar', field: 'avatar', width: '60px' },
-            { label: 'Username', field: 'username' },
-            { label: 'Type', field: 'type' },
-            { label: 'Action', field: 'action' }
-        ];
+        public tableContactsColumns = new Array();
         public tableContactsData = new Array();
+        public tableConfig = {};
 
-        mounted ()
-        {
-            this.$watch('auth.userContacts', (value) =>
-            {
+        created() {
+            this.tableContactsColumns = [
+                {label: this.$t('table.avatar', this.i18n.locale), field: 'avatar', width: '60px'},
+                {label: this.$t('table.username', this.i18n.locale), field: 'username'},
+                {label: this.$t('table.type', this.i18n.locale), field: 'type'},
+                {label: this.$t('table.action', this.i18n.locale), field: 'action'}
+            ];
+
+            this.tableConfig = {
+                messages: {
+                    noData: '<i class="material-icons">warning</i> ' + this.$t('table.no-data', this.i18n.locale),
+                    noDataAfterFiltering: '<i class="material-icons">warning</i> ' + this.$t('table.no-results', this.i18n.locale)
+                },
+                labels: {
+                    columns: this.$t('table.columns', this.i18n.locale),
+                    allCols: this.$t('table.allCols', this.i18n.locale),
+                    rows: this.$t('table.rows', this.i18n.locale),
+                    selected: {
+                        singular: this.$t('table.selected.singular', this.i18n.locale),
+                        plural: this.$t('table.selected.plural', this.i18n.locale)
+                    },
+                    clear: this.$t('table.clear', this.i18n.locale),
+                    search: this.$t('table.search', this.i18n.locale),
+                    all: this.$t('table.all', this.i18n.locale)
+                }
+            };
+        }
+
+        mounted() {
+            this.$watch('auth.userContacts', (value) => {
                 this.updateContactData();
             });
             this.updateContactData();
         }
 
-        updateContactData ()
-        {
+        updateContactData() {
             this.tableContactsData = new Array();
-            for ( let i in this.auth.userContacts )
-            {
+            for (let i in this.auth.userContacts) {
                 let contact = this.auth.userContacts[i];
 
                 this.socialsBinded.push(contact.type.replace(" ", "-").toLowerCase());
 
-                if ( contact.type == "phone" )
-                {
+                if (contact.type == "phone") {
                     this.isVerifiedPhone = true;
                     this.phoneNumber = contact.value;
                 }
 
-                if ( contact.global )
+                if (contact.global)
                     this.tableContactsData.push({
                         avatar: contact.avatar,
                         username: contact.value,
@@ -187,12 +202,9 @@
             }
         }
 
-        connectPhoneNumber ()
-        {
-            if( this.isWaitingForSMS )
-            {
-                if( this.verifyCode == this.smsCode )
-                {
+        connectPhoneNumber() {
+            if (this.isWaitingForSMS) {
+                if (this.verifyCode == this.smsCode) {
                     // TODO save this.phoneNumber into DB by backend
 
                     this.riseUpBalance(1);
@@ -205,74 +217,63 @@
                     this.isVerifiedPhone = true;
                     this.isWaitingForSMS = false;
                     this.isOpenedModalPhone = false;
-                    Notifier.notify({ msg: 'Number binded!' });
+                    Notifier.notify({msg: 'Number binded!'});
                 }
-                else Notifier.notify({ msg: 'Code is not true!', isNegative: true, id: "connectphonenumber" });
+                else Notifier.notify({msg: 'Code is not true!', isNegative: true, id: "connectphonenumber"});
 
                 return;
             }
 
-            new Promise((resolve, reject) =>
-            {
+            new Promise((resolve, reject) => {
                 // TODO sending request to sms-service by backend
                 resolve();
             })
-            .then((response) =>
-            {
-                this.isWaitingForSMS = true;
-                this.verifyCode = "123456";
-            })
-            .catch((err) =>
-            {
-                Notifier.notify({ msg: err, isNegative: true });
-            });
+                .then((response) => {
+                    this.isWaitingForSMS = true;
+                    this.verifyCode = "123456";
+                })
+                .catch((err) => {
+                    Notifier.notify({msg: err, isNegative: true});
+                });
         }
 
-        connectSocial (social)
-        {
-            if( !social.url ) return
+        connectSocial(social) {
+            if (!social.url) return
 
             var authWindow
-            new Promise((resolve, reject) =>
-            {
+            new Promise((resolve, reject) => {
                 authWindow = window.open(social.getGoto(), "Auth in TravelChain AI", "width=800,height=700")
-                var checker = setInterval(() =>
-                {
+                var checker = setInterval(() => {
                     try {
-                        if( authWindow.location.href != "about:blank" )
-                        {
-                            if( authWindow.location.href.indexOf(this.socials[0].redirectURL) != -1 )
-                            {
+                        if (authWindow.location.href != "about:blank") {
+                            if (authWindow.location.href.indexOf(this.socials[0].redirectURL) != -1) {
                                 clearInterval(checker)
-                                resolve( authWindow.location.hash || authWindow.location.search )
+                                resolve(authWindow.location.hash || authWindow.location.search)
                             }
                         }
                     }
-                    catch(err) {}
+                    catch (err) {
+                    }
                 }, 500)
             })
-            .then((response) =>
-            {
-                let data = {};
-                ( response as String ).substring(1).split("&").forEach(function(par)
-                {
-                    data[ par.split("=")[0] ] = par.split("=")[1]
-                })
+                .then((response) => {
+                    let data = {};
+                    (response as String).substring(1).split("&").forEach(function (par) {
+                        data[par.split("=")[0]] = par.split("=")[1]
+                    })
 
-                authWindow.close()
-                social.process( data, true ).then((social) => this.updateData(social, true));
-            })
+                    authWindow.close()
+                    social.process(data, true).then((social) => this.updateData(social, true));
+                })
         }
 
-        updateData (social, userInitiated = false)
-        {
+        updateData(social, userInitiated = false) {
             let socialName = social.name.replace('-', ' ');
             socialName = socialName.split(' ').map((part) => {
                 return part[0].toUpperCase() + part.substring(1);
             }).join(' ');
 
-            if( userInitiated )
-            {
+            if (userInitiated) {
                 this.riseUpBalance(2);
                 this.addContact({
                     avatar: social.info.avatar,
@@ -283,8 +284,7 @@
             }
         }
 
-        openDecodedDataModal (data)
-        {
+        openDecodedDataModal(data) {
             this.decodedUserData = JSON.stringify(data, null, 4);
             this.isOpenDecodedDataModal = true;
         }

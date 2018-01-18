@@ -1,13 +1,13 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title Buy data
-            h4.page-subtitle Perchase data from the blockchain
+            h3.page-title {{ $t('menu.purchase.name', i18n.locale) }}
+            h4.page-subtitle {{ $t('menu.purchase.title', i18n.locale) }}
 
-            p.page-desc Purchased data - check purchased information.
+            p.page-desc {{ $t('menu.purchase.desc[0]', i18n.locale) }}
 
         q-card-main
-            q-data-table(:data="auth.userBoughtData" :columns="tableColumns")
+            q-data-table(:data="auth.userBoughtData" :columns="tableColumns" :config="tableConfig")
                 template(slot="col-action" slot-scope="cell")
                     template(v-if="!cell.row.requested")
                         q-btn(color="blue" @click="openDecodedDataModal(cell.row)")
@@ -17,13 +17,13 @@
 
 
         q-card-title
-            p.page-desc Data search - find and buy information with TT
+            p.page-desc {{ $t('menu.purchase.desc[1]', i18n.locale) }}
 
         q-card-main
-            q-data-table(:data="auth.buyableData" :columns="tableColumns")
+            q-data-table(:data="auth.buyableData" :columns="tableColumns" :config="tableConfig")
                 template(slot="col-action" slot-scope="cell")
                     q-btn(color="pink" @click="openPurchasingModal(cell.row.username, cell.row.type)")
-                        | Buy
+                        | {{ $t('action.buy', i18n.locale) }}
 
 
 
@@ -33,10 +33,10 @@
                 | Purchase Data
 
             q-input(
-                v-model="requestedPrice"
-                placeholder="0.0"
-                type="number"
-                suffix="TT"
+            v-model="requestedPrice"
+            placeholder="0.0"
+            type="number"
+            suffix="TT"
             )
 
             br
@@ -54,10 +54,10 @@
                 | View purchased decoded Data
 
             q-input(
-                type="textarea"
-                v-model="decodedUserData"
-                float-label="Decoded data"
-                style="width: 600px; max-width: 100%"
+            type="textarea"
+            v-model="decodedUserData"
+            float-label="Decoded data"
+            style="width: 600px; max-width: 100%"
             )
 
             br
@@ -72,7 +72,7 @@
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
-    import { State, Mutation, Action } from 'vuex-class';
+    import {State, Mutation, Action} from 'vuex-class';
     import {
         QLayout,
         QInput,
@@ -101,74 +101,93 @@
             QBtn,
         }
     })
-    export default class Purchase extends Vue
-    {
-        @State auth
-        @Mutation riseDownBalance
-        @Action changeStateBuyableData
+    export default class Purchase extends Vue {
+        @State auth;
+        @State i18n;
+        @Mutation riseDownBalance;
+        @Action changeStateBuyableData;
 
-        public isOpenDecodedDataModal = false
-        public isOpenPurchasingModal = false
-        public requestedPrice = 0
-        public sellerUser = ""
-        public sellerType = ""
-        public decodedUserData = ""
+        public isOpenDecodedDataModal = false;
+        public isOpenPurchasingModal = false;
+        public requestedPrice = 0;
+        public sellerUser = "";
+        public sellerType = "";
+        public decodedUserData = "";
 
-        public tableColumns = [
-            { label: 'Username', field: 'username', filter: true, },
-            { label: 'Type', field: 'type', filter: true, },
-            { label: 'Action', field: 'action', }
-        ];
+        public tableColumns = new Array();
+        public tableConfig = {};
 
-        openDecodedDataModal (data)
-        {
+        created() {
+            this.tableColumns = [
+                {label: this.$t('table.username', this.i18n.locale), field: 'username', filter: true},
+                {label: this.$t('table.type', this.i18n.locale), field: 'type', filter: true},
+                {label: this.$t('table.action', this.i18n.locale), field: 'action'}
+            ];
+
+            this.tableConfig = {
+                messages: {
+                    noData: '<i class="material-icons">warning</i> ' + this.$t('table.no-data', this.i18n.locale),
+                    noDataAfterFiltering: '<i class="material-icons">warning</i> ' + this.$t('table.no-results', this.i18n.locale)
+                },
+                labels: {
+                    columns: this.$t('table.columns', this.i18n.locale),
+                    allCols: this.$t('table.allCols', this.i18n.locale),
+                    rows: this.$t('table.rows', this.i18n.locale),
+                    selected: {
+                        singular: this.$t('table.selected.singular', this.i18n.locale),
+                        plural: this.$t('table.selected.plural', this.i18n.locale)
+                    },
+                    clear: this.$t('table.clear', this.i18n.locale),
+                    search: this.$t('table.search', this.i18n.locale),
+                    all: this.$t('table.all', this.i18n.locale)
+                }
+            };
+        }
+
+        openDecodedDataModal(data) {
             this.decodedUserData = JSON.stringify(data, null, 4);
             this.isOpenDecodedDataModal = true;
         }
 
-        openPurchasingModal (user, type)
-        {
+        openPurchasingModal(user, type) {
             this.sellerUser = user;
             this.sellerType = type;
             this.isOpenPurchasingModal = true;
         }
 
-        closePurchasingModal ()
-        {
+        closePurchasingModal() {
             this.sellerUser = "";
             this.sellerType = "";
             this.isOpenPurchasingModal = false;
         }
 
-        buyData ()
-        {
-            if ( !this.requestedPrice || this.requestedPrice == 0 ) {
+        buyData() {
+            if (!this.requestedPrice || this.requestedPrice == 0) {
                 Notifier.notify({
                     msg: 'Offered price must been more of null',
                     id: 'offeredpurchaseprice',
                     isNegative: true,
                 });
             }
-            else if ( this.requestedPrice > this.auth.userBalance ) {
+            else if (this.requestedPrice > this.auth.userBalance) {
                 Notifier.notify({
                     msg: 'Your haven\'t the required number of TT',
                     id: 'offeredpurchasepricehavent',
                     isNegative: true,
                 });
             } else {
-                this.changeStateBuyableData({ user: this.sellerUser, type: this.sellerType })
-                .then((res) =>
-                {
-                    if ( res ) {
-                        this.riseDownBalance(this.requestedPrice);
-                        this.closePurchasingModal();
-                    } else {
-                        Notifier.notify({
-                            msg: 'Unknown error',
-                            isNegative: true,
-                        });
-                    }
-                });
+                this.changeStateBuyableData({user: this.sellerUser, type: this.sellerType})
+                    .then((res) => {
+                        if (res) {
+                            this.riseDownBalance(this.requestedPrice);
+                            this.closePurchasingModal();
+                        } else {
+                            Notifier.notify({
+                                msg: 'Unknown error',
+                                isNegative: true,
+                            });
+                        }
+                    });
             }
         }
     }

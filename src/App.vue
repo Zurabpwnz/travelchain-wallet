@@ -11,22 +11,29 @@
                 q-toolbar-title TravelChain
                     div(slot="subtitle") Data Wallet
 
+                div
+                    q-select(
+                        :value="i18n.locale"
+                        :options="langOptions"
+                        @change="updateLang"
+                    )
+
   
             div(v-if="auth.isLoggedIn" slot="left")
-                q-list(no-border link inset-delimiter)
+                q-list#header-menu(no-border link inset-delimiter)
                     q-item(v-if="auth.isLoggedIn" @click="$router.push('/')")
                         q-item-side(icon="face")
                         q-item-main(:label="username")
                         div
                             p.no-margin {{ auth.userBalance }} TT
-                    q-list-header Menu
+                    q-list-header {{ $t('menu.name', i18n.locale) }}
 
                     template(v-for="link in menuLinks" v-if="!link.isAuth || auth.isLoggedIn")
                         q-item(@click="link.href ? $router.push(link.href) : link.click()" :class="isCurrentPage(link.href)")
                             q-item-side(:icon="link.icon")
-                            q-item-main(:label="link.name" :sublabel="link.title")
+                            q-item-main(:label="$t('menu.'+ link.name +'.name', i18n.locale)" :sublabel="$t('menu.'+ link.name +'.title', i18n.locale)")
     
-            div(:class="'page-'+ getPage()")
+            div(:class="'page-'+ getPage()" v-if="show")
                 router-view
 
         ai-notifier
@@ -41,7 +48,6 @@
     import Notifier from './modules/Notifier'
     import {State, Mutation} from 'vuex-class'
 
-
     import './modules/class-component-hooks';
     import {
         QLayout,
@@ -53,7 +59,8 @@
         QListHeader,
         QItem,
         QItemSide,
-        QItemMain
+        QItemMain,
+        QSelect,
     } from 'quasar';
 
 
@@ -69,56 +76,80 @@
             QListHeader,
             QItem,
             QItemSide,
-            QItemMain
+            QItemMain,
+            QSelect,
         }
     })
     export default class App extends Vue {
 
-        @State auth
-        @Mutation login
+        @State auth;
+        @State i18n;
+        @Mutation login;
+        @Mutation setLang;
+
+        private show = true;
 
         private menuLinks = [
             {
                 href: "/",
-                name: "Dashboard",
-                title: "Manage your account",
+                name: "dashboard",
                 icon: "home",
                 isAuth: true,
             },
 
             {
                 href: "/data",
-                name: "My Data",
-                title: "Publish data into the blockchain",
+                name: "data",
                 icon: "data_usage",
                 isAuth: true,
             },
 
             {
                 href: "/purchase",
-                name: "Buy data",
-                title: "Purchase data from the Blockchain",
+                name: "purchase",
                 icon: "assignment_returned",
                 isAuth: true,
             },
 
             {
                 href: "/proposals",
-                name: "My proposals",
-                title: "Proposals for the purchase of my data",
+                name: "proposals",
                 icon: "monetization_on",
                 isAuth: true,
             },
 
             {
-                name: "Log Out",
+                name: "log-out",
                 icon: "exit_to_app",
                 click: this.logout,
                 isAuth: true,
             },
-        ]
+        ];
+
+        private langOptions = [
+            {
+                label: 'Russian',
+                value: 'ru'
+            },
+            {
+                label: 'English',
+                value: 'en'
+            }
+        ];
+
+        updateLang(e) {
+            this.setLang(e);
+            this.show = false;
+            this.$nextTick(() => {
+                this.show = true;
+            })
+        }
 
         mounted() {
+            this.$watch('currentLang', function(value){
+                console.log(value)
+            });
+
             Blockchain.init()
             .catch(() => document.write('Not connected to node!'))
         }

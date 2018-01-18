@@ -1,0 +1,77 @@
+{
+    "menu": {
+        "name": "Menu",
+        "dashboard": {
+            "name": "Dashboard",
+            "title": "Manage your account"
+        },
+        "data": {
+            "name": "My Data",
+            "title": "Publish data into the blockchain",
+            "desc": [
+                "Connect your basic data sources and get TravelToken for it",
+                "My data - published and encryped data"
+            ]
+        },
+        "purchase": {
+            "name": "Buy data",
+            "title": "Purchase data from the Blockchain",
+            "desc": [
+                "Purchased data - check purchased information",
+                "Data search - find and buy information with TT"
+            ]
+        },
+        "proposals": {
+            "name": "My proposals",
+            "title": "Proposals for the purchase of my data",
+            "desc": [
+                "You can sell information, if somebode requests it"
+            ]
+        },
+        "log-out": {
+            "name": "Log Out",
+            "title": ""
+        }
+    },
+    "action": {
+        "close": "Close",
+        "copy": "Copy",
+        "bind": "Bind",
+        "search": "Search",
+        "buy": "Buy",
+        "accept": "Accept",
+        "decline": "Decline"
+    },
+    "table": {
+        "columns": "Columns",
+        "allCols": "All Cols",
+        "rows": "Rows",
+        "selected": {
+            "singular": "Item selected",
+            "plural": "Items selected"
+        },
+        "clear": "Clear",
+        "search": "Search",
+        "all": "All",
+        "no-data": "No data available to show",
+        "no-results": "No results. Please refine your search terms",
+        "avatar": "Avatar",
+        "username": "Username",
+        "amount": "Amount",
+        "type": "Type",
+        "action": "Action"
+    },
+    "username": "Пользователь",
+    "wallet": "Wallet",
+    "transfer": "Transfer",
+    "referal-link": "Referal link",
+    "how-it-works": "How it works",
+    "units-of-information": "Units of Information",
+    "go-to-my-data": "Go to my data",
+    "active-proposals": "Active proposals",
+    "go-to-proposals": "Go to Proposals",
+    "how-working-referral-link": "How working referral link",
+    "copied": "Copied",
+    "social": "Data source",
+    "phone": "Phone"
+}

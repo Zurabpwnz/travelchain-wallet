@@ -114,8 +114,9 @@ const actions: ActionTree<LoginState, MutationTree<LoginState>> = {
     },
 };
 
-export const auth = {
+const auth = {
     state,
     mutations,
     actions,
 };
+export default auth;

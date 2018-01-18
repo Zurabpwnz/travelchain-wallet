@@ -1,18 +1,18 @@
 <template lang="pug">
     q-layout
-            q-card-title
-              h3.page-title Proposals
-              h4.page-subtitle Proposals of the purchase of my data
+        q-card-title
+            h3.page-title {{ $t('menu.proposals.name', i18n.locale) }}
+            h4.page-subtitle {{ $t('menu.proposals.title', i18n.locale) }}
 
-              p.page-desc You can sell information, if somebode requests it
+            p.page-desc {{ $t('menu.proposals.desc[0]', i18n.locale) }}
 
-            q-card-main
-                q-data-table(:data="auth.userProposals" :columns="tableProposalsColumns")
-                    template(slot="col-action" slot-scope="cell")
-                        q-btn(color="red" @click="declineProposal(cell.row.username, cell.row.type)")
-                            | Decline
-                        q-btn(color="green" @click="acceptProposal(cell.row.username, cell.row.type)")
-                            | Accept
+        q-card-main
+            q-data-table(:data="auth.userProposals" :columns="tableProposalsColumns" :config="tableConfig")
+                template(slot="col-action" slot-scope="cell")
+                    q-btn(color="red" @click="declineProposal(cell.row.username, cell.row.type)")
+                        | {{ $t('action.decline', i18n.locale) }}
+                    q-btn(color="green" @click="acceptProposal(cell.row.username, cell.row.type)")
+                        | {{ $t('action.accept', i18n.locale) }}
 </template>
 
 <script lang="ts">
@@ -21,7 +21,7 @@
     import {Google, VK, Facebook} from '../modules/Social';
     import Component from 'vue-class-component';
     import Notifier from '../modules/Notifier';
-    import { State, Mutation, Action } from 'vuex-class';
+    import {State, Mutation, Action} from 'vuex-class';
     import {
         QLayout,
         QInput,
@@ -50,61 +50,75 @@
             QBtn,
         }
     })
-    export default class Proposals extends Vue
-    {
-        @State auth
-        @Mutation riseUpBalance
-        @Action removeProposal
+    export default class Proposals extends Vue {
+        @State auth;
+        @State i18n;
+        @Mutation riseUpBalance;
+        @Action removeProposal;
 
-        public tableProposalsColumns = [
-            { label: 'Username', field: 'username'},
-            { label: 'Type', field: 'type' },
-            { label: 'Amount, TT', field: 'amount' },
-            { label: 'Action', field: 'action' }
-        ];
+        public tableProposalsColumns = new Array();
+        public tableConfig = {};
 
-        declineProposal (user, type)
-        {
-            this.removeProposal({ user, type });
+        created() {
+            this.tableProposalsColumns = [
+                {label: this.$t('table.username', this.i18n.locale), field: 'username'},
+                {label: this.$t('table.type', this.i18n.locale), field: 'type'},
+                {label: this.$t('table.amount', this.i18n.locale), field: 'amount'},
+                {label: this.$t('table.action', this.i18n.locale), field: 'action'}
+            ];
+
+            this.tableConfig = {
+                messages: {
+                    noData: '<i class="material-icons">warning</i> ' + this.$t('table.no-data', this.i18n.locale),
+                    noDataAfterFiltering: '<i class="material-icons">warning</i> ' + this.$t('table.no-results', this.i18n.locale)
+                },
+                labels: {
+                    columns: this.$t('table.columns', this.i18n.locale),
+                    allCols: this.$t('table.allCols', this.i18n.locale),
+                    rows: this.$t('table.rows', this.i18n.locale),
+                    selected: {
+                        singular: this.$t('table.selected.singular', this.i18n.locale),
+                        plural: this.$t('table.selected.plural', this.i18n.locale)
+                    },
+                    clear: this.$t('table.clear', this.i18n.locale),
+                    search: this.$t('table.search', this.i18n.locale),
+                    all: this.$t('table.all', this.i18n.locale)
+                }
+            };
         }
 
-        acceptProposal (user, type)
-        {
+        declineProposal(user, type) {
+            this.removeProposal({user, type});
+        }
+
+        acceptProposal(user, type) {
             let proposalPrice = false;
-            for ( let i in this.auth.userProposals )
-            {
-                if ( this.auth.userProposals[i].username == user && this.auth.userProposals[i].type == type )
-                {
+            for (let i in this.auth.userProposals) {
+                if (this.auth.userProposals[i].username == user && this.auth.userProposals[i].type == type) {
                     proposalPrice = this.auth.userProposals[i].amount;
                     break;
                 }
             }
 
-            if ( proposalPrice === false )
-            {
+            if (proposalPrice === false) {
                 Notifier.notify({
                     msg: 'No finded needed data for accepting. Try again',
                     id: 'nofindedneededdata',
                     isNegative: true,
                 });
-            }
-            else
-            {
-                this.removeProposal({ user, type })
-                .then((res) =>
-                {
-                    if( res )
-                    {
-                        this.riseUpBalance(proposalPrice);
-                    }
-                    else
-                    {
-                        Notifier.notify({
-                            msg: 'Unknown error',
-                            isNegative: true,
-                        });
-                    }
-                });
+            } else {
+                this.removeProposal({user, type})
+                    .then((res) => {
+                        if (res) {
+                            this.riseUpBalance(proposalPrice);
+                        }
+                        else {
+                            Notifier.notify({
+                                msg: 'Unknown error',
+                                isNegative: true,
+                            });
+                        }
+                    });
             }
         }
     }

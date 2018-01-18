@@ -12,7 +12,6 @@ import SignUp from './pages/SignUp.vue';
 import store from '../node_modules/store';
 import { store as vuex } from './store';
 
-
 Vue.use(VueRouter);
 
 export const AppRouter = new VueRouter({
@@ -87,6 +86,10 @@ export const AppRouter = new VueRouter({
     }
   ]
 });
+
+if (store.get('app.lang')) {
+    vuex.commit('setLang', store.get('app.lang'));
+}
 
 if (!store.get('account.proposals')) {
     store.set('account.proposals', [
