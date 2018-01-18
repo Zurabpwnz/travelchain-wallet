@@ -3,6 +3,7 @@
         :isProcessValidating="isProcessValidating"
         :validator="$v"
         @usernameChanged="e => username = e"
+        @emailChanged="e => email = e"
         @passwordChanged="e => password = e"
         @repeatPasswordChanged="e => repeatPassword = e",
         @submit="signUp"
@@ -15,7 +16,7 @@ import Component from "vue-class-component"
 import Blockchain from '../../modules/blockchain.js'
 import SignUp from '../SignUp.vue'
 import {Toast} from 'quasar'
-import {required, sameAs, minLength} from 'vuelidate/lib/validators'
+import {required, sameAs, minLength, email} from 'vuelidate/lib/validators'
 
 @Component({
     components: {SignUp},
@@ -27,6 +28,11 @@ import {required, sameAs, minLength} from 'vuelidate/lib/validators'
                 if (value === '' || value.length <= 3) return true
                 return !(await Blockchain.doesUserExist(value))
             }
+        },
+
+        email: {
+            email,
+            required
         },
         password: {
             required,
@@ -40,6 +46,7 @@ import {required, sameAs, minLength} from 'vuelidate/lib/validators'
 })
 export default class SignUpContainer extends Vue {
     username: string = ''
+    email: string = ''
     password: string = ''
     repeatPassword: string = ''
     isProcessValidating: boolean = false
@@ -52,6 +59,8 @@ export default class SignUpContainer extends Vue {
         }
 
         this.isProcessValidating = true
+
+        // TODO: Save this.email to backend
 
         Blockchain.signUp(this.username, this.password)
         .then(res => {

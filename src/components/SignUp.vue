@@ -15,6 +15,20 @@
                 )
 
             q-field(
+                icon="fa-envelope"
+                helper="Enter your Email"
+                :error="validator.email.$error"
+                error-label="Does not match email address"
+            )
+                q-input(
+                    type="email"
+                    float-label="Email"
+                    :after="conditionIcon('email')"
+                    @input="updateEmail($event); validator.email.$touch();"
+                    v-model="email"
+                )
+
+            q-field(
                 icon="fa-key"
                 helper="Enter your password"
                 :error="validator.password.$error"
@@ -75,6 +89,7 @@ import {
 export interface SignUpForm {
     form: {
         username: string;
+        email: string;
         password: string;
         repeatPassword: string;
     }
@@ -99,11 +114,16 @@ export default class SignUpPresentation extends Vue {
     isProcessValidating: boolean
 
     username: string = ''
+    email: string = ''
     password: string = ''
     repeatPassword: string = ''
 
     @Emit('usernameChanged')
     updateUsername(e) {/* Pass username to the container component */
+    }
+
+    @Emit('emailChanged')
+    updateEmail(e) {/* Pass email to the container component */
     }
 
     @Emit('passwordChanged')
