@@ -12,7 +12,7 @@
                     div(slot="subtitle") Data Wallet
 
                 div
-                    q-select(
+                    q-select.color-light(
                         :value="i18n.locale"
                         :options="langOptions"
                         @change="updateLang"
@@ -26,12 +26,12 @@
                         q-item-main(:label="username")
                         div
                             p.no-margin {{ auth.userBalance }} TT
-                    q-list-header {{ $t('menu.name', i18n.locale) }}
+                    q-list-header {{ $t('menu.name') }}
 
                     template(v-for="link in menuLinks" v-if="!link.isAuth || auth.isLoggedIn")
                         q-item(@click="link.href ? $router.push(link.href) : link.click()" :class="isCurrentPage(link.href)")
                             q-item-side(:icon="link.icon")
-                            q-item-main(:label="$t('menu.'+ link.name +'.name', i18n.locale)" :sublabel="$t('menu.'+ link.name +'.title', i18n.locale)")
+                            q-item-main(:label="$t('menu.'+ link.name +'.name')" :sublabel="$t('menu.'+ link.name +'.title')")
     
             div(:class="'page-'+ getPage()" v-if="show")
                 router-view
@@ -139,6 +139,7 @@
 
         updateLang(e) {
             this.setLang(e);
+            this.$i18n.locale = e;
             this.show = false;
             this.$nextTick(() => {
                 this.show = true;
@@ -146,10 +147,6 @@
         }
 
         mounted() {
-            this.$watch('currentLang', function(value){
-                console.log(value)
-            });
-
             Blockchain.init()
             .catch(() => document.write('Not connected to node!'))
         }

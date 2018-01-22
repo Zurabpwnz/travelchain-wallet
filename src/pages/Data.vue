@@ -1,16 +1,16 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title {{ $t('menu.data.name', i18n.locale) }}
-            h4.page-subtitle {{ $t('menu.data.title', i18n.locale) }}
-            p.page-desc {{ $t('menu.data.desc[0]', i18n.locale) }}
+            h3.page-title {{ $t('menu.data.name') }}
+            h4.page-subtitle {{ $t('menu.data.title') }}
+            p.page-desc {{ $t('menu.data.desc[0]') }}
 
 
         q-card-main#social-logger
             p(v-if="!isVerifiedPhone")
                 q-btn.connect(icon="phone" @click="isOpenedModalPhone = true")
                     span.text
-                        | {{ $t('phone', i18n.locale) }}
+                        | {{ $t('phone') }}
                 span.cost
                     | + 1 TT
 
@@ -18,12 +18,12 @@
                 q-btn.connect(@click="connectSocial(social)")
                     span(:class="'fa fa-' + social.name")
                     span.text
-                        | {{ $t('action.bind', i18n.locale) }} {{ $t('social', i18n.locale).toLowerCase() }}
+                        | {{ $t('action.bind') }} {{ $t('social').toLowerCase() }}
                 span.cost
                     | + 2 TT
 
         q-card-title
-            p.page-desc {{ $t('menu.data.desc[1]', i18n.locale) }}
+            p.page-desc {{ $t('menu.data.desc[1]') }}
 
         q-card-main
             q-data-table(:data="tableContactsData" :columns="tableContactsColumns" :config="tableConfig")

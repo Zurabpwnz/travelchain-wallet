@@ -1,27 +1,27 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title {{ $t('menu.dashboard.name', i18n.locale) }}
-            h4.page-subtitle {{ $t('menu.dashboard.title', i18n.locale) }}
+            h3.page-title {{ $t('menu.dashboard.name') }}
+            h4.page-subtitle {{ $t('menu.dashboard.title') }}
 
         div.row
             q-card.col-md-4.col-xs-12.col-sm-10
                 q-card-title.text-center
                     q-icon.head-icon(name="account balance wallet")
-                    | {{ $t('wallet', i18n.locale) }}
+                    | {{ $t('wallet') }}
                 q-card-main(align="center")
                     p.big
                         | {{ auth.userBalance }} TT
                 q-card-actions(align="center")
                     q-btn(flat @click="$router.push('/purchase')")
-                        | {{ $t('transfer', i18n.locale) }}
+                        | {{ $t('transfer') }}
 
 
 
             q-card.col-md-4.col-xs-12.col-sm-10
                 q-card-title.text-center
                     q-icon.head-icon(name="link")
-                    | {{ $t('referal-link', i18n.locale) }}
+                    | {{ $t('referal-link') }}
                 q-card-main
                     p
                         q-input(:value="'https://data.travelchain.io/?r=' + username" readonly)#reflink
@@ -29,39 +29,39 @@
                     q-btn(@click="copySucceeded1 = true" v-clipboard:copy="copy" flat)
                         | {{ copyButtonText }}
                     q-btn(flat @click="isOpenHIWModal = true")
-                        | {{ $t('how-it-works', i18n.locale) }}
+                        | {{ $t('how-it-works') }}
 
 
 
             q-card.col-md-4.col-xs-12.col-sm-10
                 q-card-title.text-center
                     q-icon.head-icon(name="info outline")
-                    | {{ $t('units-of-information', i18n.locale) }}
+                    | {{ $t('units-of-information') }}
                 q-card-main(align="center")
                     p.big
                         | {{ auth.userContacts.length }}
                 q-card-actions(align="center")
                     q-btn(flat @click="$router.push('/data')")
-                        | {{ $t('go-to-my-data', i18n.locale) }}
+                        | {{ $t('go-to-my-data') }}
 
 
 
             q-card.col-md-4.col-xs-12.col-sm-10
                 q-card-title.text-center
                     q-icon.head-icon(name="sync")
-                    | {{ $t('active-proposals', i18n.locale) }}
+                    | {{ $t('active-proposals') }}
                 q-card-main(align="center")
                     p.big
                         | {{ auth.userProposals.length }}
                 q-card-actions(align="center")
                     q-btn(flat @click="$router.push('/proposals')")
-                        | {{ $t('go-to-proposals', i18n.locale) }}
+                        | {{ $t('go-to-proposals') }}
 
 
 
             q-modal(ref="decodedData" v-model="isOpenHIWModal" minimized)
                 h5
-                    | {{ $t('how-working-referral-link', i18n.locale) }}
+                    | {{ $t('how-working-referral-link') }}
                 br
 
                 p(style="max-width: 500px")
@@ -76,7 +76,7 @@
                 br
 
                 q-btn(@click="isOpenHIWModal = false" color="blue")
-                    | {{ $t('action.close', i18n.locale) }}
+                    | {{ $t('action.close') }}
 </template>
 
 <script lang="ts">

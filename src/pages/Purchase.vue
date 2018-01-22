@@ -1,10 +1,10 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title {{ $t('menu.purchase.name', i18n.locale) }}
-            h4.page-subtitle {{ $t('menu.purchase.title', i18n.locale) }}
+            h3.page-title {{ $t('menu.purchase.name') }}
+            h4.page-subtitle {{ $t('menu.purchase.title') }}
 
-            p.page-desc {{ $t('menu.purchase.desc[0]', i18n.locale) }}
+            p.page-desc {{ $t('menu.purchase.desc[0]') }}
 
         q-card-main
             q-data-table(:data="auth.userBoughtData" :columns="tableColumns" :config="tableConfig")
@@ -17,13 +17,13 @@
 
 
         q-card-title
-            p.page-desc {{ $t('menu.purchase.desc[1]', i18n.locale) }}
+            p.page-desc {{ $t('menu.purchase.desc[1]') }}
 
         q-card-main
             q-data-table(:data="auth.buyableData" :columns="tableColumns" :config="tableConfig")
                 template(slot="col-action" slot-scope="cell")
                     q-btn(color="pink" @click="openPurchasingModal(cell.row.username, cell.row.type)")
-                        | {{ $t('action.buy', i18n.locale) }}
+                        | {{ $t('action.buy') }}
 
 
 

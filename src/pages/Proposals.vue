@@ -1,18 +1,18 @@
 <template lang="pug">
     q-layout
         q-card-title
-            h3.page-title {{ $t('menu.proposals.name', i18n.locale) }}
-            h4.page-subtitle {{ $t('menu.proposals.title', i18n.locale) }}
+            h3.page-title {{ $t('menu.proposals.name') }}
+            h4.page-subtitle {{ $t('menu.proposals.title') }}
 
-            p.page-desc {{ $t('menu.proposals.desc[0]', i18n.locale) }}
+            p.page-desc {{ $t('menu.proposals.desc[0]') }}
 
         q-card-main
             q-data-table(:data="auth.userProposals" :columns="tableProposalsColumns" :config="tableConfig")
                 template(slot="col-action" slot-scope="cell")
                     q-btn(color="red" @click="declineProposal(cell.row.username, cell.row.type)")
-                        | {{ $t('action.decline', i18n.locale) }}
+                        | {{ $t('action.decline') }}
                     q-btn(color="green" @click="acceptProposal(cell.row.username, cell.row.type)")
-                        | {{ $t('action.accept', i18n.locale) }}
+                        | {{ $t('action.accept') }}
 </template>
 
 <script lang="ts">
@@ -61,28 +61,28 @@
 
         created() {
             this.tableProposalsColumns = [
-                {label: this.$t('table.username', this.i18n.locale), field: 'username'},
-                {label: this.$t('table.type', this.i18n.locale), field: 'type'},
-                {label: this.$t('table.amount', this.i18n.locale), field: 'amount'},
-                {label: this.$t('table.action', this.i18n.locale), field: 'action'}
+                {label: this.$t('table.username'), field: 'username'},
+                {label: this.$t('table.type'), field: 'type'},
+                {label: this.$t('table.amount'), field: 'amount'},
+                {label: this.$t('table.action'), field: 'action'}
             ];
 
             this.tableConfig = {
                 messages: {
-                    noData: '<i class="material-icons">warning</i> ' + this.$t('table.no-data', this.i18n.locale),
-                    noDataAfterFiltering: '<i class="material-icons">warning</i> ' + this.$t('table.no-results', this.i18n.locale)
+                    noData: '<i class="material-icons">warning</i> ' + this.$t('table.no-data'),
+                    noDataAfterFiltering: '<i class="material-icons">warning</i> ' + this.$t('table.no-results')
                 },
                 labels: {
-                    columns: this.$t('table.columns', this.i18n.locale),
-                    allCols: this.$t('table.allCols', this.i18n.locale),
-                    rows: this.$t('table.rows', this.i18n.locale),
+                    columns: this.$t('table.columns'),
+                    allCols: this.$t('table.allCols'),
+                    rows: this.$t('table.rows'),
                     selected: {
-                        singular: this.$t('table.selected.singular', this.i18n.locale),
-                        plural: this.$t('table.selected.plural', this.i18n.locale)
+                        singular: this.$t('table.selected.singular'),
+                        plural: this.$t('table.selected.plural')
                     },
-                    clear: this.$t('table.clear', this.i18n.locale),
-                    search: this.$t('table.search', this.i18n.locale),
-                    all: this.$t('table.all', this.i18n.locale)
+                    clear: this.$t('table.clear'),
+                    search: this.$t('table.search'),
+                    all: this.$t('table.all')
                 }
             };
         }
