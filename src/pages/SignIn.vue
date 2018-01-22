@@ -1,23 +1,23 @@
 <template lang="pug">
     div#welcome-page.column.items-center.justify-center
         img(src="/statics/logo.svg")
-        p Welcome to TravelAi - service where you can exchange your social Data
+        p {{ $t('welcome-text') }}
         br
         br
         q-layout.flex.justify-center
-            q-btn.signin(color="green" @click="isOpenedModalSignIn = true") Sign In
-            q-btn.signup(color="blue" @click="isOpenedModalSignUp = true") Sign Up
+            q-btn.signin(color="green" @click="isOpenedModalSignIn = true") {{ $t('action.signin') }}
+            q-btn.signup(color="blue" @click="isOpenedModalSignUp = true") {{ $t('action.signup') }}
 
 
 
-        q-modal#welcome-sigin(v-model="isOpenedModalSignIn")
-            h5.text-center Sign in
+        q-modal.welcome-sign-form(v-model="isOpenedModalSignIn")
+            h5.text-center {{ $t('action.signin') }}
             sign-in-container
 
 
 
-        q-modal#welcome-sigin(v-model="isOpenedModalSignUp")
-            h5.text-center Sign up
+        q-modal.welcome-sign-form(v-model="isOpenedModalSignUp")
+            h5.text-center {{ $t('action.signup') }}
             sign-up-container
 </template>
 

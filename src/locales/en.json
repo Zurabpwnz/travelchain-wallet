@@ -34,6 +34,8 @@
         }
     },
     "action": {
+        "signin": "Sign in",
+        "signup": "Sign up",
         "close": "Close",
         "copy": "Copy",
         "bind": "Bind",
@@ -73,5 +75,6 @@
     "how-working-referral-link": "How working referral link",
     "copied": "Copied",
     "social": "Data source",
-    "phone": "Phone"
+    "phone": "Phone",
+    "welcome-text": "Welcome to TravelAi - service where you can exchange your social Data"
 }
